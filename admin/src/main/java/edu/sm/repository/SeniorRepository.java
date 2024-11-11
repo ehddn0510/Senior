@@ -2,7 +2,6 @@ package edu.sm.repository;
 
 import edu.sm.frame.SMRepository;
 import edu.sm.model.Senior;
-import edu.sm.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 

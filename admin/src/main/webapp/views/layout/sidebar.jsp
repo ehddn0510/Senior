@@ -8,7 +8,7 @@
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-user"></i><span class="nav-text">고객 관리</span></a>
                 <ul aria-expanded="false">
                     <li><a href="<c:url value='/customer-list'/>">고객 리스트</a></li>
-                    <li><a href="<c:url value='/customer-detail'/>">고객 상세</a></li>
+<%--                    <li><a href="<c:url value='/customer-detail'/>">고객 상세</a></li>--%>
                 </ul>
             </li>
 
