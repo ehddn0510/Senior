@@ -14,4 +14,5 @@ public interface UserRepository extends SMRepository<Integer, User> {
     User selectOne(Integer userId);
     List<User> findAll();
     List<Senior> selectSeniorByUserId(Integer userId);
+    void update(User user) throws Exception;
 }
