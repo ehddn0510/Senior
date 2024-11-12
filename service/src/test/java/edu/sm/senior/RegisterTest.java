@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SpringBootTest
-public class SeniorRegisterTest {
+public class RegisterTest {
 
 
     @Autowired

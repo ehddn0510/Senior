@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SpringBootTest
-public class SeniorStatusChangeTest {
+public class StatusChangeTest {
 
     @Autowired
     private SeniorService seniorService;
