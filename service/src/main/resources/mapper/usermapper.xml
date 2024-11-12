@@ -31,4 +31,33 @@
     <select id="findByEmail" parameterType="String" resultType="edu.sm.model.User">
     SELECT * FROM user WHERE user_email = #{email};
     </select>
+
+    <!-- 회원 정보 수정 쿼리 (비밀번호 제외) -->
+    <update id="updateUserInfo" parameterType="edu.sm.model.User">
+        UPDATE user
+        SET user_tel = #{tel},
+            user_email = #{email},
+            user_name = #{name},
+            user_zipcode = #{zipcode},
+            user_detail_add1 = #{detailAdd1},
+            user_detail_addr1 = #{detailAddr1},
+            user_detail_addr2 = #{detailAddr2},
+            user_profile = #{profileImage}
+        WHERE user_id = #{userId};
+    </update>
+
+    <!-- 비밀번호 수정 쿼리 -->
+    <update id="updatePassword" parameterType="map">
+        UPDATE user
+        SET user_password = #{newPassword}
+        WHERE user_id = #{userId};
+    </update>
+
+    <!-- 계정 비활성화 (소프트 삭제) 쿼리 -->
+    <update id="deactivateUser" parameterType="int">
+        UPDATE user
+        SET user_status = 'inactive'
+        WHERE user_id = #{userId};
+    </update>
+
 </mapper>
