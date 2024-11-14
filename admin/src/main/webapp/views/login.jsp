@@ -78,7 +78,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <a href="<c:url value='/register' />">회원가입 해버려 형냐들</a>
+                                            <a href="<c:url value='/register' />">Register Here</a>
                                         </div>
                                     </div>
                                 </form>
