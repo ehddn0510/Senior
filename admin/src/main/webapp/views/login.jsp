@@ -78,7 +78,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <a href="<c:url value='/page-forgot-password.html' />">Forgot Password?</a>
+                                            <a href="<c:url value='/register' />">회원가입 해버려 형냐들</a>
                                         </div>
                                     </div>
                                 </form>
