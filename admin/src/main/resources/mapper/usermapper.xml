@@ -3,13 +3,50 @@
         PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="edu.sm.repository.UserRepository">
+
+    <!-- 특정 유저 조회 -->
     <select id="selectOne" parameterType="Integer" resultType="User">
         SELECT * FROM user WHERE user_id = #{userId};
     </select>
+
+    <!-- 모든 유저 조회 -->
     <select id="findAll" resultType="User">
         SELECT * FROM user;
     </select>
+
+    <!-- userId로 senior 데이터 조회 -->
     <select id="selectSeniorByUserId" parameterType="Integer" resultType="Senior">
         SELECT * FROM senior WHERE user_id = #{userId};
     </select>
+
+    <!-- 유저 수정 (기본 정보 수정) -->
+    <update id="update" parameterType="edu.sm.model.User">
+        UPDATE user
+        SET user_username = #{userUsername},
+        user_tel = #{userTel},
+        user_email = #{userEmail},
+        user_name = #{userName},
+        user_birthday = #{userBirthday},
+        user_zipcode = #{userZipcode},
+        user_detail_add1 = #{userDetailAdd1}, <!-- 수정된 필드 반영 -->
+        user_detail_addr1 = #{userDetailAddr1},
+        user_detail_addr2 = #{userDetailAddr2},
+        user_profile = #{userProfile}
+        WHERE user_id = #{userId};
+    </update>
+
+    <!-- 유저 상태를 inactive로 변경 -->
+    <update id="updateStatusToInactive" parameterType="int">
+        UPDATE user
+        SET user_status = 'inactive'
+        WHERE user_id = #{userId};
+    </update>
+
+    <!-- 비밀번호 수정 -->
+    <update id="updatePasswordById" parameterType="edu.sm.model.User">
+        UPDATE user
+        SET user_password = #{userPassword}
+        WHERE user_id = #{userId};
+    </update>
+
 </mapper>

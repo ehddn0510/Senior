@@ -9,5 +9,20 @@
     <select id="findAll" resultType="Senior">
         SELECT * FROM senior;
     </select>
+
+    <!-- 시니어 정보 수정 (기본 정보 수정) -->
+    <update id="update" parameterType="edu.sm.model.Senior">
+        UPDATE senior
+        SET senior_name = #{seniorName},
+            senior_tel = #{seniorTel},
+            senior_birth = #{seniorBirth},
+            senior_zipcode = #{seniorZipcode},
+            senior_street_addr = #{seniorStreetAddr},
+            senior_detail_addr1 = #{seniorDetailAddr1},
+            senior_detail_addr2 = #{seniorDetailAddr2},
+            senior_status = #{seniorStatus},
+            senior_significant = #{seniorSignificant}
+        WHERE senior_id = #{seniorId};
+    </update>
 </mapper>
 

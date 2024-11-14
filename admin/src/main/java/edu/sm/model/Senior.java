@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -16,6 +17,7 @@ public class Senior {
     private String seniorName;
     private String seniorGender;
     private String seniorTel;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date seniorBirth;
     private String seniorZipcode;
     private String seniorStreetAddr;
