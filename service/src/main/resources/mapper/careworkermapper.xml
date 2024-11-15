@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.sm.repository.CareworkerRepository">
+
+    <insert id="insert" parameterType="Careworker">
+        INSERT INTO careworker (
+            cw_username, cw_password, cw_tel, cw_email, cw_name,
+            cw_gender, cw_birthday, cw_zipcode, cw_street_addr,
+            cw_detail_addr1, cw_detail_addr2, cw_profile,
+            cw_holiday, cw_intro, cw_experience
+        ) VALUES (
+                     #{cwUsername}, #{cwPassword}, #{cwTel}, #{cwEmail}, #{cwName},
+                     #{cwGender}, #{cwBirthday}, #{cwZipcode}, #{cwStreetAddr},
+                     #{cwDetailAddr1}, #{cwDetailAddr2}, #{cwProfile},
+                     #{cwHoliday}, #{cwIntro}, #{cwExperience}
+                 );
+    </insert>
+
+    <select id="selectByUsername" parameterType="String" resultType="Careworker">
+        SELECT * FROM careworker WHERE cw_username = #{username};
+    </select>
+</mapper>
