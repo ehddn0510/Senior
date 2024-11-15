@@ -29,4 +29,9 @@ public class MainController {
     public String login(Model model) {
         return "login";
     }
+
+    @RequestMapping("/register")
+    public String register(Model model) {
+        return "register";
+    }
 }
