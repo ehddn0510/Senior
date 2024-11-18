@@ -11,7 +11,7 @@
             <div class="modal-body text-center">
                 <div class="d-flex flex-column">
                     <!-- 고객 로그인 버튼 -->
-                    <a href="/signup/customer" class="btn btn-custom btn-customer mb-3">
+                    <a href="/signup/user" class="btn btn-custom btn-customer mb-3">
                         고객으로 회원가입
                     </a>
                     <!-- 보호사 로그인 버튼 -->

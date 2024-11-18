@@ -58,7 +58,7 @@
                 </a>
                 <div class="user_option">
                     <%-- 고객 메뉴 --%>
-                    <c:if test="${sessionScope.role == 'CUSTOMER'}">
+                    <c:if test="${sessionScope.role == 'USER'}">
                         <a href="/choice">보호사 신청</a>
                         <a href="/senior-health">시니어 건강</a>
                         <a href="/schedule">일정관리</a>
@@ -78,7 +78,6 @@
                     <c:choose>
                         <c:when test="${not empty sessionScope.principal}">
                             <a href="/logout"><span>로그아웃</span>
-                                <i class="fa fa-user" aria-hidden="true"></i>
                             </a>
                         </c:when>
                         <c:otherwise>

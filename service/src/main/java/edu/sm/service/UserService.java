@@ -88,14 +88,10 @@ public class UserService implements SMService<Integer, User> {
     @Transactional
     public User login(User user) throws Exception {
         User principal = userRepository.selectByUsername(user.getUserUsername());
-        log.info("id: " + principal.getUserUsername());
-        log.info("Encoded password: " + principal.getUserPassword());
         if (principal == null) {
             throw new UsernameNotFoundException("존재하지 않는 사용자 아이디입니다.");
         }
         if (!passwordEncoder.matches(user.getUserPassword(), principal.getUserPassword())) {
-            log.info("Attempted username: " + user.getUserUsername());
-            log.info("Attempted password: " + user.getUserPassword());
             throw new InvalidCredentialsException("비밀번호가 일치하지 않습니다.");
         }
         return principal;

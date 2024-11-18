@@ -1,5 +1,6 @@
 package edu.sm.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +21,9 @@ public class MainController {
         return "auth/login"; // 로그인 페이지로 이동
     }
 
-    @RequestMapping("/login/customer")
-    public String loginCustomer(Model model) {
-        return "auth/login/customer";
+    @RequestMapping("/login/user")
+    public String loginUser(Model model) {
+        return "auth/login/user";
     }
 
     @RequestMapping("/login/careworker")
@@ -34,7 +35,6 @@ public class MainController {
     public String signup(Model model) {
         return "auth/signup"; // 로그인 페이지로 이동
     }
-
 
     @RequestMapping("/about")
     public String about(Model model) {

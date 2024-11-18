@@ -47,11 +47,12 @@ public class UserApiController {
             return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), null);
         }
     }
-    @PostMapping("/api/service/login")
+    @PostMapping("/login")
     public ResponseDto<Integer> login(@RequestBody User user, HttpSession session) {
         try {
             User principal = userService.login(user);
-            session.setAttribute("principal", principal);
+            session.setAttribute("principal", principal.getUserId());
+            session.setAttribute("role", "USER");
             return new ResponseDto<>(HttpStatus.OK.value(), 1);
         } catch (UsernameNotFoundException e) {
             log.error("존재하지 않는 사용자 아이디입니다.", e);
