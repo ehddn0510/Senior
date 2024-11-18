@@ -5,7 +5,7 @@
 <mapper namespace="edu.sm.repository.SeniorRepository">
 
     <!-- 시니어 추가 -->
-    <insert id="insert" parameterType="edu.sm.model.Senior">
+    <insert id="insert" parameterType="Senior">
         INSERT INTO senior (senior_id, senior_name, senior_gender, senior_tel, senior_birth,
                             senior_zipcode, senior_street_addr, senior_detail_addr1,
                             senior_detail_addr2, senior_rdate, senior_status,
@@ -22,7 +22,7 @@
     </select>
 
     <!-- 시니어 수정 -->
-    <update id="update" parameterType="edu.sm.model.Senior">
+    <update id="update" parameterType="Senior">
         UPDATE senior
         SET senior_name = #{seniorName},
             senior_gender = #{seniorGender},
