@@ -18,6 +18,36 @@
     <link href="css/style.css" rel="stylesheet"/>
     <link href="css/responsive.css" rel="stylesheet"/>
 </head>
+<style>
+    .modal-header {
+        background-color: #f8f9fa;
+    }
+
+    .btn-custom {
+        font-size: 1.2rem;
+        font-weight: 500;
+        padding: 0.75rem;
+        width: 100%;
+    }
+
+    .btn-customer {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .btn-customer:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-careworker {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .btn-careworker:hover {
+        background-color: #1e7e34;
+    }
+</style>
 <body>
 <div class="hero_area">
     <header class="header_section">
@@ -52,9 +82,9 @@
                             </a>
                         </c:when>
                         <c:otherwise>
-                            <a href="/login"><span>로그인</span>
+                            <a href="/login" data-toggle="modal" data-target="#loginModal"><span>로그인</span>
                             </a>
-                            <a href="/signup"><span>회원가입</span>
+                            <a href="/signup" data-toggle="modal" data-target="#signModal"><span>회원가입</span>
                             </a>
                         </c:otherwise>
                     </c:choose>
@@ -63,3 +93,6 @@
         </div>
     </header>
 </div>
+
+<%@ include file="../auth/login/modal-login.jsp" %>
+<%@ include file="../auth/signup/modal-signup.jsp" %>
