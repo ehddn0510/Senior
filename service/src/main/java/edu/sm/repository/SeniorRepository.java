@@ -7,6 +7,4 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface SeniorRepository extends SMRepository<Integer, Senior> {
-
-    void update(Senior senior) throws Exception;
 }

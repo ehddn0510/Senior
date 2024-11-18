@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/api/senior")
-public class SeniorController {
+public class SeniorApiController {
 
     private final SeniorService seniorService;
 
