@@ -16,9 +16,10 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class License {
-    private Integer licenseId;
-    private String licenseName;
     private LocalDateTime licenseStartDate;
     private LocalDateTime licenseEndDate;
-    private Integer licenseStatus;
+    private String licenseStartDateStr; // 변환된 필드
+    private String licenseEndDateStr;   // 변환된 필드
+    private int licenseStatus;
+    private String licenseName;
 }
