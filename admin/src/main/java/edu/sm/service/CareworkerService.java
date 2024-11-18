@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -28,7 +29,12 @@ public class CareworkerService implements SMService<Integer, Careworker> {
 
     // 보호사 상태를 waiting에서 active로 변경
     public void activateCareworker(Integer cwId) throws Exception {
-        careworkerRepository.updateStatusToActive(cwId);
+        careworkerRepository.updateStatusFromWaitingToActive(cwId);
+    }
+
+    // 보호사 상태가 waiting인 보호사 목록 조회
+    public List<Careworker> findWaiting() throws Exception {
+        return careworkerRepository.findWaiting();
     }
 
     @Override
@@ -60,12 +66,31 @@ public class CareworkerService implements SMService<Integer, Careworker> {
 
     @Override
     public Careworker get(Integer integer) throws Exception {
-        return careworkerRepository.selectOne(integer);
+        return careworkerRepository.selectById(integer);
     }
 
-    @Override
-    public void modifyById(Integer integer, Careworker careworker) throws Exception {
-        SMService.super.modifyById(integer, careworker);
+    @Transactional
+    public void modifyById(Integer cwId, Careworker careworker) {
+        // 기존 Careworker 데이터 가져오기
+        Careworker existing = careworkerRepository.selectById(cwId);
+        if (existing == null) {
+            throw new IllegalArgumentException("Careworker not found with id: " + cwId);
+        }
+
+        // 기존 데이터와 새로운 데이터를 병합하여 업데이트
+        if (careworker.getCwTel() == null) careworker.setCwTel(existing.getCwTel());
+        if (careworker.getCwEmail() == null) careworker.setCwEmail(existing.getCwEmail());
+        if (careworker.getCwName() == null) careworker.setCwName(existing.getCwName());
+        if (careworker.getCwZipcode() == null) careworker.setCwZipcode(existing.getCwZipcode());
+        if (careworker.getCwStreetAddr() == null) careworker.setCwStreetAddr(existing.getCwStreetAddr());
+        if (careworker.getCwDetailAddr1() == null) careworker.setCwDetailAddr1(existing.getCwDetailAddr1());
+        if (careworker.getCwDetailAddr2() == null) careworker.setCwDetailAddr2(existing.getCwDetailAddr2());
+        if (careworker.getCwStatus() == null) careworker.setCwStatus(existing.getCwStatus());
+        if (careworker.getCwIntro() == null) careworker.setCwIntro(existing.getCwIntro());
+        if (careworker.getCwExperience() == null) careworker.setCwExperience(existing.getCwExperience());
+
+        // DB 업데이트
+        careworkerRepository.update(careworker);
     }
 
     @Override

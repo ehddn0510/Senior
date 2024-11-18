@@ -18,6 +18,14 @@
                  );
     </insert>
 
+    <select id="findAll" resultType="Careworker">
+        SELECT * FROM careworker where cw_status != 'waiting'
+    </select>
+
+    <select id="findWaiting" resultType="Careworker">
+        SELECT * FROM careworker where cw_status = 'waiting'
+    </select>
+
     <select id="selectByUsername" parameterType="String" resultType="Careworker">
         SELECT * FROM careworker WHERE cw_username = #{username};
     </select>
@@ -32,6 +40,22 @@
         SELECT * FROM license WHERE cw_id = #{cwId};
     </select>
 
+    <update id="update">
+        UPDATE careworker
+        <set>
+            <if test="cwTel != null">cw_tel = #{cwTel},</if>
+            <if test="cwEmail != null">cw_email = #{cwEmail},</if>
+            <if test="cwName != null">cw_name = #{cwName},</if>
+            <if test="cwZipcode != null">cw_zipcode = #{cwZipcode},</if>
+            <if test="cwStreetAddr != null">cw_street_addr = #{cwStreetAddr},</if>
+            <if test="cwDetailAddr1 != null">cw_detail_addr1 = #{cwDetailAddr1},</if>
+            <if test="cwDetailAddr2 != null">cw_detail_addr2 = #{cwDetailAddr2},</if>
+            <if test="cwStatus != null">cw_status = #{cwStatus},</if>
+            <if test="cwIntro != null">cw_intro = #{cwIntro},</if>
+            <if test="cwExperience != null">cw_experience = #{cwExperience}</if>
+        </set>
+        WHERE cw_id = #{cwId};
+    </update>
     <!-- 보호사 상태 업데이트 쿼리 -->
     <update id="updateStatusToActive" parameterType="int">
         UPDATE careworker

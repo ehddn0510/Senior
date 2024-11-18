@@ -11,16 +11,12 @@ import java.util.List;
 @Repository
 @Mapper
 public interface CareworkerRepository extends SMRepository<Integer, Careworker> {
-    Careworker selectByUsername(String cwUsername) throws Exception;
-    void update(Careworker careworker) throws Exception;
+    Careworker selectByUsername(String cwUsername);
+    void update(Careworker careworker); // update 쿼리 메서드
     Careworker selectOne(Integer userId);
     List<Careworker> findAll();
-    // 보호사 ID로 상세 정보 조회
-    Careworker selectById(Integer cwId) throws Exception;
-
-    // 보호사 ID로 자격증 목록 조회
-    List<License> selectLicensesByCareworkerId(Integer cwId) throws Exception;
-
-    // 보호사 상태를 waiting -> active로 업데이트
-    void updateStatusToActive(Integer cwId) throws Exception;
+    List<Careworker> findWaiting();
+    Careworker selectById(Integer cwId);
+    List<License> selectLicensesByCareworkerId(Integer cwId);
+    void updateStatusFromWaitingToActive(Integer cwId);
 }
