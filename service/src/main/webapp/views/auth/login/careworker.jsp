@@ -32,20 +32,21 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
             }).done(function (resp) {
-                if (resp.data === 1) {
+                if (resp.status === 200 && resp.data === "1") {
                     location.href = "/";
                 } else {
-                    alert("로그인 실패");
+                    alert(resp.data); // 예외 메시지를 사용자에게 표시
                 }
             }).fail(function (error) {
-                alert("로그인 실패 ! " + error);
+                alert("서버와의 통신 중 오류가 발생했습니다.");
                 console.error("Error:", error);
             });
         }
     }
     $(function () {
         login.init();
-    })
+    });
+
 </script>
 <body class="bg-light">
 <div class="container">

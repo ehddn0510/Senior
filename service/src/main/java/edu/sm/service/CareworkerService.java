@@ -73,11 +73,8 @@ public class CareworkerService implements SMService<Integer, Careworker> {
     @Transactional
     public Careworker login(Careworker careworker) throws Exception {
         Careworker principal = careworkerRepository.selectByUsername(careworker.getCwUsername());
-        if (principal == null) {
-            throw new UsernameNotFoundException("존재하지 않는 사용자 아이디입니다.");
-        }
-        if (!passwordEncoder.matches(careworker.getCwPassword(), principal.getCwPassword())) {
-            throw new InvalidCredentialsException("비밀번호가 일치하지 않습니다.");
+        if (principal == null || !passwordEncoder.matches(careworker.getCwPassword(), principal.getCwPassword())) {
+            throw new IllegalArgumentException("아이디 또는 비밀번호가 올바르지 않습니다.");
         }
         return principal;
     }
