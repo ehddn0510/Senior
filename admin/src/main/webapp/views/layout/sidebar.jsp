@@ -23,9 +23,9 @@
             <li class="nav-label">보호사 관리</li>
             <li><a class="has-arrow" href="javascript:void()" aria-expanded="false"><i class="icon icon-people"></i><span class="nav-text">보호사 관리</span></a>
                 <ul aria-expanded="false">
-                    <li><a href="<c:url value='/guardian-list'/>">보호사 리스트</a></li>
-                    <li><a href="<c:url value='/guardian-approval'/>">보호사 승인 / 거절</a></li>
-                    <li><a href="<c:url value='/guardian-certification'/>">보호사 자격증 상세</a></li>
+                    <li><a href="<c:url value='/carewoker-list'/>">보호사 리스트</a></li>
+                    <li><a href="<c:url value='/carewoker-waitinglist'/>">보호사 승인 / 거절</a></li>
+<%--                    <li><a href="<c:url value='/carewoker-certification'/>">보호사 자격증 상세</a></li>--%>
                 </ul>
             </li>
 
