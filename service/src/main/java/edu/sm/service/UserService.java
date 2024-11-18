@@ -42,12 +42,10 @@ public class UserService implements SMService<Integer, User> {
 
     @Override
     public void modify(User user) throws Exception {
-        // 수정 로직 추가
     }
 
     @Override
     public void del(Integer userId) throws Exception {
-        userRepository.delete(userId);
     }
 
     @Override
@@ -84,33 +82,12 @@ public class UserService implements SMService<Integer, User> {
         }
     }
 
-    // 로그인
     @Transactional
     public User login(User user) throws Exception {
         User principal = userRepository.selectByUsername(user.getUserUsername());
-        log.info("id: " + principal.getUserUsername());
-        log.info("Encoded password: " + principal.getUserPassword());
-        if (principal == null) {
-            throw new UsernameNotFoundException("존재하지 않는 사용자 아이디입니다.");
-        }
-        if (!passwordEncoder.matches(user.getUserPassword(), principal.getUserPassword())) {
-            log.info("Attempted username: " + user.getUserUsername());
-            log.info("Attempted password: " + user.getUserPassword());
-            throw new InvalidCredentialsException("비밀번호가 일치하지 않습니다.");
+        if (principal == null || !passwordEncoder.matches(user.getUserPassword(), principal.getUserPassword())) {
+            throw new IllegalArgumentException("아이디 또는 비밀번호가 올바르지 않습니다.");
         }
         return principal;
-    }
-
-    // 필수 필드 유효성 검사를 위한 메서드
-    private void validateServiceFields(User user) {
-        if (user.getUserUsername() == null || user.getUserUsername().trim().isEmpty()) {
-            throw new IllegalArgumentException("사용자 이름은 필수 입력 항목입니다.");
-        }
-        if (user.getUserPassword() == null || user.getUserPassword().trim().isEmpty()) {
-            throw new IllegalArgumentException("비밀번호는 필수 입력 항목입니다.");
-        }
-        if (user.getUserName() == null || user.getUserName().trim().isEmpty()) {
-            throw new IllegalArgumentException("이름은 필수 입력 항목입니다.");
-        }
     }
 }

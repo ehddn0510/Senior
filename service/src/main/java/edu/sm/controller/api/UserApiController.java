@@ -47,25 +47,17 @@ public class UserApiController {
             return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), null);
         }
     }
-    @PostMapping("/api/service/login")
-    public ResponseDto<Integer> login(@RequestBody User user, HttpSession session) {
+    @PostMapping("/login")
+    public ResponseDto<String> login(@RequestBody User user, HttpSession session) {
         try {
             User principal = userService.login(user);
-            session.setAttribute("principal", principal);
-            return new ResponseDto<>(HttpStatus.OK.value(), 1);
-        } catch (UsernameNotFoundException e) {
-            log.error("존재하지 않는 사용자 아이디입니다.", e);
-            return new ResponseDto<>(HttpStatus.NOT_FOUND.value(), 0); // 사용자 아이디가 없는 경우 404 반환
-        } catch (InvalidCredentialsException e) {
-            log.error("비밀번호가 일치하지 않습니다.", e);
-            return new ResponseDto<>(HttpStatus.UNAUTHORIZED.value(), 0); // 비밀번호 오류인 경우 401 반환
+            session.setAttribute("principal", principal.getUserId());
+            session.setAttribute("role", "USER");
+            return new ResponseDto<>(HttpStatus.OK.value(), "1");
         } catch (IllegalArgumentException e) {
-            log.error("잘못된 입력 값입니다.", e);
-            return new ResponseDto<>(HttpStatus.BAD_REQUEST.value(), 0);
+            return new ResponseDto<>(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
         } catch (Exception e) {
-            log.error("예기치 않은 오류 발생", e);
-            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), 0);
+            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "예기치 않은 오류 발생");
         }
     }
-
 }

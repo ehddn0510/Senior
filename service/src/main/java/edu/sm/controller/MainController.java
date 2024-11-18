@@ -1,5 +1,6 @@
 package edu.sm.controller;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +16,24 @@ public class MainController {
         return "index"; // 메인 페이지로 이동
     }
 
-    @RequestMapping("/index")
-    public String index(Model model) {
-        log.info("Start Main");
-        return "index"; // 메인 페이지로 이동
+    @RequestMapping("/login")
+    public String login(Model model) {
+        return "auth/login"; // 로그인 페이지로 이동
+    }
+
+    @RequestMapping("/login/user")
+    public String loginUser(Model model) {
+        return "auth/login/user";
+    }
+
+    @RequestMapping("/login/careworker")
+    public String loginCareworker(Model model) {
+        return "auth/login/careworker";
+    }
+
+    @RequestMapping("/signup")
+    public String signup(Model model) {
+        return "auth/signup"; // 로그인 페이지로 이동
     }
 
     @RequestMapping("/about")
