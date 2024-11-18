@@ -5,9 +5,12 @@ import edu.sm.model.Careworker;
 import edu.sm.repository.CareworkerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.http.auth.InvalidCredentialsException;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -65,5 +68,17 @@ public class CareworkerService implements SMService<Integer, Careworker> {
             careworker.setCwDetailAddr2(textEncoder.encrypt(careworker.getCwDetailAddr2()));
         }
         careworkerRepository.insert(careworker);
+    }
+
+    @Transactional
+    public Careworker login(Careworker careworker) throws Exception {
+        Careworker principal = careworkerRepository.selectByUsername(careworker.getCwUsername());
+        if (principal == null) {
+            throw new UsernameNotFoundException("존재하지 않는 사용자 아이디입니다.");
+        }
+        if (!passwordEncoder.matches(careworker.getCwPassword(), principal.getCwPassword())) {
+            throw new InvalidCredentialsException("비밀번호가 일치하지 않습니다.");
+        }
+        return principal;
     }
 }
