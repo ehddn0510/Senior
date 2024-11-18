@@ -36,7 +36,7 @@ public class CareworkerApiController {
         }
     }
 
-    @PostMapping("/api/service/login")
+    @PostMapping("/login")
     public ResponseDto<Integer> login(@RequestBody Careworker careworker, HttpSession session) {
         try {
             Careworker principal = careworkerService.login(careworker);
