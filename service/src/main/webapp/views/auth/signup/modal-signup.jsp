@@ -1,4 +1,35 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<style>
+    .modal-header {
+        background-color: #f8f9fa;
+    }
+
+    .btn-custom {
+        font-size: 1.2rem;
+        font-weight: 500;
+        padding: 0.75rem;
+        width: 100%;
+    }
+
+    .btn-customer {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .btn-customer:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-careworker {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .btn-careworker:hover {
+        background-color: #1e7e34;
+    }
+</style>
 <div class="modal fade" id="signModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">

@@ -5,49 +5,24 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <title>seniorCare</title>
+    <title>SeniorCare</title>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <link rel="stylesheet" type="text/css"
           href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"/>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.css"/>
-    <link href="css/font-awesome.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
+    <link href="/css/font-awesome.min.css'" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700|Poppins:400,500,700&display=swap"
           rel="stylesheet"/>
-    <link href="css/style.css" rel="stylesheet"/>
-    <link href="css/responsive.css" rel="stylesheet"/>
+    <link href="value='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'" rel="stylesheet"/>
+    <link href="/css/style.css" rel="stylesheet"/>
+    <link href="/css/responsive.css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 </head>
-<style>
-    .modal-header {
-        background-color: #f8f9fa;
-    }
-
-    .btn-custom {
-        font-size: 1.2rem;
-        font-weight: 500;
-        padding: 0.75rem;
-        width: 100%;
-    }
-
-    .btn-customer {
-        background-color: #007bff;
-        color: #fff;
-    }
-
-    .btn-customer:hover {
-        background-color: #0056b3;
-    }
-
-    .btn-careworker {
-        background-color: #28a745;
-        color: #fff;
-    }
-
-    .btn-careworker:hover {
-        background-color: #1e7e34;
-    }
-</style>
 <body>
 <div class="hero_area">
     <header class="header_section">
@@ -92,6 +67,5 @@
         </div>
     </header>
 </div>
-
 <%@ include file="../auth/login/modal-login.jsp" %>
 <%@ include file="../auth/signup/modal-signup.jsp" %>
