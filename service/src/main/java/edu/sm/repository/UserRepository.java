@@ -4,9 +4,11 @@ import edu.sm.frame.SMRepository;
 import edu.sm.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 @Mapper
 public interface UserRepository extends SMRepository<Integer, User> {
     User selectByUsername(String username) throws Exception;

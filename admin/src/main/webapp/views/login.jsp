@@ -78,7 +78,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <a href="<c:url value='/page-forgot-password.html' />">Forgot Password?</a>
+                                            <a href="<c:url value='/register' />">Register Here</a>
                                         </div>
                                     </div>
                                 </form>

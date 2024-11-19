@@ -70,5 +70,8 @@
         WHERE user_id = #{userId};
     </update>
 
-
+<!--    로그인-->
+    <select id="selectByUsername" parameterType="String" resultType="edu.sm.model.User">
+        SELECT * FROM user WHERE user_username = #{username};
+    </select>
 </mapper>

@@ -34,6 +34,14 @@ public class SpringSecurity {
                 .anyRequest().permitAll() // 모든 요청 허용
         );
 
+        http.logout(logout -> logout
+                .logoutUrl("/logout") // 로그아웃 요청 경로
+                .logoutSuccessUrl("/") // 로그아웃 성공 후 이동할 경로
+                .invalidateHttpSession(true) // 세션 무효화
+                .deleteCookies("JSESSIONID") // 쿠키 삭제
+                .permitAll() // 누구나 접근 가능
+        );
+
         return http.build();
     }
 }

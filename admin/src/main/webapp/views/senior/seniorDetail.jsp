@@ -98,6 +98,32 @@
 </div>
 
 <script>
+    document.querySelector("form[action='updateSenior']").addEventListener("submit", function(event) {
+        event.preventDefault(); // 폼 기본 제출 동작 방지
+
+        const formData = new FormData(this);
+
+        fetch("<c:url value='/api/senior/updateSenior' />", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.data === 1) {
+                    alert("수정이 완료되었습니다."); // 성공 알림
+                    window.location.href = window.location.href; // 현재 페이지 새로고침
+                } else {
+                    alert("수정에 실패했습니다."); // 실패 알림
+                    window.location.href = window.location.href; // 현재 페이지 새로고침
+                }
+            })
+            .catch(error => {
+                alert("수정 요청 중 오류가 발생했습니다. 다시 시도해주세요.");
+                console.error("Error:", error);
+                window.location.href = window.location.href; // 현재 페이지 새로고침
+            });
+    });
+
     function popupZipSearch(){
         new daum.Postcode({
             oncomplete: function(data) {
@@ -136,3 +162,4 @@
         }).open();
     }
 </script>
+

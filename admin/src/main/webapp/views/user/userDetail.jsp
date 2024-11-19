@@ -31,47 +31,60 @@
                 <div class="card mt-3">
                     <div class="card-body">
                         <h5 class="text-primary">Edit User Information</h5>
-                        <form action="updateUser" method="post">
+                        <form id="updateUserForm" action="<c:url value='/api/user/updateUser' />" method="post"
+                              onsubmit="return validateForm()">
+                            <input type="hidden" name="userId" value="${user.userId}"/>
+                            <input type="hidden" name="userUsername" value="${user.userUsername}"/> <!-- 숨김 처리 -->
+
                             <div class="form-group">
                                 <label for="userName">Name</label>
-                                <input type="text" class="form-control" id="userName" name="userName" value="${user.userName}">
+                                <input type="text" class="form-control" id="userName" name="userName"
+                                       value="${user.userName}">
                             </div>
                             <div class="form-group">
                                 <label for="userEmail">Email</label>
-                                <input type="email" class="form-control" id="userEmail" name="userEmail" value="${user.userEmail}">
+                                <input type="email" class="form-control" id="userEmail" name="userEmail"
+                                       value="${user.userEmail}">
                             </div>
                             <div class="form-group">
                                 <label for="userTel">Phone</label>
-                                <input type="text" class="form-control" id="userTel" name="userTel" value="${user.userTel}">
+                                <input type="text" class="form-control" id="userTel" name="userTel"
+                                       value="${user.userTel}">
                             </div>
 
                             <!-- 주소 입력 필드 및 우편번호 검색 버튼 -->
                             <div class="form-group">
                                 <label for="userZipcode">Address</label>
                                 <div class="d-flex align-items-center mb-2">
-                                    <input type="text" class="form-control mr-2" id="userZipcode" name="userZipcode" placeholder="우편번호" value="${user.userZipcode}" readonly />
-                                    <a href="javascript:void(0);" onclick="popupZipSearch(); return false;" class="btn btn-primary px-4">우편번호 찾기</a>
+                                    <input type="text" class="form-control mr-2" id="userZipcode" name="userZipcode"
+                                           placeholder="우편번호" value="${user.userZipcode}" readonly/>
+                                    <a href="javascript:void(0);" onclick="popupZipSearch(); return false;"
+                                       class="btn btn-primary px-4">우편번호 찾기</a>
                                 </div>
-                                <input type="text" class="form-control mb-2" id="userDetailAdd1" name="userDetailAdd1" placeholder="Street" value="${user.userDetailAdd1}" readonly />
-                                <input type="text" class="form-control mb-2" id="userDetailAddr1" name="userDetailAddr1" placeholder="Apartment" value="${user.userDetailAddr1}">
-                                <input type="text" class="form-control" id="userDetailAddr2" name="userDetailAddr2" placeholder="Building Name" value="${user.userDetailAddr2}"readonly>
+                                <input type="text" class="form-control mb-2" id="userDetailAdd1" name="userDetailAdd1"
+                                       placeholder="Street" value="${user.userDetailAdd1}" readonly/>
+                                <input type="text" class="form-control mb-2" id="userDetailAddr1" name="userDetailAddr1"
+                                       placeholder="Apartment" value="${user.userDetailAddr1}">
+                                <input type="text" class="form-control" id="userDetailAddr2" name="userDetailAddr2"
+                                       placeholder="Building Name" value="${user.userDetailAddr2}" readonly>
                             </div>
-
 
                             <div class="form-group">
                                 <label for="userStatus">Status</label>
                                 <select class="form-control" id="userStatus" name="userStatus">
-                                    <option ${user.userStatus == 'Active' ? 'selected' : ''}>Active</option>
-                                    <option ${user.userStatus == 'Inactive' ? 'selected' : ''}>Inactive</option>
+                                    <option value="Active" ${user.userStatus == 'Active' ? 'selected' : ''}>Active
+                                    </option>
+                                    <option value="Inactive" ${user.userStatus == 'Inactive' ? 'selected' : ''}>
+                                        Inactive
+                                    </option>
                                 </select>
                             </div>
+
                             <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                     </div>
                 </div>
             </div>
-
-            <!-- 추가적인 유저 정보나 활동 내역 등을 표시할 영역 -->
             <div class="col-lg-4">
                 <h5 class="text-primary">Senior List</h5>
                 <c:forEach items="${senior}" var="senior">
@@ -83,8 +96,8 @@
                                 <fmt:formatDate value="${senior.seniorBirth}" pattern="yyyy년 MM월 dd일" />
                             </p>
                             <div class="mt-4 text-center">
-                                <a href="javascript:void(0)" class="btn btn-primary btn-sm">Follow</a>
-                                <a href="javascript:void(0)" class="btn btn-dark btn-sm">Message</a>
+                                <!-- Detail 버튼으로 수정하고 링크 연결 -->
+                                <a href="<c:url value='/senior-detail?id=${senior.seniorId}' />" class="btn btn-primary btn-sm">Detail</a>
                             </div>
                         </div>
                     </div>
@@ -95,9 +108,36 @@
 </div>
 
 <script>
-    function popupZipSearch(){
+    // 수정 요청을 AJAX로 처리
+    document.getElementById("updateUserForm").addEventListener("submit", function(event) {
+        event.preventDefault(); // 폼 기본 제출 동작 방지
+
+        const formData = new FormData(this);
+
+        fetch("<c:url value='/api/user/updateUser' />", {
+            method: "POST",
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.data === 1) {
+                    alert("수정이 완료되었습니다."); // 성공 알림
+                    window.location.href = window.location.href; // 현재 페이지 새로고침
+                } else {
+                    alert("수정에 실패했습니다."); // 실패 알림
+                    window.location.href = window.location.href; // 현재 페이지 새로고침
+                }
+            })
+            .catch(error => {
+                alert("수정 요청 중 오류가 발생했습니다. 다시 시도해주세요.");
+                console.error("Error:", error);
+                window.location.href = window.location.href; // 현재 페이지 새로고침
+            });
+    });
+
+    function popupZipSearch() {
         new daum.Postcode({
-            oncomplete: function(data) {
+            oncomplete: function (data) {
                 var fullAddr = ''; // 최종 주소 변수
                 var extraAddr = ''; // 조합형 주소 변수
 
@@ -108,14 +148,14 @@
                 }
 
                 // 도로명 주소에 추가 정보가 있을 경우
-                if(data.userSelectedType === 'R'){
-                    if(data.bname !== ''){
+                if (data.userSelectedType === 'R') {
+                    if (data.bname !== '') {
                         extraAddr += data.bname;
                     }
-                    if(data.buildingName !== ''){
+                    if (data.buildingName !== '') {
                         extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                     }
-                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+                    fullAddr += (extraAddr !== '' ? ' (' + extraAddr + ')' : '');
                 }
 
                 // 주소와 괄호 내용을 분리
