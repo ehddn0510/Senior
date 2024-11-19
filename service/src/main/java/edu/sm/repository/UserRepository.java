@@ -16,5 +16,5 @@ public interface UserRepository extends SMRepository<Integer, User> {
     void updatePassword(User user);
     // 사용자 상태를 inactive로 변경 (소프트 삭제)
     void deactivateUser(int userId);
-
+    User findByEmailForFindId(String userEmail); // 필드 이름에 맞게 수정
 }

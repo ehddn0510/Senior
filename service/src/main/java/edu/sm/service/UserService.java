@@ -28,17 +28,18 @@ public class UserService implements SMService<Integer, User> {
 
         user.setUserRegDate(LocalDateTime.now());
         user.setUserPassword(passwordEncoder.encode(user.getUserPassword())); // 비밀번호 암호화
-
-        // 주소 필드 암호화
-        if (user.getUserStreetAddr() != null) user.setUserStreetAddr(textEncoder.encrypt(user.getUserStreetAddr()));
-        if (user.getUserDetailAddr1() != null) user.setUserDetailAddr1(textEncoder.encrypt(user.getUserDetailAddr1()));
-        if (user.getUserDetailAddr2() != null) user.setUserDetailAddr2(textEncoder.encrypt(user.getUserDetailAddr2()));
+        encryptAddressFields(user);
 
         userRepository.insert(user);
     }
 
     @Override
     public void modify(User user) throws Exception {
+    }
+
+    @Override
+    public void del(Integer integer) throws Exception {
+
     }
 
     @Transactional
@@ -76,8 +77,7 @@ public class UserService implements SMService<Integer, User> {
             user.setUserDetailAddr2(updatedUser.getUserDetailAddr2());
         }
 
-        encryptAddress(user);
-
+        user.setUserPassword(passwordEncoder.encode(updatedUser.getUserPassword())); // 비밀번호 암호화
         // 변경된 데이터 저장
         userRepository.update(user);
     }
@@ -101,16 +101,6 @@ public class UserService implements SMService<Integer, User> {
     }
 
     @Override
-    public void del(Integer userId) throws Exception {
-        User user = userRepository.selectOne(userId);
-        if (user == null) {
-            throw new IllegalArgumentException("해당 ID로 유저를 찾을 수 없습니다: " + userId);
-        }
-
-        userRepository.deactivateUser(userId);
-    }
-
-    @Override
     public List<User> get() throws Exception {
         return null;
     }
@@ -118,12 +108,7 @@ public class UserService implements SMService<Integer, User> {
     public User getUserById(int userId) throws Exception {
         User user = userRepository.selectOne(userId);
 
-        // 주소 필드 복호화
-        if (user != null) {
-            if (user.getUserStreetAddr() != null) user.setUserStreetAddr(textEncoder.decrypt(user.getUserStreetAddr()));
-            if (user.getUserDetailAddr1() != null) user.setUserDetailAddr1(textEncoder.decrypt(user.getUserDetailAddr1()));
-            if (user.getUserDetailAddr2() != null) user.setUserDetailAddr2(textEncoder.decrypt(user.getUserDetailAddr2()));
-        }
+        decryptAddressFields(user); // 주소 필드 복호화
         return user;
     }
 
@@ -136,18 +121,6 @@ public class UserService implements SMService<Integer, User> {
         return principal;
     }
 
-    private void encryptAddress(User user) {
-        if (user.getUserDetailAddr1() != null) {
-            user.setUserDetailAddr1(textEncoder.encrypt(user.getUserDetailAddr1()));
-        }
-        if (user.getUserDetailAddr2() != null) {
-            user.setUserDetailAddr2(textEncoder.encrypt(user.getUserDetailAddr2()));
-        }
-        if (user.getUserStreetAddr() != null) {
-            user.setUserStreetAddr(textEncoder.encrypt(user.getUserStreetAddr()));
-        }
-    }
-
     private void validateDuplicateUser(User user) {
         if (userRepository.findByUsername(user.getUserUsername()) != null) {
             throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
@@ -157,6 +130,44 @@ public class UserService implements SMService<Integer, User> {
         }
         if (userRepository.findByEmail(user.getUserEmail()) != null) {
             throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
+        }
+    }
+
+    // 이메일로 아이디 찾기
+    public String findIdByEmail(String email) throws Exception {
+        User user = userRepository.findByEmailForFindId(email);
+        if (user == null) {
+            throw new IllegalArgumentException("해당 이메일로 등록된 계정을 찾을 수 없습니다.");
+        }
+
+        String username = user.getUserUsername();
+
+        // 아이디를 반으로 나누기
+        int length = username.length();
+        int halfLength = length / 2;
+
+        // 앞부분: 반만 가져오기, 뒷부분: 나머지 부분은 *로 채우기
+        String maskedUsername = username.substring(0, halfLength)
+                + "*".repeat(length - halfLength);
+
+        return maskedUsername;
+    }
+
+
+
+    // 주소 필드 암호화
+    private void encryptAddressFields(User user) {
+        if (user.getUserStreetAddr() != null) user.setUserStreetAddr(textEncoder.encrypt(user.getUserStreetAddr()));
+        if (user.getUserDetailAddr1() != null) user.setUserDetailAddr1(textEncoder.encrypt(user.getUserDetailAddr1()));
+        if (user.getUserDetailAddr2() != null) user.setUserDetailAddr2(textEncoder.encrypt(user.getUserDetailAddr2()));
+    }
+
+    // 주소 필드 복호화
+    private void decryptAddressFields(User user) {
+        if (user != null) {
+            if (user.getUserStreetAddr() != null) user.setUserStreetAddr(textEncoder.decrypt(user.getUserStreetAddr()));
+            if (user.getUserDetailAddr1() != null) user.setUserDetailAddr1(textEncoder.decrypt(user.getUserDetailAddr1()));
+            if (user.getUserDetailAddr2() != null) user.setUserDetailAddr2(textEncoder.decrypt(user.getUserDetailAddr2()));
         }
     }
 }

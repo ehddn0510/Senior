@@ -58,6 +58,18 @@ public class UserApiController {
         }
     }
 
+    // 아이디 찾기 API
+    @GetMapping("/findid")
+    public ResponseDto<String> findId(@RequestParam String userEmail) {
+        try {
+            String username = userService.findIdByEmail(userEmail);
+            return new ResponseDto<>(HttpStatus.OK.value(), username);
+        } catch (Exception e) {
+            log.error("아이디 찾기 실패", e);
+            return new ResponseDto<>(HttpStatus.NOT_FOUND.value(), null);
+        }
+    }
+
     // 회원 정보 수정 (비밀번호 제외)
     @PutMapping("/update/{id}")
     public ResponseDto<Integer> updateUserInfo(@PathVariable Integer id, @RequestBody User user) {
