@@ -1,17 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>고객 로그인</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.4.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script>
     let login = {
         init: function () {
@@ -48,9 +37,8 @@
     })
 </script>
 
-<body class="bg-light">
-<div class="container">
-    <div class="row justify-content-center mt-5">
+<div class="container" style="margin-top: 5rem">
+    <div class="row justify-content-center mt-5"  style="margin-bottom: 6rem">
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-body">
@@ -68,7 +56,7 @@
                         </div>
                     </form>
                     <div class="text-center">
-                        <button type="button" id="loginbtn" class="btn btn-primary btn-block">로그인</button>
+                        <button type="button" id="loginbtn" class="btn btn-primary btn-block" style="background-color: #82c419; border: none">로그인</button>
                     </div>
                     <div class="mt-3 text-center">
                         <p>아직 계정이 없으신가요? <a href="/signup/customer">회원가입</a></p>
@@ -78,5 +66,3 @@
         </div>
     </div>
 </div>
-</body>
-</html>

@@ -2,17 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <title>Senior Care</title>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
-  <link rel="stylesheet" href="css/style.css" />
-</head>
-<body>
-
 <!-- Include Header -->
 <%@ include file="layout/header.jsp" %>
 
@@ -29,6 +18,4 @@
 <!-- Include Footer -->
 <%@ include file="layout/footer.jsp" %>
 
-<script src="js/bootstrap.js"></script>
-</body>
-</html>
+

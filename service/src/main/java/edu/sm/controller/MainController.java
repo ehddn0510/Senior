@@ -16,24 +16,28 @@ public class MainController {
         return "index"; // 메인 페이지로 이동
     }
 
-    @RequestMapping("/login")
-    public String login(Model model) {
-        return "auth/login"; // 로그인 페이지로 이동
-    }
-
     @RequestMapping("/login/user")
     public String loginUser(Model model) {
-        return "auth/login/user";
+        model.addAttribute("center", "auth/login/user");
+        return "index";
     }
 
     @RequestMapping("/login/careworker")
     public String loginCareworker(Model model) {
-        return "auth/login/careworker";
+        model.addAttribute("center", "auth/login/careworker");
+        return "index";
     }
 
-    @RequestMapping("/signup")
-    public String signup(Model model) {
-        return "auth/signup"; // 로그인 페이지로 이동
+    @RequestMapping("/signup/user")
+    public String signupUser(Model model) {
+        model.addAttribute("center", "auth/signup/user");
+        return "index";
+    }
+
+    @RequestMapping("/signup/careworker")
+    public String signupCareworker(Model model) {
+        model.addAttribute("center", "auth/signup/careworker");
+        return "index";
     }
 
     @RequestMapping("/about")
