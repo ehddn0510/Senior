@@ -5,13 +5,13 @@
 <mapper namespace="edu.sm.repository.UserRepository">
 
     <!-- 사용자 추가 쿼리 -->
-    <insert id="insert" parameterType="edu.sm.model.User">
+    <insert id="insert" parameterType="User">
         INSERT INTO user (user_username, user_password, user_tel, user_email, user_name, user_birthday, user_zipcode, user_street_addr, user_detail_addr1, user_detail_addr2, user_rdate, user_status, user_profile)
         VALUES (#{username}, #{password}, #{tel}, #{email}, #{name}, #{birthday}, #{zipcode}, #{streetAddr}, #{detailAddr1}, #{detailAddr2}, #{regDate}, #{status}, #{profile});
     </insert>
 
     <!-- 사용자 ID로 사용자 조회 -->
-    <select id="selectOne" parameterType="int" resultType="edu.sm.model.User">
+    <select id="selectOne" parameterType="int" resultType="User">
         SELECT user_id AS userId, user_username AS userUsername, user_password AS userPassword,
                user_tel AS userTel, user_email AS userEmail, user_name AS userName,
                user_birthday AS userBirthday, user_zipcode AS userZipcode,
@@ -23,27 +23,27 @@
     </select>
 
     <!-- 사용자 이름 중복 확인 쿼리 -->
-    <select id="findByUsername" parameterType="String" resultType="edu.sm.model.User">
+    <select id="findByUsername" parameterType="String" resultType="User">
         SELECT * FROM user WHERE user_username = #{username};
     </select>
 
     <!-- 전화번호 중복 확인 쿼리 -->
-    <select id="findByTel" parameterType="String" resultType="edu.sm.model.User">
+    <select id="findByTel" parameterType="String" resultType="User">
         SELECT * FROM user WHERE user_tel = #{tel};
     </select>
 
     <!-- 이메일 중복 확인 쿼리 -->
-    <select id="findByEmail" parameterType="String" resultType="edu.sm.model.User">
+    <select id="findByEmail" parameterType="String" resultType="User">
         SELECT * FROM user WHERE user_email = #{email};
     </select>
 
     <!-- 로그인 (사용자 이름으로 사용자 조회) -->
-    <select id="selectByUsername" parameterType="String" resultType="edu.sm.model.User">
+    <select id="selectByUsername" parameterType="String" resultType="User">
         SELECT * FROM user WHERE user_username = #{username};
     </select>
 
     <!-- 회원 정보 수정 쿼리 (비밀번호 제외) -->
-    <update id="update" parameterType="edu.sm.model.User">
+    <update id="update" parameterType="User">
         UPDATE user
         SET user_tel = #{userTel},
             user_email = #{userEmail},
@@ -57,7 +57,7 @@
     </update>
 
     <!-- 비밀번호 수정 쿼리 -->
-    <update id="updatePassword" parameterType="edu.sm.model.User">
+    <update id="updatePassword" parameterType="User">
         UPDATE user
         SET user_password = #{userPassword}
         WHERE user_id = #{userId};
