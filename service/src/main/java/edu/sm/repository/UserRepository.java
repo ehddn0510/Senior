@@ -8,9 +8,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 @Mapper
 public interface UserRepository extends SMRepository<Integer, User> {
-    User selectByUsername(String userUsername) throws Exception; // 필드 이름에 맞게 수정
-    User findByUsername(String userUsername); // 필드 이름에 맞게 수정
-    User findByTel(String userTel); // 필드 이름에 맞게 수정
-    User findByEmail(String userEmail); // 필드 이름에 맞게 수정
+    User selectByUsername(String username) throws Exception;
+    User findByUsername(String username);
+    User findByTel(String tel);
+    User findByEmail(String email);
+    // 비밀번호 수정
+    void updatePassword(User user);
+    // 사용자 상태를 inactive로 변경 (소프트 삭제)
+    void deactivateUser(int userId);
     User findByEmailForFindId(String userEmail); // 필드 이름에 맞게 수정
 }
