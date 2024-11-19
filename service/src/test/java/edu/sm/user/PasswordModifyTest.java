@@ -1,0 +1,22 @@
+package edu.sm.user;
+
+import edu.sm.service.UserService;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+@SpringBootTest
+public class PasswordModifyTest {
+
+    @Autowired
+    private UserService userService;
+
+    @Test
+    void modifyUserPassword() {
+        int userId = 2; // 테스트 유저의 ID
+        String newPassword = "amldmlaml123";
+
+        assertDoesNotThrow(() -> userService.updatePassword(userId, newPassword));
+    }
+}

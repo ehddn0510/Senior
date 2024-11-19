@@ -21,10 +21,10 @@ public class User {
     private String userName;
     private LocalDate userBirthday;
     private String userZipcode;
-    private String userDetailAdd1;            // 상세 주소 1
+    private String userStreetAddr;            // 상세 주소 1
     private String userDetailAddr1;           // 상세 주소 2
     private String userDetailAddr2;           // 상세 주소 3
     private LocalDateTime userRegDate;        // 회원가입 일자
     private String userStatus;
-    private String userProfileImage;
+    private String userProfile;
 }
