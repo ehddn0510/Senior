@@ -14,8 +14,8 @@ public class PasswordModifyTest {
 
     @Test
     void modifyUserPassword() {
-        int userId = 1; // 테스트 유저의 ID
-        String newPassword = "newPassword123";
+        int userId = 2; // 테스트 유저의 ID
+        String newPassword = "amldmlaml123";
 
         assertDoesNotThrow(() -> userService.updatePassword(userId, newPassword));
     }

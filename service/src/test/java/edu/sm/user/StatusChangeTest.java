@@ -14,7 +14,7 @@ public class StatusChangeTest {
 
     @Test
     void changeUserStatusToInactive() {
-        int userId = 4; // 테스트 유저의 ID
+        int userId = 2; // 테스트 유저의 ID
         assertDoesNotThrow(() -> userService.del(userId));
     }
 }

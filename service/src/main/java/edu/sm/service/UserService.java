@@ -4,13 +4,18 @@ import edu.sm.frame.SMService;
 import edu.sm.model.User;
 import edu.sm.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.http.auth.InvalidCredentialsException;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService implements SMService<Integer, User> {
@@ -23,13 +28,13 @@ public class UserService implements SMService<Integer, User> {
     public void add(User user) throws Exception {
         validateDuplicateUser(user);
 
-        user.setRegDate(LocalDateTime.now());
-        user.setPassword(passwordEncoder.encode(user.getPassword())); // 비밀번호 암호화
+        user.setUserRegDate(LocalDateTime.now());
+        user.setUserPassword(passwordEncoder.encode(user.getUserPassword())); // 비밀번호 암호화
 
         // 주소 필드 암호화
-        if (user.getDetailAdd1() != null) user.setDetailAdd1(textEncoder.encrypt(user.getDetailAdd1()));
-        if (user.getDetailAddr1() != null) user.setDetailAddr1(textEncoder.encrypt(user.getDetailAddr1()));
-        if (user.getDetailAddr2() != null) user.setDetailAddr2(textEncoder.encrypt(user.getDetailAddr2()));
+        if (user.getUserDetailAdd1() != null) user.setUserDetailAdd1(textEncoder.encrypt(user.getUserDetailAdd1()));
+        if (user.getUserDetailAddr1() != null) user.setUserDetailAddr1(textEncoder.encrypt(user.getUserDetailAddr1()));
+        if (user.getUserDetailAddr2() != null) user.setUserDetailAddr2(textEncoder.encrypt(user.getUserDetailAddr2()));
 
         userRepository.insert(user);
     }
@@ -37,30 +42,60 @@ public class UserService implements SMService<Integer, User> {
     @Override
     @Transactional
     public void modify(User updatedUser) throws Exception {
-        if (updatedUser == null || updatedUser.getUserId() == 0) {
-            throw new IllegalArgumentException("유효하지 않은 유저 정보입니다.");
+    }
+
+    @Override
+    @Transactional
+    public void modifyById(Integer userId, User updatedUser) throws Exception {
+        if (userId == null || userId <= 0) {
+            throw new IllegalArgumentException("유효하지 않은 유저 ID입니다.");
         }
 
         // 기존 데이터 조회
-        User existingUser = userRepository.selectOne(updatedUser.getUserId());
+        User existingUser = userRepository.selectOne(userId);
         if (existingUser == null) {
-            throw new IllegalArgumentException("해당 ID로 유저를 찾을 수 없습니다: " + updatedUser.getUserId());
+            throw new IllegalArgumentException("해당 ID로 유저를 찾을 수 없습니다: " + userId);
         }
 
-        // 수정 요청에서 제공된 값만 업데이트
-        if (updatedUser.getTel() != null) existingUser.setTel(updatedUser.getTel());
-        if (updatedUser.getEmail() != null) existingUser.setEmail(updatedUser.getEmail());
-        if (updatedUser.getName() != null) existingUser.setName(updatedUser.getName());
+        // 수정 요청에서 제공된 값만 반영
+        if (updatedUser.getUserTel() != null) {
+            existingUser.setUserTel(updatedUser.getUserTel());
+        }
+        if (updatedUser.getUserName() != null) {
+            existingUser.setUserName(updatedUser.getUserName());
+        }
+        if (updatedUser.getUserZipcode() != null) {
+            existingUser.setUserZipcode(updatedUser.getUserZipcode());
+        }
+        if (updatedUser.getUserDetailAdd1() != null) {
+            existingUser.setUserDetailAdd1(updatedUser.getUserDetailAdd1());
+        }
+        if (updatedUser.getUserDetailAddr1() != null) {
+            existingUser.setUserDetailAddr1(updatedUser.getUserDetailAddr1());
+        }
+        if (updatedUser.getUserDetailAddr2() != null) {
+            existingUser.setUserDetailAddr2(updatedUser.getUserDetailAddr2());
+        }
 
-        // 주소 필드 암호화 후 업데이트
-        if (updatedUser.getDetailAdd1() != null) existingUser.setDetailAdd1(textEncoder.encrypt(updatedUser.getDetailAdd1()));
-        if (updatedUser.getDetailAddr1() != null) existingUser.setDetailAddr1(textEncoder.encrypt(updatedUser.getDetailAddr1()));
-        if (updatedUser.getDetailAddr2() != null) existingUser.setDetailAddr2(textEncoder.encrypt(updatedUser.getDetailAddr2()));
+        // 주소 필드 암호화
+        encryptAddress(existingUser);
 
-        // 기존 데이터에 변경 사항 적용
-        userRepository.updateUserInfo(existingUser);
+        // 변경된 데이터 저장
+        userRepository.update(existingUser); // existingUser 전달
     }
 
+
+    private void encryptAddress(User user) {
+        if (user.getUserDetailAddr1() != null) {
+            user.setUserDetailAddr1(textEncoder.encrypt(user.getUserDetailAddr1()));
+        }
+        if (user.getUserDetailAddr2() != null) {
+            user.setUserDetailAddr2(textEncoder.encrypt(user.getUserDetailAddr2()));
+        }
+        if (user.getUserZipcode() != null) {
+            user.setUserZipcode(textEncoder.encrypt(user.getUserZipcode()));
+        }
+    }
 
     // 비밀번호 수정
     @Transactional
@@ -85,12 +120,6 @@ public class UserService implements SMService<Integer, User> {
         userRepository.deactivateUser(userId);
     }
 
-    // 사용자 정보 조회 (ID로 조회)
-    public User getUserById(Integer userId) throws Exception {
-        return get(userId);
-    }
-
-    // SMService 인터페이스의 get 메서드 구현 (getUserById 메서드를 호출)
     @Override
     @Transactional(readOnly = true)
     public User get(Integer userId) throws Exception {
@@ -98,9 +127,9 @@ public class UserService implements SMService<Integer, User> {
 
         // 주소 필드 복호화
         if (user != null) {
-            if (user.getDetailAdd1() != null) user.setDetailAdd1(textEncoder.decrypt(user.getDetailAdd1()));
-            if (user.getDetailAddr1() != null) user.setDetailAddr1(textEncoder.decrypt(user.getDetailAddr1()));
-            if (user.getDetailAddr2() != null) user.setDetailAddr2(textEncoder.decrypt(user.getDetailAddr2()));
+            if (user.getUserDetailAdd1() != null) user.setUserDetailAdd1(textEncoder.decrypt(user.getUserDetailAdd1()));
+            if (user.getUserDetailAddr1() != null) user.setUserDetailAddr1(textEncoder.decrypt(user.getUserDetailAddr1()));
+            if (user.getUserDetailAddr2() != null) user.setUserDetailAddr2(textEncoder.decrypt(user.getUserDetailAddr2()));
         }
         return user;
     }
@@ -108,18 +137,45 @@ public class UserService implements SMService<Integer, User> {
     @Override
     @Transactional(readOnly = true)
     public List<User> get() throws Exception {
-        return userRepository.select();
+        return null;
     }
 
+    // 로그인
+    @Transactional
+    public User login(User user) throws Exception {
+        User principal = userRepository.selectByUsername(user.getUserUsername());
+        if (principal == null) {
+            throw new UsernameNotFoundException("존재하지 않는 사용자 아이디입니다.");
+        }
+        if (!passwordEncoder.matches(user.getUserPassword(), principal.getUserPassword())) {
+            throw new InvalidCredentialsException("비밀번호가 일치하지 않습니다.");
+        }
+        return principal;
+    }
+
+    // 중복 사용자 검증
     private void validateDuplicateUser(User user) {
-        if (userRepository.findByUsername(user.getUsername()) != null) {
+        if (userRepository.findByUsername(user.getUserUsername()) != null) {
             throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
         }
-        if (userRepository.findByTel(user.getTel()) != null) {
+        if (userRepository.findByTel(user.getUserTel()) != null) {
             throw new IllegalArgumentException("이미 존재하는 전화번호입니다.");
         }
-        if (userRepository.findByEmail(user.getEmail()) != null) {
+        if (userRepository.findByEmail(user.getUserEmail()) != null) {
             throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
+        }
+    }
+
+    // 필수 필드 유효성 검사
+    private void validateServiceFields(User user) {
+        if (user.getUserUsername() == null || user.getUserUsername().trim().isEmpty()) {
+            throw new IllegalArgumentException("사용자 이름은 필수 입력 항목입니다.");
+        }
+        if (user.getUserPassword() == null || user.getUserPassword().trim().isEmpty()) {
+            throw new IllegalArgumentException("비밀번호는 필수 입력 항목입니다.");
+        }
+        if (user.getUserName() == null || user.getUserName().trim().isEmpty()) {
+            throw new IllegalArgumentException("이름은 필수 입력 항목입니다.");
         }
     }
 }
