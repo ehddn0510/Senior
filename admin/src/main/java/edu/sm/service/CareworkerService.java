@@ -37,6 +37,11 @@ public class CareworkerService implements SMService<Integer, Careworker> {
         return careworkerRepository.findWaiting();
     }
 
+    // 추가: 보호사와 자격증 데이터를 포함한 waiting 상태 보호사 목록 조회
+    public List<Careworker> findWaitingWithLicenses() throws Exception {
+        return careworkerRepository.findWaitingWithLicenses();
+    }
+
     @Override
     public void add(Careworker careworker) throws Exception {
         if (careworkerRepository.selectByUsername(careworker.getCwUsername()) != null) {

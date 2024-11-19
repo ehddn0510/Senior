@@ -9,9 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
@@ -38,4 +37,7 @@ public class Careworker {
     private DayOfWeek cwHoliday;
     private String cwIntro;
     private Integer cwExperience;
+
+    // 자격증 목록 필드 추가
+    private List<License> licenses;
 }

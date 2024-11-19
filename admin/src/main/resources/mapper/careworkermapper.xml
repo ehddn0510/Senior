@@ -62,4 +62,53 @@
         SET cw_status = 'active'
         WHERE cw_id = #{cwId};
     </update>
+
+    <select id="findWaitingWithLicenses" resultMap="CareworkerWithLicenseMap">
+        SELECT
+            cw.cw_id,
+            cw.cw_name,
+            cw.cw_email,
+            cw.cw_tel,
+            cw.cw_gender,
+            cw.cw_street_addr,
+            cw.cw_experience,
+            l.license_id,
+            l.license_name,
+            l.license_start_date,
+            l.license_end_date,
+            l.license_status
+        FROM
+            careworker cw
+                LEFT JOIN
+            license l
+            ON
+                cw.cw_id = l.cw_id
+        WHERE
+            cw.cw_status = 'waiting'
+        ORDER BY
+            CASE WHEN l.license_id IS NULL THEN 1 ELSE 0 END, -- null인 자격증을 뒤로 보냄
+            cw.cw_id,
+            l.license_start_date;
+    </select>
+
+
+
+    <resultMap id="CareworkerWithLicenseMap" type="Careworker">
+        <id property="cwId" column="cw_id"/>
+        <result property="cwName" column="cw_name"/>
+        <result property="cwEmail" column="cw_email"/>
+        <result property="cwTel" column="cw_tel"/>
+        <result property="cwGender" column="cw_gender"/>
+        <result property="cwStreetAddr" column="cw_street_addr"/>
+        <result property="cwExperience" column="cw_experience"/>
+        <collection property="licenses" ofType="edu.sm.model.License" javaType="java.util.ArrayList">
+            <id property="licenseId" column="license_id"/>
+            <result property="licenseName" column="license_name"/>
+            <result property="licenseStartDate" column="license_start_date"/>
+            <result property="licenseEndDate" column="license_end_date"/>
+            <result property="licenseStatus" column="license_status"/>
+        </collection>
+    </resultMap>
+
+
 </mapper>
