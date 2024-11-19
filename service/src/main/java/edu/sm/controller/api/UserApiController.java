@@ -6,16 +6,8 @@ import edu.sm.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.catalina.Service;
-import org.apache.http.auth.InvalidCredentialsException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
-
-import static net.sf.jsqlparser.util.validation.metadata.NamedObject.user;
-
 @RestController
 @Slf4j
 @RequiredArgsConstructor
@@ -24,40 +16,52 @@ public class UserApiController {
 
     private final UserService userService;
 
-    // 회원가입 API 엔드포인트
+    // 회원가입 API
     @PostMapping("/signup")
     public ResponseDto<Integer> registerUser(@RequestBody User user) {
         try {
             userService.add(user);
             return new ResponseDto<>(HttpStatus.OK.value(), 1);
-        } catch (IllegalArgumentException e) {
-            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), 0);
         } catch (Exception e) {
+            log.error("회원가입 실패", e);
             return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), 0);
         }
     }
 
-    // 사용자 정보 조회 API 엔드포인트
+    // 사용자 정보 조회 API
     @GetMapping("/{userId}")
     public ResponseDto<User> getUser(@PathVariable int userId) {
         try {
             User user = userService.getUserById(userId);
             return new ResponseDto<>(HttpStatus.OK.value(), user);
         } catch (Exception e) {
+            log.error("사용자 조회 실패", e);
             return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), null);
         }
     }
+
+    // 로그인 API
     @PostMapping("/login")
-    public ResponseDto<String> login(@RequestBody User user, HttpSession session) {
+    public ResponseDto<Integer> login(@RequestBody User user, HttpSession session) {
         try {
             User principal = userService.login(user);
-            session.setAttribute("principal", principal.getUserId());
-            session.setAttribute("role", "USER");
-            return new ResponseDto<>(HttpStatus.OK.value(), "1");
-        } catch (IllegalArgumentException e) {
-            return new ResponseDto<>(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
+            session.setAttribute("principal", principal);
+            return new ResponseDto<>(HttpStatus.OK.value(), 1);
         } catch (Exception e) {
-            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "예기치 않은 오류 발생");
+            log.error("로그인 실패", e);
+            return new ResponseDto<>(HttpStatus.UNAUTHORIZED.value(), 0);
+        }
+    }
+
+    // 아이디 찾기 API
+    @GetMapping("/findid")
+    public ResponseDto<String> findId(@RequestParam String userEmail) {
+        try {
+            String username = userService.findIdByEmail(userEmail);
+            return new ResponseDto<>(HttpStatus.OK.value(), username);
+        } catch (Exception e) {
+            log.error("아이디 찾기 실패", e);
+            return new ResponseDto<>(HttpStatus.NOT_FOUND.value(), null);
         }
     }
 }

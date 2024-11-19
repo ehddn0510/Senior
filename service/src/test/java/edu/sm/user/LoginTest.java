@@ -18,7 +18,7 @@ public class LoginTest {
     public void testLogin() {
         try {
             User loginDto = User.builder()
-                    .userUsername("newTestUser7")
+                    .userUsername("newTestUser2")
                     .userPassword("newPassword123")
                     .build();
             User user = userService.login(loginDto);

@@ -24,14 +24,14 @@ public class SignupTest {
         try {
             // Given: 테스트 데이터 준비
             User userDto = User.builder()
-                    .userUsername("newTestUser1") // 아이디
+                    .userUsername("newTestUser2") // 아이디
                     .userPassword("newPassword123") // 비밀번호
-                    .userEmail("newtestuser1@example.com") // 이메일
-                    .userTel("01087654322") // 전화번호
+                    .userEmail("newtestuser2@example.com") // 이메일
+                    .userTel("01087654323") // 전화번호
                     .userName("New Test User") // 이름
                     .userBirthday(LocalDate.of(1990, 1, 1)) // 생년월일 (LocalDate)
                     .userZipcode("12345") // 우편번호
-                    .userDetailAdd1("서울시 강남구") // 상세주소 1
+                    .userStreetAddr("서울시 강남구") // 상세주소 1
                     .userDetailAddr1("삼성동") // 상세주소 2
                     .userDetailAddr2("101호") // 상세주소 3
                     .userRegDate(LocalDateTime.of(2024, 11, 6, 0, 0)) // 등록 날짜 (LocalDateTime)
