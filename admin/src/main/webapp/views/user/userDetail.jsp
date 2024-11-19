@@ -62,7 +62,7 @@
                                        class="btn btn-primary px-4">우편번호 찾기</a>
                                 </div>
                                 <input type="text" class="form-control mb-2" id="userDetailAdd1" name="userDetailAdd1"
-                                       placeholder="Street" value="${user.userDetailAdd1}" readonly/>
+                                       placeholder="Street" value="${user.userStreetAddr}" readonly/>
                                 <input type="text" class="form-control mb-2" id="userDetailAddr1" name="userDetailAddr1"
                                        placeholder="Apartment" value="${user.userDetailAddr1}">
                                 <input type="text" class="form-control" id="userDetailAddr2" name="userDetailAddr2"
@@ -164,7 +164,7 @@
 
                 // 우편번호와 주소 필드에 입력
                 document.getElementById('userZipcode').value = data.zonecode;
-                document.getElementById("userDetailAdd1").value = mainAddr; // 괄호 제외 주소
+                document.getElementById("userStreetAddr").value = mainAddr; // 괄호 제외 주소
                 document.getElementById("userDetailAddr2").value = buildingNameMatch ? buildingNameMatch[1] : ""; // 괄호 안의 내용
 
                 // 상세 주소 입력 필드로 포커스 이동

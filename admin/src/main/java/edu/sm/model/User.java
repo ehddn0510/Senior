@@ -18,7 +18,7 @@ public class User {
     private String userName;
     private String userBirthday;
     private String userZipcode;
-    private String userDetailAdd1;
+    private String userStreetAddr;
     private String userDetailAddr1;
     private String userDetailAddr2;
     private String userRdate;

@@ -28,7 +28,7 @@
         user_name = #{userName},
         user_birthday = #{userBirthday},
         user_zipcode = #{userZipcode},
-        user_detail_add1 = #{userDetailAdd1}, <!-- 수정된 필드 반영 -->
+        user_street_addr = #{userStreetAddr}, <!-- 올바른 필드 이름으로 수정 -->
         user_detail_addr1 = #{userDetailAddr1},
         user_detail_addr2 = #{userDetailAddr2},
         user_profile = #{userProfile}
