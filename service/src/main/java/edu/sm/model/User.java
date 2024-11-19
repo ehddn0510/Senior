@@ -26,5 +26,5 @@ public class User {
     private String userDetailAddr2;           // 상세 주소 3
     private LocalDateTime userRegDate;        // 회원가입 일자
     private String userStatus;
-    private String userProfileImage;
+    private String userProfile;
 }
