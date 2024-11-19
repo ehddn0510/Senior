@@ -1,6 +1,7 @@
 package edu.sm.service;
 
 import edu.sm.frame.SMService;
+import edu.sm.model.HealthInfo;
 import edu.sm.model.Senior;
 import edu.sm.repository.SeniorRepository;
 import lombok.RequiredArgsConstructor;
@@ -81,5 +82,17 @@ public class SeniorService implements SMService<Integer, Senior> {
         }
 
         seniorRepository.update(existingSenior); // 병합된 데이터를 DB에 저장
+    }
+
+    // seniorId를 기준으로 healthinfo 데이터를 가져오는 메서드
+    public List<HealthInfo> getHealthInfoBySeniorId(Integer seniorId) throws Exception {
+        if (seniorId == null || seniorId <= 0) {
+            throw new IllegalArgumentException("Invalid senior ID: " + seniorId);
+        }
+        List<HealthInfo> healthInfoList = seniorRepository.findHealthInfoBySeniorId(seniorId);
+        if (healthInfoList.isEmpty()) {
+            log.warn("No health information found for senior ID: {}", seniorId);
+        }
+        return healthInfoList;
     }
 }
