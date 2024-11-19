@@ -19,4 +19,6 @@ public interface CareworkerRepository extends SMRepository<Integer, Careworker> 
     Careworker selectById(Integer cwId);
     List<License> selectLicensesByCareworkerId(Integer cwId);
     void updateStatusFromWaitingToActive(Integer cwId);
+    List<Careworker> findWaitingWithLicenses();
+
 }
