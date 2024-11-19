@@ -70,4 +70,16 @@
         WHERE user_id = #{userId};
     </update>
 
+    <!-- 이메일로 사용자 검색 (아이디 찾기용) -->
+    <select id="findByEmailForFindId" parameterType="String" resultType="User">
+        SELECT user_id AS userId, user_username AS userUsername, user_password AS userPassword,
+               user_tel AS userTel, user_email AS userEmail, user_name AS userName,
+               user_birthday AS userBirthday, user_zipcode AS userZipcode,
+               user_street_addr AS userStreetAddr, user_detail_addr1 AS userDetailAddr1,
+               user_detail_addr2 AS userDetailAddr2, user_rdate AS userRegDate,
+               user_status AS userStatus, user_profile AS userProfile
+        FROM user
+        WHERE user_email = #{userEmail};
+    </select>
+
 </mapper>

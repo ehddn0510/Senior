@@ -153,8 +153,6 @@ public class UserService implements SMService<Integer, User> {
         return maskedUsername;
     }
 
-
-
     // 주소 필드 암호화
     private void encryptAddressFields(User user) {
         if (user.getUserStreetAddr() != null) user.setUserStreetAddr(textEncoder.encrypt(user.getUserStreetAddr()));
