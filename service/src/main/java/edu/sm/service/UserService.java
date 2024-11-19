@@ -30,7 +30,7 @@ public class UserService implements SMService<Integer, User> {
         user.setUserPassword(passwordEncoder.encode(user.getUserPassword())); // 비밀번호 암호화
 
         // 주소 필드 암호화
-        if (user.getUserDetailAdd1() != null) user.setUserDetailAdd1(textEncoder.encrypt(user.getUserDetailAdd1()));
+        if (user.getUserStreetAddr() != null) user.setUserStreetAddr(textEncoder.encrypt(user.getUserStreetAddr()));
         if (user.getUserDetailAddr1() != null) user.setUserDetailAddr1(textEncoder.encrypt(user.getUserDetailAddr1()));
         if (user.getUserDetailAddr2() != null) user.setUserDetailAddr2(textEncoder.encrypt(user.getUserDetailAddr2()));
 
@@ -48,36 +48,38 @@ public class UserService implements SMService<Integer, User> {
         }
 
         // 기존 데이터 조회
-        User existingUser = userRepository.selectOne(userId);
-        if (existingUser == null) {
+        User user = userRepository.selectOne(userId);
+        if (user == null) {
             throw new IllegalArgumentException("해당 ID로 유저를 찾을 수 없습니다: " + userId);
         }
 
         // 수정 요청에서 제공된 값만 반영
         if (updatedUser.getUserTel() != null) {
-            existingUser.setUserTel(updatedUser.getUserTel());
+            user.setUserTel(updatedUser.getUserTel());
         }
         if (updatedUser.getUserName() != null) {
-            existingUser.setUserName(updatedUser.getUserName());
+            user.setUserName(updatedUser.getUserName());
+        }
+        if (updatedUser.getUserEmail() != null) {
+            user.setUserEmail(updatedUser.getUserEmail());
         }
         if (updatedUser.getUserZipcode() != null) {
-            existingUser.setUserZipcode(updatedUser.getUserZipcode());
+            user.setUserZipcode(updatedUser.getUserZipcode());
         }
-        if (updatedUser.getUserDetailAdd1() != null) {
-            existingUser.setUserDetailAdd1(updatedUser.getUserDetailAdd1());
+        if (updatedUser.getUserStreetAddr() != null) {
+            user.setUserStreetAddr(updatedUser.getUserStreetAddr());
         }
         if (updatedUser.getUserDetailAddr1() != null) {
-            existingUser.setUserDetailAddr1(updatedUser.getUserDetailAddr1());
+            user.setUserDetailAddr1(updatedUser.getUserDetailAddr1());
         }
         if (updatedUser.getUserDetailAddr2() != null) {
-            existingUser.setUserDetailAddr2(updatedUser.getUserDetailAddr2());
+            user.setUserDetailAddr2(updatedUser.getUserDetailAddr2());
         }
 
-        // 주소 필드 암호화
-        encryptAddress(existingUser);
+        encryptAddress(user);
 
         // 변경된 데이터 저장
-        userRepository.update(existingUser); // existingUser 전달
+        userRepository.update(user);
     }
 
     // 비밀번호 수정
@@ -88,7 +90,9 @@ public class UserService implements SMService<Integer, User> {
             throw new IllegalArgumentException("해당 ID로 유저를 찾을 수 없습니다: " + userId);
         }
 
-        userRepository.updatePassword(userId, passwordEncoder.encode(newPassword));
+        user.setUserPassword(passwordEncoder.encode(newPassword));
+
+        userRepository.updatePassword(user);
     }
 
     @Override
@@ -116,7 +120,7 @@ public class UserService implements SMService<Integer, User> {
 
         // 주소 필드 복호화
         if (user != null) {
-            if (user.getUserDetailAdd1() != null) user.setUserDetailAdd1(textEncoder.decrypt(user.getUserDetailAdd1()));
+            if (user.getUserStreetAddr() != null) user.setUserStreetAddr(textEncoder.decrypt(user.getUserStreetAddr()));
             if (user.getUserDetailAddr1() != null) user.setUserDetailAddr1(textEncoder.decrypt(user.getUserDetailAddr1()));
             if (user.getUserDetailAddr2() != null) user.setUserDetailAddr2(textEncoder.decrypt(user.getUserDetailAddr2()));
         }
@@ -139,8 +143,8 @@ public class UserService implements SMService<Integer, User> {
         if (user.getUserDetailAddr2() != null) {
             user.setUserDetailAddr2(textEncoder.encrypt(user.getUserDetailAddr2()));
         }
-        if (user.getUserZipcode() != null) {
-            user.setUserZipcode(textEncoder.encrypt(user.getUserZipcode()));
+        if (user.getUserStreetAddr() != null) {
+            user.setUserStreetAddr(textEncoder.encrypt(user.getUserStreetAddr()));
         }
     }
 

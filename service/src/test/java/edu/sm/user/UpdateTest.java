@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 public class UpdateTest {
@@ -17,19 +15,19 @@ public class UpdateTest {
     private UserService userService;
 
     @Test
-    void updateUserInformation() {
-        int userId = 3; // 테스트 유저의 ID
+    void updateUserInformation() throws Exception {
+        // 테스트 대상 유저 ID
+        int userId = 2;
 
-        // 2. 수정할 데이터 생성
+        // 수정할 데이터 생성 (일부 필드만 수정)
         User updatedUser = User.builder()
-                .userName("Updated Name") // 새 이름
-                .userEmail("updated.email@example.com") // 새 이메일
-                .userDetailAdd1("서울")
-                .userDetailAddr1("강서구") // 새 상세주소1
-                .userDetailAddr2("집") // 새 상세주소2
+                .userName("이순신")
+                .userStreetAddr("용인")
+                .userDetailAddr1("용인빌딩")
+                .userDetailAddr2("1006호")
                 .build();
 
-        // 3. 수정 요청 실행
+        // 예외 없이 수정 요청이 실행되는지 검증
         assertDoesNotThrow(() -> userService.modifyById(userId, updatedUser));
     }
 }
