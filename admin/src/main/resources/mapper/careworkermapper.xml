@@ -57,7 +57,7 @@
         WHERE cw_id = #{cwId};
     </update>
     <!-- 보호사 상태 업데이트 쿼리 -->
-    <update id="updateStatusToActive" parameterType="int">
+    <update id="updateStatusFromWaitingToActive" parameterType="int">
         UPDATE careworker
         SET cw_status = 'active'
         WHERE cw_id = #{cwId};
