@@ -27,7 +27,7 @@
                                 <th>Email</th>
                                 <th>Name</th>
                                 <th>Zipcode</th>
-                                <th>Address1</th>
+                                <th>Street</th>
                                 <th>Address2</th>
                                 <th>Address3</th>
                                 <th>Status</th>
@@ -43,7 +43,7 @@
                                     <td>${user.userEmail}</td>
                                     <td>${user.userName}</td>
                                     <td>${user.userZipcode}</td>
-                                    <td>${user.userDetailAdd1}</td>
+                                    <td>${user.userStreetAddr}</td>
                                     <td>${user.userDetailAddr1}</td>
                                     <td>${user.userDetailAddr2}</td>
                                     <td>${user.userStatus}</td>

@@ -1,5 +1,6 @@
 package edu.sm.controller;
 
+import edu.sm.model.HealthInfo;
 import edu.sm.model.Senior;
 import edu.sm.service.SeniorService;
 import jakarta.servlet.http.HttpSession;
@@ -31,8 +32,11 @@ public class SeniorController {
     @RequestMapping("/senior-detail")
     public String detail(Model model, @RequestParam("id") Integer seniorId) throws Exception {
         Senior senior = seniorService.get(seniorId);
+        List<HealthInfo> healthInfo = seniorService.getHealthInfoBySeniorId(seniorId);
         log.info(senior.toString());
+        log.info("여기 : " + healthInfo.toString());
         model.addAttribute("senior", senior);
+        model.addAttribute("healthInfo", healthInfo);
         model.addAttribute("center", dir + "seniorDetail");
         return "index";
     }

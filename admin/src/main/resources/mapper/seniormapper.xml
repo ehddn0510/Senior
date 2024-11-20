@@ -24,5 +24,9 @@
             senior_significant = #{seniorSignificant}
         WHERE senior_id = #{seniorId};
     </update>
+
+    <select id="findHealthInfoBySeniorId" parameterType="Integer" resultType="edu.sm.model.HealthInfo">
+        SELECT * FROM healthinfo WHERE senior_id = #{seniorId};
+    </select>
 </mapper>
 

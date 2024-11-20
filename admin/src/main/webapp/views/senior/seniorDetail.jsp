@@ -74,24 +74,33 @@
 
             <!-- Senior 목록 표시 -->
             <div class="col-lg-4">
-                <h5 class="text-primary">Senior List</h5>
-                <c:forEach items="${seniors}" var="seniorItem">
-                    <div class="card mb-3">
-                        <div class="card-body text-center">
-                            <h5 class="text-primary">
-                                <a href="senior-detail?id=${seniorItem.seniorId}">${seniorItem.seniorName}</a>
-                            </h5>
-                            <p class="mb-1">${seniorItem.seniorGender == 'male' ? '남성' : '여성'}</p>
-                            <p class="mb-1">
-                                <fmt:formatDate value="${seniorItem.seniorBirth}" pattern="yyyy년 MM월 dd일" />
-                            </p>
-                            <div class="mt-4 text-center">
-                                <a href="javascript:void(0)" class="btn btn-primary btn-sm">Follow</a>
-                                <a href="javascript:void(0)" class="btn btn-dark btn-sm">Message</a>
-                            </div>
-                        </div>
+                <h4 class="text-primary mb-3">Senior Detail</h4>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Health Information</h5>
+                        <c:if test="${not empty healthInfo}">
+                            <table class="table table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Disease Name</th>
+                                    <th>Description</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach items="${healthInfo}" var="info">
+                                    <tr>
+                                        <td>${info.diseaseName}</td>
+                                        <td>${info.diseaseDescription}</td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:if>
+                        <c:if test="${empty healthInfo}">
+                            <p class="text-muted">No health information available.</p>
+                        </c:if>
                     </div>
-                </c:forEach>
+                </div>
             </div>
         </div>
     </div>

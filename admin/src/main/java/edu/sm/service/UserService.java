@@ -68,8 +68,8 @@ public class UserService implements SMService<Integer, User> {
         if (updatedUser.getUserZipcode() != null) {
             existingUser.setUserZipcode(updatedUser.getUserZipcode());
         }
-        if (updatedUser.getUserDetailAdd1() != null) {
-            existingUser.setUserDetailAdd1(updatedUser.getUserDetailAdd1());
+        if (updatedUser.getUserStreetAddr() != null) {
+            existingUser.setUserStreetAddr(updatedUser.getUserStreetAddr());
         }
         if (updatedUser.getUserDetailAddr1() != null) {
             existingUser.setUserDetailAddr1(updatedUser.getUserDetailAddr1());
