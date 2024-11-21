@@ -34,8 +34,6 @@ public class SignupTest {
                     .userStreetAddr("서울시 강남구") // 상세주소 1
                     .userDetailAddr1("삼성동") // 상세주소 2
                     .userDetailAddr2("101호") // 상세주소 3
-                    .userRegDate(LocalDateTime.of(2024, 11, 6, 0, 0)) // 등록 날짜 (LocalDateTime)
-                    .userStatus("active") // 상태
                     .userProfile("profile1.jpg") // 프로필 이미지
                     .build();
 

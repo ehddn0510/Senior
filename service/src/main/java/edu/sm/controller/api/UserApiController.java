@@ -17,18 +17,16 @@ public class UserApiController {
 
     private final UserService userService;
 
-    // 회원가입 API 엔드포인트
     @PostMapping("/signup")
-    public ResponseDto<Integer> registerUser(@RequestBody User user) {
+    public ResponseDto<String> registerUser(@ModelAttribute User user) {
         try {
+            user.setUserProfile(user.getUserProfileFile().getOriginalFilename());
             userService.add(user);
-            return new ResponseDto<>(HttpStatus.OK.value(), 1);
+            return new ResponseDto<>(HttpStatus.OK.value(), "1");
         } catch (IllegalArgumentException e) {
-            log.error("회원가입 중 잘못된 입력 값입니다.", e);
-            return new ResponseDto<>(HttpStatus.BAD_REQUEST.value(), 0);
+            return new ResponseDto<>(HttpStatus.BAD_REQUEST.value(), e.getMessage());
         } catch (Exception e) {
-            log.error("회원가입 중 예기치 않은 오류 발생", e);
-            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), 0);
+            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
         }
     }
 

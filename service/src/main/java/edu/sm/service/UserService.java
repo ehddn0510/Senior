@@ -3,13 +3,17 @@ package edu.sm.service;
 import edu.sm.frame.SMService;
 import edu.sm.model.User;
 import edu.sm.repository.UserRepository;
+import edu.sm.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,14 +25,21 @@ public class UserService implements SMService<Integer, User> {
     private final BCryptPasswordEncoder passwordEncoder;
     private final StandardPBEStringEncryptor textEncoder;
 
+    @Value("${app.dir.userprofile}")
+    String imgDir;
+
     @Override
     @Transactional
     public void add(User user) throws Exception {
         validateDuplicateUser(user);
 
-        user.setUserRegDate(LocalDateTime.now());
+        FileUploadUtil.saveFile(user.getUserProfileFile(), imgDir);
+
         user.setUserPassword(passwordEncoder.encode(user.getUserPassword())); // 비밀번호 암호화
         encryptAddressFields(user);
+
+        user.setUserRegDate(LocalDateTime.now());
+        user.setUserStatus("active");
 
         userRepository.insert(user);
     }
@@ -168,4 +179,5 @@ public class UserService implements SMService<Integer, User> {
             if (user.getUserDetailAddr2() != null) user.setUserDetailAddr2(textEncoder.decrypt(user.getUserDetailAddr2()));
         }
     }
+
 }
