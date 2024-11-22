@@ -352,7 +352,7 @@ a:focus {
 
 /*end header section*/
 .slider_section {
-  background-image: url(../images/slider-bg.jpg);
+  background-image: url(../images/senior.jpg);
   background-size: cover;
   -webkit-box-flex: 1;
       -ms-flex: 1;
@@ -1234,3 +1234,152 @@ a:focus {
   color: inherit;
 }
 /*# sourceMappingURL=style.css.map */
+
+/* careworker_list section */
+.filter_section {
+  padding: 30px 40px;
+  margin-top: 70px;
+  background: #f7f7f7;
+  border-radius: 10px;
+
+  .filter_title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: block;
+    text-align: center;
+  }
+
+  .form_group {
+    margin-bottom: 20px;
+
+    .form_label {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .radio_group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+
+      .radio_label {
+        margin-left: 5px;
+        font-size: 0.95rem;
+        color: #333;
+      }
+    }
+
+    .form_select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background: #fff;
+      font-size: 0.95rem;
+    }
+  }
+
+  .submit_btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #39b54a;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background: #2e8c3b;
+    }
+  }
+}
+
+/* careworker_list END section */
+
+/* 보호사 리스트 섹션 */
+.careworker_list {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.worker_card {
+  width: calc(33.333% - 20px);
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.worker_card .photo {
+  width: 100%;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.worker_card .photo .waiting_time {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.85rem;
+}
+
+.worker_card .info {
+  padding: 15px;
+}
+
+.worker_card .info .greeting {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.worker_card .info .details {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.worker_card .actions {
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.worker_card .actions .btn {
+  display: inline-block;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.worker_card .actions .btn-interest {
+  background-color: #ff9800;
+  color: #fff;
+}
+
+.worker_card .actions .btn-support {
+  background-color: #4caf50;
+  color: #fff;
+}
