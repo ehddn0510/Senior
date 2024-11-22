@@ -36,4 +36,6 @@ public class Careworker {
     private String cwIntro;
     private int cwExperience;
     private MultipartFile cwProfileFile;
+    private Double cwLatitude;
+    private Double cwLongitude;
 }
