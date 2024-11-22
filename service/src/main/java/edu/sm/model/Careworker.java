@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -34,4 +35,5 @@ public class Careworker {
     private DayOfWeek cwHoliday;
     private String cwIntro;
     private int cwExperience;
+    private MultipartFile cwProfileFile;
 }

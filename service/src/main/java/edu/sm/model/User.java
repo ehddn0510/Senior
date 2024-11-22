@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,17 +15,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class User {
     private int userId;
-    private String userUsername;              // 사용자 아이디
+    private String userUsername;
     private String userPassword;
     private String userTel;
     private String userEmail;
     private String userName;
     private LocalDate userBirthday;
     private String userZipcode;
-    private String userStreetAddr;            // 상세 주소 1
-    private String userDetailAddr1;           // 상세 주소 2
-    private String userDetailAddr2;           // 상세 주소 3
-    private LocalDateTime userRegDate;        // 회원가입 일자
+    private String userStreetAddr;
+    private String userDetailAddr1;
+    private String userDetailAddr2;
+    private LocalDateTime userRegDate;
     private String userStatus;
     private String userProfile;
+    private MultipartFile userProfileFile;
 }

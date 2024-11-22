@@ -21,8 +21,8 @@
             $('#tel').on('input', () => this.validateTel());
 
             $('#profile').on('change', (e) => this.previewProfileImage(e.target));
-        },
 
+        },
         validateUsername: function () {
             let username = $('#username').val();
             let message = $('#usernameMessage');
@@ -38,7 +38,6 @@
                 message.text('아이디는 4~20자의 영문, 숫자와 특수문자 "_"만 사용 가능합니다.').removeClass('text-success').addClass('text-danger');
             }
         },
-
         validatePassword: function () {
             let password = $('#password').val();
             let message = $('#passwordMessage');
@@ -56,7 +55,6 @@
                 message.text('비밀번호는 8~16자리의 영문 대소문자, 숫자, 특수문자 중 3가지 이상 조합이어야 합니다.').removeClass('text-success').addClass('text-danger');
             }
         },
-
         isPasswordValid: function (password) {
             if (password.length < 8 || password.length > 16) {
                 return false;
@@ -69,11 +67,15 @@
 
             return [hasLowerCase, hasUpperCase, hasNumber, hasSpecialChar].filter(Boolean).length >= 3;
         },
-
         checkPasswordMatch: function () {
             let password = $('#password').val();
             let passwordConfirm = $('#passwordConfirm').val();
             let message = $('#passwordConfirmMessage');
+
+            if (password === '') {
+                message.text('');
+                return;
+            }
 
             if (password === passwordConfirm) {
                 message.text('비밀번호가 일치합니다.').removeClass('text-danger').addClass('text-success');
@@ -81,7 +83,21 @@
                 message.text('비밀번호가 일치하지 않습니다.').removeClass('text-success').addClass('text-danger');
             }
         },
+        validateEmail: function () {
+            let email = $('#email').val();
+            let message = $('#emailMessage');
 
+            if (email === '') {
+                message.text('');
+                return;
+            }
+
+            if (/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)) {
+                message.text('사용 가능한 이메일입니다.').removeClass('text-danger').addClass('text-success');
+            } else {
+                message.text('올바른 이메일 형식을 입력하세요.').removeClass('text-success').addClass('text-danger');
+            }
+        },
         validateName: function () {
             let name = $('#name').val();
 
@@ -91,37 +107,6 @@
                 return true;
             }
         },
-
-        validateGender: function () {
-            let gender = $('#gender').val();
-
-            if (gender === 'N') {
-                return false;
-            } else {
-                return true;
-            }
-        },
-
-        validateHoliday: function () {
-            let holiday = $('#holiday').val();
-
-            if (holiday === '선택') {
-                return false;
-            } else {
-                return true;
-            }
-        },
-
-        validateIntro: function () {
-            let intro = $('#intro').val();
-
-            if (intro === '') {
-                return false;
-            } else {
-                return true;
-            }
-        },
-
         validateAddress: function () {
             let zipcode = $('#zipcode').val();
             let streetAddr = $('#streetAddr').val();
@@ -134,7 +119,6 @@
                 return true;
             }
         },
-
         validateBirthday: function () {
             let birthday = $('#birthday').val();
 
@@ -151,23 +135,6 @@
                 return true;
             }
         },
-
-        validateEmail: function () {
-            let email = $('#email').val();
-            let message = $('#emailMessage');
-
-            if (email === '') {
-                message.text('');
-                return;
-            }
-
-            if (/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)) {
-                message.text('사용 가능한 이메일입니다.').removeClass('text-danger').addClass('text-success');
-            } else {
-                message.text('올바른 이메일 형식을 입력하세요.').removeClass('text-success').addClass('text-danger');
-            }
-        },
-
         validateTel: function () {
             let tel = $('#tel').val();
             let message = $('#telMessage');
@@ -183,7 +150,6 @@
                 message.text('전화번호는 - 를 제외하여 입력하세요.').removeClass('text-success').addClass('text-danger');
             }
         },
-
         validateForm: function () {
             this.validateUsername();
             this.validatePassword();
@@ -193,9 +159,6 @@
             let isNameValid = this.validateName();
             let isAddressValid = this.validateAddress();
             let isBirthdayValid = this.validateBirthday();
-            let isGenderValid = this.validateGender();
-            let isHolidayValid = this.validateHoliday();
-            let isIntroValid = this.validateIntro();
 
             let isValid = (
                 $('#usernameMessage').hasClass('text-success') &&
@@ -205,20 +168,8 @@
                 $('#telMessage').hasClass('text-success') &&
                 isNameValid &&
                 isAddressValid &&
-                isBirthdayValid &&
-                isGenderValid &&
-                isHolidayValid &&
-                isIntroValid
+                isBirthdayValid
             );
-
-            console.log('isValid:', isValid);
-            console.log('isNameValid:', isNameValid);
-            console.log('isAddressValid:', isAddressValid);
-            console.log('isBirthdayValid:', isBirthdayValid);
-            console.log('isGenderValid:', isGenderValid);
-            console.log('isHolidayValid:', isHolidayValid);
-            console.log('isIntroValid:', isIntroValid);
-
 
             return isValid;
         },
@@ -259,12 +210,12 @@
         },
 
         register: function () {
-            let form = $('#careworker_add_form')[0];
+            let form = $('#user_add_form')[0];
             let formData = new FormData(form);
-            console.log('formData:', formData);
+
             $.ajax({
                 type: 'POST',
-                url: '/api/careworkers/signup',
+                url: '/api/users/signup',
                 data: formData,
                 processData: false,
                 contentType: false,
@@ -272,7 +223,7 @@
             }).done(function (resp) {
                 if (resp.status === 200) {
                     alert('회원가입이 완료되었습니다.');
-                    location.href = '/login/careworker';
+                    location.href = '/login/user';
                 } else {
                     alert(resp.data);
                 }
@@ -314,8 +265,8 @@
         <div class="col-md-6">
             <div class="card border-0">
                 <div class="card-body">
-                    <h3 class="card-title text-center mb-4">보호사로 회원가입</h3>
-                    <form id="careworker_add_form">
+                    <h3 class="card-title text-center mb-4">고객으로 회원가입</h3>
+                    <form id="user_add_form">
                         <div class="form-group text-center">
                             <label for="profile">
                                 <div class="profile-preview-container mt-3">
@@ -324,18 +275,18 @@
                                          alt="이미지 미리보기"/>
                                 </div>
                             </label>
-                            <input type="file" class="form-control" id="profile" name="cwProfileFile" accept="image/*"
+                            <input type="file" class="form-control" id="profile" name="userProfileFile" accept="image/*"
                                    hidden="hidden"/>
                         </div>
                         <div class="form-group">
                             <label for="username">아이디</label>
-                            <input type="text" class="form-control" id="username" name="cwUsername"
+                            <input type="text" class="form-control" id="username" name="userUsername"
                                    placeholder="아이디를 입력하세요" required>
                             <small id="usernameMessage" class="form-text"></small>
                         </div>
                         <div class="form-group">
                             <label for="password">비밀번호</label>
-                            <input type="password" class="form-control" id="password" name="cwPassword"
+                            <input type="password" class="form-control" id="password" name="userPassword"
                                    placeholder="비밀번호를 입력하세요" required>
                             <small id="passwordMessage" class="form-text"></small>
                         </div>
@@ -347,55 +298,29 @@
                         </div>
                         <div class="form-group">
                             <label for="name">이름</label>
-                            <input type="text" class="form-control" id="name" name="cwName" placeholder="이름을 입력하세요"
+                            <input type="text" class="form-control" id="name" name="userName" placeholder="이름을 입력하세요"
                                    required>
                         </div>
                         <div class="form-group">
-                            <label for="gender">성별</label>
-                            <select class="form-control" id="gender" name="cwGender" required>
-                                <option value="N">선택</option>
-                                <option value="M">남성</option>
-                                <option value="F">여성</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label for="tel">전화번호</label>
-                            <input type="text" class="form-control" id="tel" name="cwTel" placeholder="전화번호 입력"
+                            <input type="text" class="form-control" id="tel" name="userTel" placeholder="전화번호 입력"
                                    maxlength="11" required>
                             <small id="telMessage" class="form-text"></small>
                         </div>
                         <div class="form-group">
                             <label for="email">이메일</label>
-                            <input type="email" class="form-control" id="email" name="cwEmail"
+                            <input type="email" class="form-control" id="email" name="userEmail"
                                    placeholder="이메일을 입력하세요" required>
                             <small id="emailMessage" class="form-text"></small>
                         </div>
                         <div class="form-group">
                             <label for="birthday">생년월일</label>
-                            <input type="date" class="form-control" id="birthday" name="cwBirthday" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="holiday">휴무일</label>
-                            <select class="form-control" id="holiday" name="cwHoliday" required>
-                                <c:forEach var="day" items="${['선택', 'SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY']}">
-                                    <option value="${day}">${day}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="experience">경력 (년)</label>
-                            <input type="number" class="form-control" id="experience" name="cwExperience" min="0"
-                                   placeholder="보호사 경력 (년)" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="intro">소개</label>
-                            <textarea class="form-control" id="intro" name="cwIntro" rows="3"
-                                      placeholder="자신을 소개해주세요." required></textarea>
+                            <input type="date" class="form-control" id="birthday" name="userBirthday" required>
                         </div>
                         <div class="form-group">
                             <label for="zipcode">우편번호</label>
                             <div class="input-group">
-                                <input type="text" class="form-control" id="zipcode" name="cwZipcode"
+                                <input type="text" class="form-control" id="zipcode" name="userZipcode"
                                        placeholder="우편번호를 검색하세요" readonly required>
                                 <div class="input-group-append">
                                     <button type="button" class="btn btn-outline-secondary" id="zipcodeBtn">우편번호 검색
@@ -405,24 +330,24 @@
                         </div>
                         <div class="form-group">
                             <label for="streetAddr">주소</label>
-                            <input type="text" class="form-control" id="streetAddr" name="cwStreetAddr"
+                            <input type="text" class="form-control" id="streetAddr" name="userStreetAddr"
                                    placeholder="주소를 입력하세요" readonly required>
                         </div>
                         <div class="form-group">
                             <label for="detailAddr2">상세주소 1</label>
-                            <input type="text" class="form-control" id="detailAddr2" name="cwDetailAddr2"
+                            <input type="text" class="form-control" id="detailAddr2" name="userDetailAddr2"
                                    placeholder="상세주소 1을 입력하세요" readonly required>
                         </div>
                         <div class="form-group">
                             <label for="detailAddr1">상세주소 2</label>
-                            <input type="text" class="form-control" id="detailAddr1" name="cwDetailAddr1"
+                            <input type="text" class="form-control" id="detailAddr1" name="userDetailAddr1"
                                    placeholder="상세주소 2를 입력하세요">
                         </div>
                     </form>
                     <button type="submit" id="btn_add" class="btn btn-primary btn-block border-0">회원가입
                     </button>
                     <div class="mt-3 text-center">
-                        <p>이미 계정이 있으신가요? <a href="/login/careworker">로그인</a></p>
+                        <p>이미 계정이 있으신가요? <a href="/login/user">로그인</a></p>
                     </div>
                 </div>
             </div>

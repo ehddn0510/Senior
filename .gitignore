@@ -240,3 +240,4 @@ application.yml
 # Allow other profile-specific yml files to be committed
 !application-*.yml
 
+imgs/

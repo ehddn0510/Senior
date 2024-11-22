@@ -16,6 +16,10 @@ spring:
     url: ENC(xHXpClXXAhvJXW7mThmzW0380tgz1PC44ygba26Pd/ZMXkzQZswNF6V/HS2N9ZVBvZDhQzx6gluSwTSX9uBHKDGvHSPEljzB)
     username: ENC(KuHY5H9zhktP04FElesliA==)
     password: ENC(HTtTVsL4aOlNh+b0IKrKDV5CgdRQB4h7)
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 # Mybatis Setting
 mybatis:
@@ -33,6 +37,9 @@ logging:
 app:
   url:
     server-url: ENC(fRoRGxzjgDDpIiL+Odv9zgjEyFnnozQRoMD1wGvhypE=)
+  dir:
+    userprofile: ENC(uOcl+MSO9ecwlkOufqno4AHpeknx+5Im)
+    cwprofile: ENC(C8uJu9YkDQN81BOMp5LAVbU3Aj4SjHdwbphxjQIHKwE=)
   key:
     algo: PBEWithMD5AndDES
     skey: c3ZFoAQC6GAxA64vwx9chJZubbkUf780

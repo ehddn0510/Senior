@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 @Mapper
 public interface CareworkerRepository extends SMRepository<Integer, Careworker> {
     Careworker selectByUsername(String username) throws Exception;
+    Careworker selectByTel(String tel);
+    Careworker selectByEmail(String email);
 }
