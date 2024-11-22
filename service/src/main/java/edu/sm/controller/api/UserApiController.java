@@ -52,9 +52,11 @@ public class UserApiController {
         } catch (IllegalArgumentException e) {
             return new ResponseDto<>(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
         } catch (Exception e) {
+            log.error("로그인 중 예기치 않은 오류 발생", e);
             return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "예기치 않은 오류 발생");
         }
     }
+
 
     // 아이디 찾기 API
     @GetMapping("/findid")
@@ -80,10 +82,11 @@ public class UserApiController {
         }
     }
 
-    // 비밀번호 수정
+    // 비밀번호 변경
     @PutMapping("/update/password/{id}")
     public ResponseDto<Integer> updatePassword(@PathVariable Integer id, @RequestBody String newPassword) {
         try {
+            log.info(newPassword);
             userService.updatePassword(id, newPassword); // 비밀번호 수정 서비스 호출
             return new ResponseDto<>(HttpStatus.OK.value(), 1);
         } catch (Exception e) {

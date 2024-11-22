@@ -40,7 +40,7 @@
                         <a href="/senior-health">시니어 건강</a>
                         <a href="/schedule">일정관리</a>
                         <a href="/help">문의</a>
-                        <a href="/cmypage">마이페이지</a>
+                        <a href="/user/mypage">마이페이지</a>
                     </c:if>
 
                     <%-- 보호사 메뉴 --%>
