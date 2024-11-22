@@ -22,6 +22,7 @@ public class MainController {
         return "index";
     }
 
+
     @RequestMapping("/login/careworker")
     public String loginCareworker(Model model) {
         model.addAttribute("center", "auth/login/careworker");
@@ -39,6 +40,24 @@ public class MainController {
         model.addAttribute("center", "auth/signup/careworker");
         return "index";
     }
+
+    @RequestMapping("/user/mypage")
+    public String Mypage(HttpSession session, Model model) {
+        Integer userId = (Integer) session.getAttribute("principal");
+        if (userId == null) {
+            return "redirect:/login/user";
+        }
+        model.addAttribute("userId", userId); // userId 모델 추가
+        model.addAttribute("center", "user/mypage"); // center 속성 추가
+        return "index";
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // 세션 초기화 (로그아웃 처리)
+        return "redirect:/"; // 메인 페이지로 리다이렉트
+    }
+
 
     @RequestMapping("/about")
     public String about(Model model) {

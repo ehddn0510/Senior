@@ -49,8 +49,13 @@ public class UserService implements SMService<Integer, User> {
     }
 
     @Override
-    public void del(Integer integer) throws Exception {
-
+    public void del(Integer userId) throws Exception {
+        User user = userRepository.selectOne(userId);
+        if (user == null) {
+            throw new IllegalArgumentException("해당 ID로 유저를 찾을 수 없습니다: " + userId);
+        }
+        user.setUserStatus("inactive");
+        userRepository.deactivateUser(userId);
     }
 
     @Transactional
@@ -87,8 +92,10 @@ public class UserService implements SMService<Integer, User> {
         if (updatedUser.getUserDetailAddr2() != null) {
             user.setUserDetailAddr2(updatedUser.getUserDetailAddr2());
         }
-
-        user.setUserPassword(passwordEncoder.encode(updatedUser.getUserPassword())); // 비밀번호 암호화
+        if (updatedUser.getUserPassword() != null) {
+            user.setUserPassword(passwordEncoder.encode(updatedUser.getUserPassword())); // 비밀번호 암호화
+        }
+        encryptAddressFields(user);
         // 변경된 데이터 저장
         userRepository.update(user);
     }
@@ -129,6 +136,11 @@ public class UserService implements SMService<Integer, User> {
         if (principal == null || !passwordEncoder.matches(user.getUserPassword(), principal.getUserPassword())) {
             throw new IllegalArgumentException("아이디 또는 비밀번호가 올바르지 않습니다.");
         }
+
+        if ("inactive".equalsIgnoreCase(principal.getUserStatus())) {
+            throw new IllegalArgumentException("탈퇴된 계정은 로그인할 수 없습니다.");
+        }
+
         return principal;
     }
 
@@ -179,5 +191,4 @@ public class UserService implements SMService<Integer, User> {
             if (user.getUserDetailAddr2() != null) user.setUserDetailAddr2(textEncoder.decrypt(user.getUserDetailAddr2()));
         }
     }
-
 }
