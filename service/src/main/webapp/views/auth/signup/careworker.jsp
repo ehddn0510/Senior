@@ -211,21 +211,12 @@
                 isIntroValid
             );
 
-            console.log('isValid:', isValid);
-            console.log('isNameValid:', isNameValid);
-            console.log('isAddressValid:', isAddressValid);
-            console.log('isBirthdayValid:', isBirthdayValid);
-            console.log('isGenderValid:', isGenderValid);
-            console.log('isHolidayValid:', isHolidayValid);
-            console.log('isIntroValid:', isIntroValid);
-
-
             return isValid;
         },
 
         openPostcode: function () {
             new daum.Postcode({
-                oncomplete: function (data) {
+                oncomplete: (data) => {
                     let roadAddr = data.roadAddress;
                     let extraRoadAddr = '';
 
@@ -236,11 +227,41 @@
                         extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                     }
 
-                    $("#zipcode").val(data.zonecode);
-                    $("#streetAddr").val(roadAddr);
-                    $("#detailAddr2").val(extraRoadAddr);
+                    this.getAddressCoords(roadAddr)
+                        .then((coords) => {
+                            const x = coords.getLng();
+                            const y = coords.getLat();
+
+                            console.log('x:', x);
+                            console.log('y:', y);
+
+                            $("#zipcode").val(data.zonecode);
+                            $("#streetAddr").val(roadAddr);
+                            $("#detailAddr2").val(extraRoadAddr);
+
+                            $("#latitude").val(x);
+                            $("#longitude").val(y);
+                        })
+                        .catch((error) => {
+                            console.error('좌표 조회 실패:', error);
+                            alert('주소에 대한 좌표를 조회할 수 없습니다.');
+                        });
                 }
             }).open();
+        },
+
+        getAddressCoords: function (address) {
+            const geoCoder = new kakao.maps.services.Geocoder();
+            return new Promise((resolve, reject) => {
+                geoCoder.addressSearch(address, (result, status) => {
+                    if (status === kakao.maps.services.Status.OK) {
+                        const coords = new kakao.maps.LatLng(result[0].x, result[0].y);
+                        resolve(coords);
+                    } else {
+                        reject(status);
+                    }
+                });
+            });
         },
 
         previewProfileImage: function (input) {
@@ -418,6 +439,8 @@
                             <input type="text" class="form-control" id="detailAddr1" name="cwDetailAddr1"
                                    placeholder="상세주소 2를 입력하세요">
                         </div>
+                        <input type="hidden" id="latitude" name="cwLatitude">
+                        <input type="hidden" id="longitude" name="cwLongitude">
                     </form>
                     <button type="submit" id="btn_add" class="btn btn-primary btn-block border-0">회원가입
                     </button>
