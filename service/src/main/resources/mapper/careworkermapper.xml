@@ -19,6 +19,14 @@
     </insert>
 
     <select id="selectByUsername" parameterType="String" resultType="Careworker">
-        SELECT * FROM careworker WHERE cw_username = #{username};
+        SELECT * FROM careworker WHERE cw_username = #{cwUsername};
+    </select>
+
+    <select id="selectByTel" parameterType="String" resultType="Careworker">
+        SELECT * FROM careworker WHERE cw_tel = #{cwTel};
+    </select>
+
+    <select id="selectByEmail" parameterType="String" resultType="Careworker">
+        SELECT * FROM careworker WHERE cw_email = #{cwEmail};
     </select>
 </mapper>

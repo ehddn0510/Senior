@@ -2,12 +2,14 @@ package edu.sm.service;
 
 import edu.sm.frame.SMService;
 import edu.sm.model.Careworker;
+import edu.sm.model.User;
+import edu.sm.model.enums.CwStatus;
 import edu.sm.repository.CareworkerRepository;
+import edu.sm.util.FileUploadUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.auth.InvalidCredentialsException;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +24,9 @@ public class CareworkerService implements SMService<Integer, Careworker> {
     private final CareworkerRepository careworkerRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final StandardPBEStringEncryptor textEncoder;
+
+    @Value("${app.dir.cwprofile}")
+    String imgDir;
 
     @Override
     public void modifyById(Integer integer, Careworker careworker) throws Exception {
@@ -50,23 +55,15 @@ public class CareworkerService implements SMService<Integer, Careworker> {
 
     @Override
     public void add(Careworker careworker) throws Exception {
-        if (careworkerRepository.selectByUsername(careworker.getCwUsername()) != null) {
-            throw new IllegalArgumentException("이미 존재하는 사용자 아이디입니다.");
-        }
+        validateDuplicateUser(careworker);
 
-        // 비밀번호 암호화
+        FileUploadUtil.saveFile(careworker.getCwProfileFile(), imgDir);
+
         careworker.setCwPassword(passwordEncoder.encode(careworker.getCwPassword()));
+        encryptAddressFields(careworker);
 
-        // 주소 필드 암호화
-        if (careworker.getCwStreetAddr() != null) {
-            careworker.setCwStreetAddr(textEncoder.encrypt(careworker.getCwStreetAddr()));
-        }
-        if (careworker.getCwDetailAddr1() != null) {
-            careworker.setCwDetailAddr1(textEncoder.encrypt(careworker.getCwDetailAddr1()));
-        }
-        if (careworker.getCwDetailAddr2() != null) {
-            careworker.setCwDetailAddr2(textEncoder.encrypt(careworker.getCwDetailAddr2()));
-        }
+        careworker.setCwStatus(CwStatus.WAITING);
+
         careworkerRepository.insert(careworker);
     }
 
@@ -77,5 +74,31 @@ public class CareworkerService implements SMService<Integer, Careworker> {
             throw new IllegalArgumentException("아이디 또는 비밀번호가 올바르지 않습니다.");
         }
         return principal;
+    }
+
+    private void validateDuplicateUser(Careworker careworker) throws Exception {
+        if (careworkerRepository.selectByUsername(careworker.getCwUsername()) != null) {
+            throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
+        }
+        if (careworkerRepository.selectByTel(careworker.getCwTel()) != null) {
+            throw new IllegalArgumentException("이미 존재하는 전화번호입니다.");
+        }
+        if (careworkerRepository.selectByEmail(careworker.getCwEmail()) != null) {
+            throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
+        }
+    }
+
+    private void encryptAddressFields(Careworker careworker) {
+        if (careworker.getCwStreetAddr() != null) careworker.setCwStreetAddr(textEncoder.encrypt(careworker.getCwStreetAddr()));
+        if (careworker.getCwDetailAddr1() != null) careworker.setCwDetailAddr1(textEncoder.encrypt(careworker.getCwDetailAddr1()));
+        if (careworker.getCwDetailAddr2() != null) careworker.setCwDetailAddr2(textEncoder.encrypt(careworker.getCwDetailAddr2()));
+    }
+
+    private void decryptAddressFields(Careworker careworker) {
+        if (careworker != null) {
+            if (careworker.getCwStreetAddr() != null) careworker.setCwStreetAddr(textEncoder.decrypt(careworker.getCwStreetAddr()));
+            if (careworker.getCwDetailAddr1() != null) careworker.setCwDetailAddr1(textEncoder.decrypt(careworker.getCwDetailAddr1()));
+            if (careworker.getCwDetailAddr2() != null) careworker.setCwDetailAddr2(textEncoder.decrypt(careworker.getCwDetailAddr2()));
+        }
     }
 }

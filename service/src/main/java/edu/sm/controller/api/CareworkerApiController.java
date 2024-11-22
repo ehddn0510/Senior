@@ -6,13 +6,8 @@ import edu.sm.service.CareworkerService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.auth.InvalidCredentialsException;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -23,16 +18,16 @@ public class CareworkerApiController {
     private final CareworkerService careworkerService;
 
     @PostMapping("/signup")
-    public ResponseDto<Integer> save(@RequestBody Careworker careworker) {
+    public ResponseDto<String> save(@ModelAttribute Careworker careworker) {
         try {
+            careworker.setCwProfile(careworker.getCwProfileFile().getOriginalFilename());
             careworkerService.add(careworker);
-            return new ResponseDto<>(HttpStatus.OK.value(), 1);
+            return new ResponseDto<>(HttpStatus.OK.value(), "1");
         } catch (IllegalArgumentException e) {
-            log.error("잘못된 입력 값입니다.", e);
-            return new ResponseDto<>(HttpStatus.BAD_REQUEST.value(), 0);
+            return new ResponseDto<>(HttpStatus.BAD_REQUEST.value(), e.getMessage());
         } catch (Exception e) {
-            log.error("예기치 않은 오류 발생", e);
-            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), 0);
+            log.info(e.getMessage());
+            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "예기치 않은 오류 발생");
         }
     }
 
