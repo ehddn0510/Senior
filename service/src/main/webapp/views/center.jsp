@@ -22,9 +22,8 @@
 
             <div class="care_text">
               <h2>
-                어르신의 <br />
-                행복한 일상을 <br />
-                지원합니다
+                어르신의 행복한<br />
+                일상을 지원합니다
               </h2>
             </div>
           </div>
@@ -43,8 +42,7 @@
           <div class="care_detail">
             <div class="care_text">
               <h2>
-                전문적이고 <br />
-                따뜻한 <br />
+                전문적이고 따뜻한 <br />
                 돌봄 서비스
               </h2>
             </div>
@@ -64,8 +62,7 @@
           <div class="care_detail">
             <div class="care_text">
               <h2>
-                경험 풍부한 <br />
-                케어 전문가가 <br />
+                경험 풍부한 케어 전문가가 <br />
                 함께합니다
               </h2>
             </div>
@@ -85,8 +82,7 @@
           <div class="care_detail">
             <div class="care_text">
               <h2>
-                개인 맞춤 <br />
-                케어로 <br />
+                개인 맞춤 케어로 <br />
                 삶의 질 향상
               </h2>
             </div>
