@@ -6,6 +6,47 @@
 
 <div class="content-body">
     <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-sm-6">
+                <div class="card">
+                    <div class="stat-widget-one card-body">
+                        <div class="stat-icon d-inline-block">
+                            <i class="ti-money text-success border-success"></i>
+                        </div>
+                        <div class="stat-content d-inline-block">
+                            <div class="stat-text">계약 금액</div>
+                            <div class="stat-digit">1,012</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="card">
+                    <div class="stat-widget-one card-body">
+                        <div class="stat-icon d-inline-block">
+                            <i class="ti-user text-primary border-primary"></i>
+                        </div>
+                        <div class="stat-content d-inline-block">
+                            <div class="stat-text">연결 시니이 명수</div>
+                            <div class="stat-digit">3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <div class="card">
+                    <div class="stat-widget-one card-body">
+                        <div class="stat-icon d-inline-block">
+                            <i class="ti-layout-grid2 text-pink border-pink"></i>
+                        </div>
+                        <div class="stat-content d-inline-block">
+                            <div class="stat-text">계약 유지 기간</div>
+                            <div class="stat-digit">14 MONTH</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- 유저 프로필 헤더 -->
         <div class="profile">
             <div class="profile-head">
