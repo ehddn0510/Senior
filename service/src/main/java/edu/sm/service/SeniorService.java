@@ -1,6 +1,8 @@
 package edu.sm.service;
 
+import edu.sm.util.FileUploadUtil;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import edu.sm.repository.SeniorRepository;
 import edu.sm.frame.SMService;
@@ -12,14 +14,19 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SeniorService implements SMService<Integer, Senior> {
-
     private final SeniorRepository seniorRepository;
-
     private final StandardPBEStringEncryptor textEncoder;
+
+    @Value("${app.dir.seniorprofile}")
+    String imgDir;
 
     @Override
     public void add(Senior senior) throws Exception {
-        encryptAddress(senior); // 시니어 등록 시 주소 암호화
+        encryptAddress(senior);
+
+        FileUploadUtil.saveFile(senior.getSeniorProfileFile(), imgDir);
+
+        senior.setSeniorStatus("active");
         seniorRepository.insert(senior);
     }
 

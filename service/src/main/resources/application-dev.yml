@@ -40,6 +40,7 @@ app:
   dir:
     userprofile: ENC(uOcl+MSO9ecwlkOufqno4AHpeknx+5Im)
     cwprofile: ENC(C8uJu9YkDQN81BOMp5LAVbU3Aj4SjHdwbphxjQIHKwE=)
+    seniorprofile: ENC(9ljTzP6I60dLgOxD0q0AT6M84U64kuQd)
   key:
     algo: PBEWithMD5AndDES
     skey: c3ZFoAQC6GAxA64vwx9chJZubbkUf780
