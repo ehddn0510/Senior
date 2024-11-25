@@ -58,6 +58,26 @@ public class MainController {
         return "redirect:/"; // 메인 페이지로 리다이렉트
     }
 
+    @RequestMapping("/senior/manage")
+    public String seniorManage(HttpSession session, Model model) {
+        // 로그인 여부 확인
+        Integer userId = (Integer) session.getAttribute("principal");
+        if (userId == null) {
+            return "redirect:/login/user"; // 로그인 페이지로 리다이렉트
+        }
+
+        // 모델에 데이터 추가
+        model.addAttribute("userId", userId); // 사용자 ID를 모델에 추가
+        model.addAttribute("center", "senior/manage"); // center 속성 추가
+
+        return "index"; // 메인 레이아웃 JSP 반환
+    }
+
+    @RequestMapping("/senior/info")
+    public String seniorInfo(Model model) {
+        model.addAttribute("center", "senior/info");
+        return "index";
+    }
 
     @RequestMapping("/about")
     public String about(Model model) {
