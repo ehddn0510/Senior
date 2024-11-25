@@ -12,7 +12,7 @@
                             senior_significant, senior_profile, senior_latitude, senior_longitude, user_id)
         VALUES (null, #{seniorName}, #{seniorGender}, #{seniorTel}, #{seniorBirth},
                 #{seniorZipcode}, #{seniorStreetAddr}, #{seniorDetailAddr1},
-                #{seniorDetailAddr2}, #{seniorStatus}, #{seniorProfile}, #{seniorSignificant}, #{seniorLatitude}, #{seniorLongitude}, #{userId})
+                #{seniorDetailAddr2}, #{seniorStatus}, #{seniorSignificant}, #{seniorProfile}, #{seniorLatitude}, #{seniorLongitude}, #{userId})
     </insert>
 
     <select id="selectOne" parameterType="int">
