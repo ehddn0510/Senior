@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.sm.repository.HealthinfoRepository">
+
+    <select id="findHealthInfoBySeniorId" parameterType="Integer" resultType="HealthInfo">
+        SELECT * FROM healthinfo WHERE senior_id = #{seniorId};
+    </select>
+
+</mapper>

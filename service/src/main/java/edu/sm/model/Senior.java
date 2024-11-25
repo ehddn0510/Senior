@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -25,5 +26,9 @@ public class Senior {
     private LocalDateTime seniorRdate;
     private String seniorStatus;
     private String seniorSignificant;
+    private String seniorProfile;
+    private MultipartFile seniorProfileFile;
+    private Double seniorLatitude;
+    private Double seniorLongitude;
     private int userId;
 }

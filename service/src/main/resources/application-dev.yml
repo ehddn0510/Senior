@@ -38,8 +38,8 @@ app:
   url:
     server-url: ENC(fRoRGxzjgDDpIiL+Odv9zgjEyFnnozQRoMD1wGvhypE=)
   dir:
-    userprofile: ENC(uOcl+MSO9ecwlkOufqno4AHpeknx+5Im)
-    cwprofile: ENC(C8uJu9YkDQN81BOMp5LAVbU3Aj4SjHdwbphxjQIHKwE=)
+    imgdir: ENC(ct2qQbo6cc8jeyPu7XCPetaZuu6qVQDB)
+    uploaddir: ENC(/2TpcDLKatu3EYdSypcT7A==)
   key:
     algo: PBEWithMD5AndDES
     skey: c3ZFoAQC6GAxA64vwx9chJZubbkUf780

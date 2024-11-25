@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -25,7 +26,7 @@ public class CareworkerService implements SMService<Integer, Careworker> {
     private final BCryptPasswordEncoder passwordEncoder;
     private final StandardPBEStringEncryptor textEncoder;
 
-    @Value("${app.dir.cwprofile}")
+    @Value("${app.dir.uploaddir}")
     String imgDir;
 
     @Override
@@ -55,9 +56,11 @@ public class CareworkerService implements SMService<Integer, Careworker> {
 
     @Override
     public void add(Careworker careworker) throws Exception {
+        String careworkerDir = Paths.get(imgDir, "careworker").toString();
+
         validateDuplicateUser(careworker);
 
-        FileUploadUtil.saveFile(careworker.getCwProfileFile(), imgDir);
+        FileUploadUtil.saveFile(careworker.getCwProfileFile(), careworkerDir);
 
         careworker.setCwPassword(passwordEncoder.encode(careworker.getCwPassword()));
         encryptAddressFields(careworker);

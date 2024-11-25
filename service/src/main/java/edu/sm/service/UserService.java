@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -25,15 +26,17 @@ public class UserService implements SMService<Integer, User> {
     private final BCryptPasswordEncoder passwordEncoder;
     private final StandardPBEStringEncryptor textEncoder;
 
-    @Value("${app.dir.userprofile}")
+    @Value("${app.dir.uploaddir}")
     String imgDir;
 
     @Override
     @Transactional
     public void add(User user) throws Exception {
+        String userDir = Paths.get(imgDir, "user").toString();
+
         validateDuplicateUser(user);
 
-        FileUploadUtil.saveFile(user.getUserProfileFile(), imgDir);
+        FileUploadUtil.saveFile(user.getUserProfileFile(), userDir);
 
         user.setUserPassword(passwordEncoder.encode(user.getUserPassword())); // 비밀번호 암호화
         encryptAddressFields(user);
