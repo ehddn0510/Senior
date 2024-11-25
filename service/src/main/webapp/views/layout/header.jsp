@@ -36,16 +36,6 @@
                 <a class="navbar-brand" href="/">
                     <span>Senior Care</span>
                 </a>
-                <div class="user_option">
-                    <%-- 고객 메뉴 --%>
-                    <c:if test="${sessionScope.role == 'USER'}">
-                        <a href="/choice">보호사 신청</a>
-                        <a href="/senior-health">시니어 건강</a>
-                        <a href="/schedule">일정관리</a>
-                        <a href="/user/video">통화</a>
-                        <a href="/help">문의</a>
-                        <a href="/user/mypage">마이페이지</a>
-                    </c:if>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>

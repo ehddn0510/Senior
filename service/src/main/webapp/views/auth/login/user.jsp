@@ -59,7 +59,7 @@
                         <button type="button" id="loginbtn" class="btn btn-primary btn-block" style="background-color: #82c419; border: none">로그인</button>
                     </div>
                     <div class="mt-3 text-center">
-                        <p>아직 계정이 없으신가요? <a href="/signup/customer">회원가입</a></p>
+                        <p>아직 계정이 없으신가요? <a href="/signup/user">회원가입</a></p>
                     </div>
                 </div>
             </div>
