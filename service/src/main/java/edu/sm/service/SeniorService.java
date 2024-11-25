@@ -9,6 +9,7 @@ import edu.sm.frame.SMService;
 import edu.sm.model.Senior;
 import lombok.RequiredArgsConstructor;
 
+import java.nio.file.Paths;
 import java.util.List;
 
 @Service
@@ -17,14 +18,16 @@ public class SeniorService implements SMService<Integer, Senior> {
     private final SeniorRepository seniorRepository;
     private final StandardPBEStringEncryptor textEncoder;
 
-    @Value("${app.dir.seniorprofile}")
+    @Value("${app.dir.uploaddir}")
     String imgDir;
 
     @Override
     public void add(Senior senior) throws Exception {
+        String seniorDir = Paths.get(imgDir, "senior").toString();
+
         encryptAddress(senior);
 
-        FileUploadUtil.saveFile(senior.getSeniorProfileFile(), imgDir);
+        FileUploadUtil.saveFile(senior.getSeniorProfileFile(), seniorDir);
 
         senior.setSeniorStatus("active");
         seniorRepository.insert(senior);
