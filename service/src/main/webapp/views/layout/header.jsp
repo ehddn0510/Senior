@@ -34,37 +34,40 @@
                 <a class="navbar-brand" href="/">
                     <span>Senior Care</span>
                 </a>
-                <div class="user_option">
-                    <%-- 고객 메뉴 --%>
-                    <c:if test="${sessionScope.role == 'USER'}">
-                        <a href="/choice">보호사 신청</a>
-                        <a href="/senior-health">시니어 건강</a>
-                        <a href="/schedule">일정관리</a>
-                        <a href="/help">문의</a>
-                        <a href="/user/mypage">마이페이지</a>
-                    </c:if>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                    <%-- 보호사 메뉴 --%>
-                    <c:if test="${sessionScope.role == 'CAREWORKER'}">
-                        <a href="/senior-list">시니어 리스트</a>
-                        <a href="/contact">계약관리</a>
-                        <a href="/cwschedule">일정관리</a>
-                        <a href="/cwmypage">마이페이지</a>
-                    </c:if>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div class="user_option ml-auto">
+                        <%-- 고객 메뉴 --%>
+                        <c:if test="${sessionScope.role == 'USER'}">
+                            <a href="/choice">보호사 신청</a>
+                            <a href="/senior-health">시니어 건강</a>
+                            <a href="/schedule">일정관리</a>
+                            <a href="/help">문의</a>
+                            <a href="/user/mypage">마이페이지</a>
+                        </c:if>
 
-                    <!-- 로그인/로그아웃 -->
-                    <c:choose>
-                        <c:when test="${not empty sessionScope.principal}">
-                            <a href="/logout"><span>로그아웃</span>
-                            </a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="/login" data-toggle="modal" data-target="#loginModal"><span>로그인</span>
-                            </a>
-                            <a href="/signup" data-toggle="modal" data-target="#signModal"><span>회원가입</span>
-                            </a>
-                        </c:otherwise>
-                    </c:choose>
+                        <%-- 보호사 메뉴 --%>
+                        <c:if test="${sessionScope.role == 'CAREWORKER'}">
+                            <a href="/senior-list">시니어 리스트</a>
+                            <a href="/contact">계약관리</a>
+                            <a href="/cwschedule">일정관리</a>
+                            <a href="/cwmypage">마이페이지</a>
+                        </c:if>
+
+                        <!-- 로그인/로그아웃 -->
+                        <c:choose>
+                            <c:when test="${not empty sessionScope.principal}">
+                                <a href="/logout"><span>로그아웃</span></a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="/login" data-toggle="modal" data-target="#loginModal"><span>로그인</span></a>
+                                <a href="/signup" data-toggle="modal" data-target="#signModal"><span>회원가입</span></a>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
                 </div>
             </nav>
         </div>
