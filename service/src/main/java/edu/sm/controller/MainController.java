@@ -79,6 +79,12 @@ public class MainController {
         return "index";
     }
 
+    @RequestMapping("/video")
+    public String video(Model model) {
+        model.addAttribute("center", "user/video");
+        return "index";
+    }
+
     @RequestMapping("/about")
     public String about(Model model) {
         return "about"; // About 페이지로 이동
