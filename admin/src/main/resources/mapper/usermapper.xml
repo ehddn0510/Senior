@@ -49,4 +49,48 @@
         WHERE user_id = #{userId};
     </update>
 
+    <!-- 월별 회원 가입 수 조회 -->
+    <select id="selectMonthlySignupStats" resultType="map">
+        SELECT
+            DATE_FORMAT(user_rdate, '%Y-%m') AS signup_month,
+            COUNT(*) AS signup_count
+        FROM
+            user
+        WHERE
+            user_rdate >= DATE_SUB(CURDATE(), INTERVAL 12 MONTH)
+        GROUP BY
+            DATE_FORMAT(user_rdate, '%Y-%m')
+        ORDER BY
+            signup_month ASC;
+    </select>
+
+    <!-- 유저 상태별 카운트 -->
+    <select id="selectUserStatusCount" resultType="map">
+        SELECT user_status, COUNT(*) AS count
+        FROM user
+        GROUP BY user_status;
+    </select>
+
+    <!-- 유저별 계약 금액 조회 -->
+    <select id="selectTotalContractAmountByUserId" resultType="map">
+        SELECT user_id, SUM(contract_price) AS total_contract_amount
+        FROM contract
+        GROUP BY user_id;
+    </select>
+
+    <!-- 유저별 시니어 수 조회 -->
+    <select id="selectSeniorCountByUserId" resultType="map">
+        SELECT user_id, COUNT(*) AS senior_count
+        FROM senior
+        GROUP BY user_id;
+    </select>
+
+    <!-- 계약 갱신 빈도 조회 -->
+    <select id="selectContractRenewalCountByUserId" resultType="map">
+        SELECT user_id, COUNT(*) AS renewal_count
+        FROM contract
+        WHERE contract_status = 'completed'
+        GROUP BY user_id;
+    </select>
+
 </mapper>

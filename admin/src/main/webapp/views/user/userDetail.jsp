@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <div class="content-body">
     <div class="container-fluid">
         <div class="row">
+            <!-- 계약 금액 -->
             <div class="col-lg-4 col-sm-6">
                 <div class="card">
                     <div class="stat-widget-one card-body">
@@ -15,11 +17,15 @@
                         </div>
                         <div class="stat-content d-inline-block">
                             <div class="stat-text">계약 금액</div>
-                            <div class="stat-digit">1,012</div>
+                            <div class="stat-digit">
+                                ${fn:escapeXml(totalContractAmount)}[user_id=${user.userId}].total_contract_amount | 0} 원
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- 연결 시니어 명수 -->
             <div class="col-lg-4 col-sm-6">
                 <div class="card">
                     <div class="stat-widget-one card-body">
@@ -27,12 +33,16 @@
                             <i class="ti-user text-primary border-primary"></i>
                         </div>
                         <div class="stat-content d-inline-block">
-                            <div class="stat-text">연결 시니이 명수</div>
-                            <div class="stat-digit">3</div>
+                            <div class="stat-text">연결 시니어 명수</div>
+                            <div class="stat-digit">
+                                ${fn:escapeXml(seniorCount)}[user_id=${user.userId}].senior_count | 0} 명
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- 계약 유지 기간 -->
             <div class="col-lg-4 col-sm-6">
                 <div class="card">
                     <div class="stat-widget-one card-body">
@@ -41,12 +51,15 @@
                         </div>
                         <div class="stat-content d-inline-block">
                             <div class="stat-text">계약 유지 기간</div>
-                            <div class="stat-digit">14 MONTH</div>
+                            <div class="stat-digit">
+                                ${fn:escapeXml(contractRenewalCount)}[user_id=${user.userId}].renewal_count | 0} 회
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <!-- 유저 프로필 헤더 -->
         <div class="profile">
             <div class="profile-head">

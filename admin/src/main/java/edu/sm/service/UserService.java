@@ -1,17 +1,15 @@
 package edu.sm.service;
 
 import edu.sm.frame.SMService;
-import edu.sm.model.Admin;
 import edu.sm.model.Senior;
 import edu.sm.model.User;
-import edu.sm.repository.AdminRepository;
 import edu.sm.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -20,10 +18,9 @@ public class UserService implements SMService<Integer, User> {
 
     private final UserRepository userRepository;
 
-
     @Override
     public void add(User user) throws Exception {
-
+        // 구현 필요 시 추가
     }
 
     @Override
@@ -36,7 +33,7 @@ public class UserService implements SMService<Integer, User> {
 
     @Override
     public void del(Integer integer) throws Exception {
-
+        // 구현 필요 시 추가
     }
 
     @Override
@@ -87,11 +84,11 @@ public class UserService implements SMService<Integer, User> {
         userRepository.update(existingUser); // 병합된 데이터를 DB에 저장
     }
 
-
     // userId로 senior 데이터 조회
     public List<Senior> getSeniorsByUserId(Integer userId) throws Exception {
         return userRepository.selectSeniorByUserId(userId);
     }
+
     // 사용자 상태를 inactive로 변경하는 메서드
     public void updateStatusToInactive(Integer userId) throws Exception {
         User user = userRepository.selectOne(userId);
@@ -102,4 +99,28 @@ public class UserService implements SMService<Integer, User> {
         userRepository.update(user);
     }
 
+    // 월별 회원 가입 통계 조회
+    public List<Map<String, Object>> getMonthlySignupStats() {
+        return userRepository.selectMonthlySignupStats();
+    }
+
+    // 유저 상태별 카운트 조회
+    public List<Map<String, Object>> getUserStatusCount() {
+        return userRepository.selectUserStatusCount();
+    }
+
+    // 유저별 계약 금액 조회
+    public List<Map<String, Object>> getTotalContractAmountByUserId() {
+        return userRepository.selectTotalContractAmountByUserId();
+    }
+
+    // 유저별 시니어 수 조회
+    public List<Map<String, Object>> getSeniorCountByUserId() {
+        return userRepository.selectSeniorCountByUserId();
+    }
+
+    // 계약 갱신 빈도 조회
+    public List<Map<String, Object>> getContractRenewalCountByUserId() {
+        return userRepository.selectContractRenewalCountByUserId();
+    }
 }
