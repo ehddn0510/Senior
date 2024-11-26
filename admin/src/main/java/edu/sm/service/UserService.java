@@ -110,17 +110,17 @@ public class UserService implements SMService<Integer, User> {
     }
 
     // 유저별 계약 금액 조회
-    public List<Map<String, Object>> getTotalContractAmountByUserId() {
-        return userRepository.selectTotalContractAmountByUserId();
+    public Long getTotalContractAmountByUserId(Integer userId) {
+        return userRepository.selectTotalContractAmountByUserId(userId);
     }
 
     // 유저별 시니어 수 조회
-    public List<Map<String, Object>> getSeniorCountByUserId() {
-        return userRepository.selectSeniorCountByUserId();
+    public Long getSeniorCountByUserId(Integer userId) {
+        return userRepository.selectSeniorCountByUserId(userId);
     }
 
     // 계약 갱신 빈도 조회
-    public List<Map<String, Object>> getContractRenewalCountByUserId() {
-        return userRepository.selectContractRenewalCountByUserId();
+    public Long getContractRenewalCountByUserId(Integer userId) {
+        return userRepository.selectContractRenewalCountByUserId(userId);
     }
 }

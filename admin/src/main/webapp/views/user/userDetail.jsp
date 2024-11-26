@@ -18,7 +18,7 @@
                         <div class="stat-content d-inline-block">
                             <div class="stat-text">계약 금액</div>
                             <div class="stat-digit">
-                                ${fn:escapeXml(totalContractAmount)}[user_id=${user.userId}].total_contract_amount | 0} 원
+                                <p>${totalContractAmount} 원</p>
                             </div>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                         <div class="stat-content d-inline-block">
                             <div class="stat-text">연결 시니어 명수</div>
                             <div class="stat-digit">
-                                ${fn:escapeXml(seniorCount)}[user_id=${user.userId}].senior_count | 0} 명
+                                <p>${seniorCount} 명</p>
                             </div>
                         </div>
                     </div>
@@ -50,9 +50,9 @@
                             <i class="ti-layout-grid2 text-pink border-pink"></i>
                         </div>
                         <div class="stat-content d-inline-block">
-                            <div class="stat-text">계약 유지 기간</div>
+                            <div class="stat-text">계약 유지 회수</div>
                             <div class="stat-digit">
-                                ${fn:escapeXml(contractRenewalCount)}[user_id=${user.userId}].renewal_count | 0} 회
+                                <p>${contractRenewalCount} 회</p>
                             </div>
                         </div>
                     </div>
@@ -147,11 +147,12 @@
                             <h5 class="text-primary">${senior.seniorName}</h5>
                             <p class="mb-1">${senior.seniorGender == 'male' ? '남성' : '여성'}</p>
                             <p class="mb-1">
-                                <fmt:formatDate value="${senior.seniorBirth}" pattern="yyyy년 MM월 dd일" />
+                                <fmt:formatDate value="${senior.seniorBirth}" pattern="yyyy년 MM월 dd일"/>
                             </p>
                             <div class="mt-4 text-center">
                                 <!-- Detail 버튼으로 수정하고 링크 연결 -->
-                                <a href="<c:url value='/senior-detail?id=${senior.seniorId}' />" class="btn btn-primary btn-sm">Detail</a>
+                                <a href="<c:url value='/senior-detail?id=${senior.seniorId}' />"
+                                   class="btn btn-primary btn-sm">Detail</a>
                             </div>
                         </div>
                     </div>
@@ -163,7 +164,7 @@
 
 <script>
     // 수정 요청을 AJAX로 처리
-    document.getElementById("updateUserForm").addEventListener("submit", function(event) {
+    document.getElementById("updateUserForm").addEventListener("submit", function (event) {
         event.preventDefault(); // 폼 기본 제출 동작 방지
 
         const formData = new FormData(this);

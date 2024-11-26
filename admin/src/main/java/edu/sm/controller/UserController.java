@@ -1,5 +1,6 @@
 package edu.sm.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.sm.model.Senior;
 import edu.sm.model.User;
 import edu.sm.service.UserService;
@@ -10,9 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -40,10 +40,7 @@ public class UserController {
 
         for (int i = 0; i < 12; i++) {
             String month = currentMonth.minusMonths(11 - i).format(DateTimeFormatter.ofPattern("yyyy-MM"));
-            Map<String, Object> monthData = signupTrends.stream()
-                    .filter(data -> month.equals(data.get("signup_month")))
-                    .findFirst()
-                    .orElse(Map.of("signup_month", month, "signup_count", 0)); // 없는 달은 0으로 채움
+            Map<String, Object> monthData = signupTrends.stream().filter(data -> month.equals(data.get("signup_month"))).findFirst().orElse(Map.of("signup_month", month, "signup_count", 0)); // 없는 달은 0으로 채움
             last12Months.add(monthData);
         }
 
@@ -75,37 +72,26 @@ public class UserController {
     public String detail(Model model, @RequestParam("id") Integer userId) throws Exception {
         User user = userService.get(userId);
         List<Senior> senior = userService.getSeniorsByUserId(userId);
+
         model.addAttribute("user", user);
         model.addAttribute("senior", senior);
         model.addAttribute("center", dir + "userDetail");
         // 이 위로는 건들지 않는다 ㅇㅋ?
 
-        // 서비스 호출 (변환 전 데이터 로그)
-        List<Map<String, Object>> totalContractAmount = userService.getTotalContractAmountByUserId();
-        List<Map<String, Object>> seniorCount = userService.getSeniorCountByUserId();
-        List<Map<String, Object>> contractRenewalCount = userService.getContractRenewalCountByUserId();
+        // Total Contract Amount 계산
+        Long totalContractAmount = userService.getTotalContractAmountByUserId(userId);
+        model.addAttribute("totalContractAmount", totalContractAmount != null ? totalContractAmount.intValue() : 0);
 
-        log.info("Before JSON Conversion - Total Contract Amount: {}", totalContractAmount);
-        log.info("Before JSON Conversion - Senior Count: {}", seniorCount);
-        log.info("Before JSON Conversion - Contract Renewal Count: {}", contractRenewalCount);
+        // 연결 시니어 명수 계산
+        Long seniorCount = userService.getSeniorCountByUserId(userId);
+        model.addAttribute("seniorCount", seniorCount != null ? seniorCount.intValue() : 0);
 
-        // ObjectMapper를 사용하여 JSON으로 변환
-        ObjectMapper objectMapper = new ObjectMapper();
-        String totalContractAmountJson = objectMapper.writeValueAsString(totalContractAmount);
-        String seniorCountJson = objectMapper.writeValueAsString(seniorCount);
-        String contractRenewalCountJson = objectMapper.writeValueAsString(contractRenewalCount);
-
-        // 변환 후 데이터 로그
-        log.info("After JSON Conversion - Total Contract Amount (JSON): {}", totalContractAmountJson);
-        log.info("After JSON Conversion - Senior Count (JSON): {}", seniorCountJson);
-        log.info("After JSON Conversion - Contract Renewal Count (JSON): {}", contractRenewalCountJson);
-
-        // JSON 데이터를 모델에 추가
-        model.addAttribute("totalContractAmount", totalContractAmountJson);
-        model.addAttribute("seniorCount", seniorCountJson);
-        model.addAttribute("contractRenewalCount", contractRenewalCountJson);
+        // 계약 갱신 횟수 조회
+        Long renewalCount = userService.getContractRenewalCountByUserId(userId);
+        model.addAttribute("contractRenewalCount", renewalCount != null ? renewalCount.intValue() : 0);
 
         return "index";
     }
+
 
 }

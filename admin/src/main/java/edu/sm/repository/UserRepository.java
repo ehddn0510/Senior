@@ -13,8 +13,11 @@ import java.util.Map;
 @Mapper
 public interface UserRepository extends SMRepository<Integer, User> {
     User selectOne(Integer userId);
+
     List<User> findAll();
+
     List<Senior> selectSeniorByUserId(Integer userId);
+
     void update(User user) throws Exception;
 
     // 월별 회원 가입 통계 조회
@@ -24,11 +27,11 @@ public interface UserRepository extends SMRepository<Integer, User> {
     List<Map<String, Object>> selectUserStatusCount();
 
     // 유저별 계약 금액 조회
-    List<Map<String, Object>> selectTotalContractAmountByUserId();
+    Long selectTotalContractAmountByUserId(Integer userId);
 
     // 유저별 시니어 수 조회
-    List<Map<String, Object>> selectSeniorCountByUserId();
+    Long selectSeniorCountByUserId(Integer userId);
 
     // 계약 갱신 빈도 조회
-    List<Map<String, Object>> selectContractRenewalCountByUserId();
+    Long selectContractRenewalCountByUserId(Integer userId);
 }
