@@ -38,4 +38,5 @@ public class Careworker {
     private MultipartFile cwProfileFile;
     private Double cwLatitude;
     private Double cwLongitude;
+    private Double distance;
 }

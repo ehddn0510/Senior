@@ -52,7 +52,7 @@
           </ul>
           <div class="text-center mt-4">
             <a href="/senior/update/${senior.seniorId}" class="btn btn-warning">수정</a>
-            <a href="/senior/list" class="btn btn-secondary">목록으로</a>
+            <a href="/user/seniors" class="btn btn-secondary">목록으로</a>
           </div>
         </div>
       </div>

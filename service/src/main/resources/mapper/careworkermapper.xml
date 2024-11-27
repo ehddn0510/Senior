@@ -18,6 +18,10 @@
                  );
     </insert>
 
+    <select id="selectOne" parameterType="Integer" resultType="Careworker">
+        SELECT * FROM careworker WHERE cw_id = #{cwId};
+    </select>
+
     <select id="selectByUsername" parameterType="String" resultType="Careworker">
         SELECT * FROM careworker WHERE cw_username = #{cwUsername};
     </select>
@@ -29,4 +33,27 @@
     <select id="selectByEmail" parameterType="String" resultType="Careworker">
         SELECT * FROM careworker WHERE cw_email = #{cwEmail};
     </select>
+
+    <select id="selectNearbyCareworkers" resultType="Careworker">
+        SELECT
+        cw_id AS cwId,
+        cw_name AS cwName,
+        cw_tel AS cwTel,
+        cw_profile AS cwProfile,
+        cw_latitude AS cwLatitude,
+        cw_longitude AS cwLongitude,
+        (
+        6371 * ACOS(
+        COS(RADIANS(#{latitude})) * COS(RADIANS(cw_latitude)) *
+        COS(RADIANS(cw_longitude) - RADIANS(#{longitude})) +
+        SIN(RADIANS(#{latitude})) * SIN(RADIANS(cw_latitude))
+        )
+        ) AS distance
+        FROM careworker
+        HAVING <![CDATA[distance <= #{radius}]]>
+        ORDER BY distance;
+    </select>
+
+
+
 </mapper>

@@ -41,7 +41,8 @@ public class CareworkerService implements SMService<Integer, Careworker> {
 
     @Override
     public Careworker get(Integer integer) throws Exception {
-        return null;
+        Careworker careworker = careworkerRepository.selectOne(integer);
+        return careworker;
     }
 
     @Override
@@ -77,6 +78,10 @@ public class CareworkerService implements SMService<Integer, Careworker> {
             throw new IllegalArgumentException("아이디 또는 비밀번호가 올바르지 않습니다.");
         }
         return principal;
+    }
+
+    public List<Careworker> getCareworkersWithinRadius(double latitude, double longitude, double radius) throws Exception {
+        return careworkerRepository.selectNearbyCareworkers(latitude, longitude, radius);
     }
 
     private void validateDuplicateUser(Careworker careworker) throws Exception {
