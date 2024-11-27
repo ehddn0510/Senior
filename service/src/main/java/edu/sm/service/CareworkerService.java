@@ -79,6 +79,10 @@ public class CareworkerService implements SMService<Integer, Careworker> {
         return principal;
     }
 
+    public List<Careworker> getCareworkersWithinRadius(double latitude, double longitude, double radius) throws Exception {
+        return careworkerRepository.selectNearbyCareworkers(latitude, longitude, radius);
+    }
+
     private void validateDuplicateUser(Careworker careworker) throws Exception {
         if (careworkerRepository.selectByUsername(careworker.getCwUsername()) != null) {
             throw new IllegalArgumentException("이미 존재하는 아이디입니다.");

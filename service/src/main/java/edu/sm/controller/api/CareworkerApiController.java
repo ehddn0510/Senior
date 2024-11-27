@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -43,5 +45,23 @@ public class CareworkerApiController {
         } catch (Exception e) {
             return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "예기치 않은 오류 발생");
         }
+    }
+
+    @GetMapping("/nearby")
+    public List<Careworker> findNearbyCareworkers(
+            @RequestParam Double latitude,
+            @RequestParam Double longitude,
+            @RequestParam Double radius
+    ) {
+        List<Careworker> careworkers = null;
+        try {
+            log.info("latitude: " + latitude + ", longitude: " + longitude + ", radius: " + radius);
+            careworkers = careworkerService.getCareworkersWithinRadius(latitude, longitude, radius);
+            log.info("cacarere: " + careworkers.toString());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        log.info(careworkers.toString());
+        return careworkers;
     }
 }

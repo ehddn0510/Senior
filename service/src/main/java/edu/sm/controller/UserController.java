@@ -42,12 +42,41 @@ public class UserController {
         return "index";
     }
 
+    @RequestMapping("/mypage")
+    public String Mypage(HttpSession session, Model model) {
+        Integer userId = (Integer) session.getAttribute("principal");
+        if (userId == null) {
+            return "redirect:/login/user";
+        }
+        model.addAttribute("userId", userId); // userId 모델 추가
+        model.addAttribute("center", "user/mypage"); // center 속성 추가
+        return "index";
+    }
+
+
     @RequestMapping("/video")
     public String video(Model model) {
         model.addAttribute("center", "user/video");
         return "index";
     }
 
+    @RequestMapping("/careworkers")
+    public String careworkerList(HttpSession session, Model model) {
+        Integer userId = (Integer) session.getAttribute("principal");
 
+        if (userId == null) {
+            return "redirect:/login/user";
+        }
 
+        List<Senior> seniors = null;
+        try {
+            seniors = seniorService.getSeniorsByUserId(userId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        model.addAttribute("seniors", seniors);
+        model.addAttribute("center", "user/careworkerlist");
+        return "index";
+    }
 }
