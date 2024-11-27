@@ -46,4 +46,9 @@
         WHERE senior_id = #{seniorId}
     </update>
 
+    <select id="selectSeniorsByUserId" parameterType="int" resultType="Senior">
+        SELECT *
+        FROM senior
+        WHERE user_id = #{userId}
+    </select>
 </mapper>

@@ -5,7 +5,10 @@ import edu.sm.frame.SMRepository;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @Mapper
 public interface SeniorRepository extends SMRepository<Integer, Senior> {
+    List<Senior> selectSeniorsByUserId(Integer userId) throws Exception;
 }

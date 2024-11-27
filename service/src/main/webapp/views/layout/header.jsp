@@ -45,7 +45,7 @@
                         <%-- 고객 메뉴 --%>
                         <c:if test="${sessionScope.role == 'USER'}">
                             <a href="/choice">보호사 신청</a>
-                            <a href="/senior/manage">시니어 관리</a>
+                            <a href="/user/seniors">시니어 관리</a>
                             <a href="/schedule">일정관리</a>
                             <a href="/help">문의</a>
                             <a href="/user/mypage">마이페이지</a>
