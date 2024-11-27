@@ -15,240 +15,327 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-6 col-sm-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">현재 active/inactive 비율</h4>
-                    </div>
-                    <div class="card-body">
-                        <div id="gauge-chart" class="ct-chart ct-golden-section">
-                            <div class="chartist-tooltip" style="top: -38.3999px; left: 342px;"><span
-                                    class="chartist-tooltip-value">40</span></div>
-                            <svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct" width="100%" height="100%"
-                                 class="ct-chart-donut" style="width: 100%; height: 100%;">
-                                <g class="ct-series ct-series-a">
-                                    <path d="M195.253,72.347A90.6,90.6,0,0,0,177.95,125.6" class="ct-slice-donut"
-                                          ct:value="20" style="stroke-width: 60px;"></path>
-                                </g>
-                                <g class="ct-series ct-series-b">
-                                    <path d="M215.297,52.303A90.6,90.6,0,0,0,195.068,72.603" class="ct-slice-donut"
-                                          ct:value="10" style="stroke-width: 60px;"></path>
-                                </g>
-                                <g class="ct-series ct-series-c">
-                                    <path d="M296.547,39.434A90.6,90.6,0,0,0,215.041,52.489" class="ct-slice-donut"
-                                          ct:value="30" style="stroke-width: 60px;"></path>
-                                </g>
-                                <g class="ct-series ct-series-d">
-                                    <path d="M359.15,125.6A90.6,90.6,0,0,0,296.246,39.337" class="ct-slice-donut"
-                                          ct:value="40" style="stroke-width: 60px;"></path>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+                <div id="container1"></div>
+                <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+                <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+                <script src="https://code.highcharts.com/maps/modules/drilldown.js"></script>
+                <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+                <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+                <script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
+
             </div>
             <div class="col-lg-6 col-sm-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title">최근 1년간 월별 신규 가입자 추이</h4>
-                    </div>
-                    <div class="card-body">
-                        <div id="chart-with-area" class="ct-chart ct-golden-section">
-                            <div class="chartist-tooltip" style="top: -43.2px; left: 519px;"><span
-                                    class="chartist-tooltip-value">9</span></div>
-                            <svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct" width="100%" height="100%"
-                                 class="ct-chart-line" style="width: 100%; height: 100%;">
-                                <g class="ct-grids">
-                                    <line x1="50" x2="50" y1="15" y2="216.1999969482422"
-                                          class="ct-grid ct-horizontal"></line>
-                                    <line x1="109.01250457763672" x2="109.01250457763672" y1="15" y2="216.1999969482422"
-                                          class="ct-grid ct-horizontal"></line>
-                                    <line x1="168.02500915527344" x2="168.02500915527344" y1="15" y2="216.1999969482422"
-                                          class="ct-grid ct-horizontal"></line>
-                                    <line x1="227.03751373291016" x2="227.03751373291016" y1="15" y2="216.1999969482422"
-                                          class="ct-grid ct-horizontal"></line>
-                                    <line x1="286.0500183105469" x2="286.0500183105469" y1="15" y2="216.1999969482422"
-                                          class="ct-grid ct-horizontal"></line>
-                                    <line x1="345.0625228881836" x2="345.0625228881836" y1="15" y2="216.1999969482422"
-                                          class="ct-grid ct-horizontal"></line>
-                                    <line x1="404.0750274658203" x2="404.0750274658203" y1="15" y2="216.1999969482422"
-                                          class="ct-grid ct-horizontal"></line>
-                                    <line x1="463.08753204345703" x2="463.08753204345703" y1="15" y2="216.1999969482422"
-                                          class="ct-grid ct-horizontal"></line>
-                                    <line y1="216.1999969482422" y2="216.1999969482422" x1="50" x2="522.1000366210938"
-                                          class="ct-grid ct-vertical"></line>
-                                    <line y1="193.84444173177084" y2="193.84444173177084" x1="50" x2="522.1000366210938"
-                                          class="ct-grid ct-vertical"></line>
-                                    <line y1="171.48888651529947" y2="171.48888651529947" x1="50" x2="522.1000366210938"
-                                          class="ct-grid ct-vertical"></line>
-                                    <line y1="149.13333129882812" y2="149.13333129882812" x1="50" x2="522.1000366210938"
-                                          class="ct-grid ct-vertical"></line>
-                                    <line y1="126.77777608235677" y2="126.77777608235677" x1="50" x2="522.1000366210938"
-                                          class="ct-grid ct-vertical"></line>
-                                    <line y1="104.42222086588542" y2="104.42222086588542" x1="50" x2="522.1000366210938"
-                                          class="ct-grid ct-vertical"></line>
-                                    <line y1="82.06666564941406" y2="82.06666564941406" x1="50" x2="522.1000366210938"
-                                          class="ct-grid ct-vertical"></line>
-                                    <line y1="59.71111043294272" y2="59.71111043294272" x1="50" x2="522.1000366210938"
-                                          class="ct-grid ct-vertical"></line>
-                                    <line y1="37.355555216471345" y2="37.355555216471345" x1="50" x2="522.1000366210938"
-                                          class="ct-grid ct-vertical"></line>
-                                    <line y1="15" y2="15" x1="50" x2="522.1000366210938"
-                                          class="ct-grid ct-vertical"></line>
-                                </g>
-                                <g>
-                                    <g class="ct-series ct-series-a">
-                                        <path d="M50,216.2L50,104.422C69.671,74.615,89.342,15,109.013,15C128.683,15,148.354,59.711,168.025,59.711C187.696,59.711,207.367,37.356,227.038,37.356C246.708,37.356,266.379,86.538,286.05,104.422C305.721,122.307,325.392,149.133,345.063,149.133C364.733,149.133,384.404,104.422,404.075,104.422C423.746,104.422,443.417,119.326,463.088,126.778L463.088,216.2Z"
-                                              class="ct-area"></path>
-                                        <path d="M50,104.422C69.671,74.615,89.342,15,109.013,15C128.683,15,148.354,59.711,168.025,59.711C187.696,59.711,207.367,37.356,227.038,37.356C246.708,37.356,266.379,86.538,286.05,104.422C305.721,122.307,325.392,149.133,345.063,149.133C364.733,149.133,384.404,104.422,404.075,104.422C423.746,104.422,443.417,119.326,463.088,126.778"
-                                              class="ct-line"></path>
-                                        <line x1="50" y1="104.42222086588542" x2="50.01" y2="104.42222086588542"
-                                              class="ct-point" ct:value="5"></line>
-                                        <line x1="109.01250457763672" y1="15" x2="109.02250457763672" y2="15"
-                                              class="ct-point" ct:value="9"></line>
-                                        <line x1="168.02500915527344" y1="59.71111043294272" x2="168.03500915527343"
-                                              y2="59.71111043294272" class="ct-point" ct:value="7"></line>
-                                        <line x1="227.03751373291016" y1="37.355555216471345" x2="227.04751373291015"
-                                              y2="37.355555216471345" class="ct-point" ct:value="8"></line>
-                                        <line x1="286.0500183105469" y1="104.42222086588542" x2="286.06001831054687"
-                                              y2="104.42222086588542" class="ct-point" ct:value="5"></line>
-                                        <line x1="345.0625228881836" y1="149.13333129882812" x2="345.0725228881836"
-                                              y2="149.13333129882812" class="ct-point" ct:value="3"></line>
-                                        <line x1="404.0750274658203" y1="104.42222086588542" x2="404.0850274658203"
-                                              y2="104.42222086588542" class="ct-point" ct:value="5"></line>
-                                        <line x1="463.08753204345703" y1="126.77777608235677" x2="463.097532043457"
-                                              y2="126.77777608235677" class="ct-point" ct:value="4"></line>
-                                    </g>
-                                </g>
-                                <g class="ct-labels">
-                                    <foreignObject style="overflow: visible;" x="50" y="221.1999969482422"
-                                                   width="59.01250457763672" height="20"><span
-                                            class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                                            style="width: 59px; height: 20px;">1</span></foreignObject>
-                                    <foreignObject style="overflow: visible;" x="109.01250457763672"
-                                                   y="221.1999969482422" width="59.01250457763672" height="20"><span
-                                            class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                                            style="width: 59px; height: 20px;">2</span></foreignObject>
-                                    <foreignObject style="overflow: visible;" x="168.02500915527344"
-                                                   y="221.1999969482422" width="59.01250457763672" height="20"><span
-                                            class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                                            style="width: 59px; height: 20px;">3</span></foreignObject>
-                                    <foreignObject style="overflow: visible;" x="227.03751373291016"
-                                                   y="221.1999969482422" width="59.01250457763672" height="20"><span
-                                            class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                                            style="width: 59px; height: 20px;">4</span></foreignObject>
-                                    <foreignObject style="overflow: visible;" x="286.0500183105469"
-                                                   y="221.1999969482422" width="59.01250457763672" height="20"><span
-                                            class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                                            style="width: 59px; height: 20px;">5</span></foreignObject>
-                                    <foreignObject style="overflow: visible;" x="345.0625228881836"
-                                                   y="221.1999969482422" width="59.01250457763672" height="20"><span
-                                            class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                                            style="width: 59px; height: 20px;">6</span></foreignObject>
-                                    <foreignObject style="overflow: visible;" x="404.0750274658203"
-                                                   y="221.1999969482422" width="59.01250457763672" height="20"><span
-                                            class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                                            style="width: 59px; height: 20px;">7</span></foreignObject>
-                                    <foreignObject style="overflow: visible;" x="463.08753204345703"
-                                                   y="221.1999969482422" width="59.01250457763672" height="20"><span
-                                            class="ct-label ct-horizontal ct-end" xmlns="http://www.w3.org/2000/xmlns/"
-                                            style="width: 59px; height: 20px;">8</span></foreignObject>
-                                    <foreignObject style="overflow: visible;" y="193.84444173177084" x="10"
-                                                   height="22.355555216471355" width="30"><span
-                                            class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                                            style="height: 22px; width: 30px;">0</span></foreignObject>
-                                    <foreignObject style="overflow: visible;" y="171.4888865152995" x="10"
-                                                   height="22.355555216471355" width="30"><span
-                                            class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                                            style="height: 22px; width: 30px;">1</span></foreignObject>
-                                    <foreignObject style="overflow: visible;" y="149.13333129882812" x="10"
-                                                   height="22.355555216471352" width="30"><span
-                                            class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                                            style="height: 22px; width: 30px;">2</span></foreignObject>
-                                    <foreignObject style="overflow: visible;" y="126.77777608235677" x="10"
-                                                   height="22.35555521647136" width="30"><span
-                                            class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                                            style="height: 22px; width: 30px;">3</span></foreignObject>
-                                    <foreignObject style="overflow: visible;" y="104.42222086588542" x="10"
-                                                   height="22.355555216471345" width="30"><span
-                                            class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                                            style="height: 22px; width: 30px;">4</span></foreignObject>
-                                    <foreignObject style="overflow: visible;" y="82.06666564941406" x="10"
-                                                   height="22.35555521647136" width="30"><span
-                                            class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                                            style="height: 22px; width: 30px;">5</span></foreignObject>
-                                    <foreignObject style="overflow: visible;" y="59.71111043294272" x="10"
-                                                   height="22.355555216471345" width="30"><span
-                                            class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                                            style="height: 22px; width: 30px;">6</span></foreignObject>
-                                    <foreignObject style="overflow: visible;" y="37.355555216471345" x="10"
-                                                   height="22.355555216471373" width="30"><span
-                                            class="ct-label ct-vertical ct-start" xmlns="http://www.w3.org/2000/xmlns/"
-                                            style="height: 22px; width: 30px;">7</span></foreignObject>
-                                    <foreignObject style="overflow: visible;" y="15" x="10" height="22.355555216471345"
-                                                   width="30"><span class="ct-label ct-vertical ct-start"
-                                                                    xmlns="http://www.w3.org/2000/xmlns/"
-                                                                    style="height: 22px; width: 30px;">8</span>
-                                    </foreignObject>
-                                    <foreignObject style="overflow: visible;" y="-15" x="10" height="30" width="30">
-                                        <span class="ct-label ct-vertical ct-start"
-                                              xmlns="http://www.w3.org/2000/xmlns/"
-                                              style="height: 30px; width: 30px;">9</span></foreignObject>
-                                </g>
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+                <div id="container2"></div>
+                <p class="highcharts-description">
+                    Bar chart showing Andorran population distribution by using a mirrored
+                    horizontal column chart with stacking and two x-axes.
+                </p>
+                <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+                <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+                <script src="https://code.highcharts.com/maps/modules/drilldown.js"></script>
+                <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+                <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+                <script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
+
             </div>
         </div>
+
+    </div>
+
+    <div class="col-12">
         <h1>시니어 리스트</h1>
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="example" class="display" style="min-width: 845px">
-                            <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Gender</th>
-                                <th>Tel</th>
-                                <th>Birth</th>
-                                <th>Zipcode</th>
-                                <th>Street Address</th>
-                                <th>Detail Address 1</th>
-                                <th>Detail Address 2</th>
-                                <th>Status</th>
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="example" class="display" style="min-width: 845px">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Gender</th>
+                            <th>Tel</th>
+                            <th>Birth</th>
+                            <th>Zipcode</th>
+                            <th>Street Address</th>
+                            <th>Detail Address 1</th>
+                            <th>Detail Address 2</th>
+                            <th>Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="senior" items="${seniors}">
+                            <tr onclick="window.location.href='senior-detail?id=${senior.seniorId}'"
+                                style="cursor: pointer;">
+                                <td>${senior.seniorId}</td>
+                                <td>${senior.seniorName}</td>
+                                <td>${senior.seniorGender}</td>
+                                <td>${senior.seniorTel}</td>
+                                <td>${senior.seniorBirth}</td>
+                                <td>${senior.seniorZipcode}</td>
+                                <td>${senior.seniorStreetAddr}</td>
+                                <td>${senior.seniorDetailAddr1}</td>
+                                <td>${senior.seniorDetailAddr2}</td>
+                                <td>${senior.seniorStatus}</td>
                             </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach var="senior" items="${seniors}">
-                                <tr onclick="window.location.href='senior-detail?id=${senior.seniorId}'" style="cursor: pointer;">
-                                    <td>${senior.seniorId}</td>
-                                    <td>${senior.seniorName}</td>
-                                    <td>${senior.seniorGender}</td>
-                                    <td>${senior.seniorTel}</td>
-                                    <td>${senior.seniorBirth}</td>
-                                    <td>${senior.seniorZipcode}</td>
-                                    <td>${senior.seniorStreetAddr}</td>
-                                    <td>${senior.seniorDetailAddr1}</td>
-                                    <td>${senior.seniorDetailAddr2}</td>
-                                    <td>${senior.seniorStatus}</td>
-                                </tr>
-                            </c:forEach>
-                            </tbody>
-                        </table>
-                    </div>
+                        </c:forEach>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</div>
 
 <!-- Required vendors -->
 <script src="./vendor/global/global.min.js"></script>
-<script src="./js/quixnav-init.js"></script>
-<script src="./js/custom.min.js"></script>
 
 <!-- Datatable -->
 <script src="./vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script src="./js/plugins-init/datatables.init.js"></script>
+<script>
+
+    const regionNames = {
+        "Seoul": "서울",
+        "Busan": "부산",
+        "Incheon": "인천",
+        "Daegu": "대구",
+        "Daejeon": "대전",
+        "Gwangju": "광주",
+        "Ulsan": "울산",
+        "Sejong": "세종",
+        "Gyeonggi": "경기",
+        "Gangwon": "강원",
+        "North Chungcheong": "충북",
+        "South Chungcheong": "충남",
+        "North Jeolla": "전북",
+        "South Jeolla": "전남",
+        "North Gyeongsang": "경북",
+        "South Gyeongsang": "경남",
+        "Jeju": "제주"
+    };
+
+    const drilldown = async function (e) {
+        if (!e.seriesOptions) {
+            const chart = this,
+                mapKey = `countries/kr/${e.point.drilldown}-all`;
+
+            let fail = setTimeout(() => {
+                if (!Highcharts.maps[mapKey]) {
+                    chart.showLoading(`
+                    <i class="icon-frown"></i>
+                    Failed loading ${e.point.name}
+                `);
+                    fail = setTimeout(() => {
+                        chart.hideLoading();
+                    }, 1000);
+                }
+            }, 3000);
+
+            chart.showLoading('<i class="icon-spinner icon-spin icon-3x"></i>');
+
+            const topology = await fetch(
+                `https://code.highcharts.com/mapdata/${mapKey}.topo.json`
+            ).then(response => response.json());
+
+            const data = Highcharts.geojson(topology);
+
+            data.forEach((d, i) => {
+                d.value = i;
+            });
+
+            chart.mapView.update(
+                Highcharts.merge(
+                    {
+                        insets: undefined,
+                        padding: 0
+                    },
+                    topology.objects.default['hc-recommended-mapview']
+                )
+            );
+
+            chart.hideLoading();
+            clearTimeout(fail);
+            chart.addSeriesAsDrilldown(e.point, {
+                name: e.point.name,
+                data,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}'
+                }
+            });
+        }
+    };
+
+    const afterDrillUp = function (e) {
+        if (e.seriesOptions.custom && e.seriesOptions.custom.mapView) {
+            e.target.mapView.update(
+                Highcharts.merge(
+                    { insets: undefined },
+                    e.seriesOptions.custom.mapView
+                ),
+                false
+            );
+        }
+    };
+    const regionWisePersonCount = JSON.parse('${regionWisePersonCountJson}');
+    console.log(regionWisePersonCount); // 데이터 확인
+    (async () => {
+        const topology = await fetch(
+            'https://code.highcharts.com/mapdata/countries/kr/kr-all.topo.json'
+        ).then(response => response.json());
+
+        const data = Highcharts.geojson(topology);
+
+        const mapView = topology.objects.default['hc-recommended-mapview'];
+
+        const personCountMapping = {};
+        regionWisePersonCount.forEach(item => {
+            personCountMapping[item.region_name] = item.person_count;
+        });
+
+        data.forEach(d => {
+            const englishName = d.properties.name;
+            if (regionNames[englishName]) {
+                d.properties.name = regionNames[englishName];
+                d.value = personCountMapping[regionNames[englishName]] || 0;
+            } else {
+                d.value = 0;
+            }
+        });
+
+        Highcharts.mapChart('container1', {
+            chart: { events: { drilldown, afterDrillUp } },
+            title: { text: '지역별 시니어 인원수' },
+            colorAxis: { min: 0, minColor: '#F7F7F7', maxColor: '#6B51DF' },
+            mapView,
+            mapNavigation: { enabled: true, buttonOptions: { verticalAlign: 'bottom' } },
+            tooltip: {
+                headerFormat: '',
+                pointFormat: '{point.properties.name}: {point.value}'
+            },
+            series: [{
+                data,
+                name: '지역별 인원수',
+                dataLabels: {
+                    enabled: false // 기본적으로 데이터 라벨 비활성화
+                },
+                states: {
+                    hover: {
+                        enabled: true,
+                        halo: {
+                            size: 10 // 마우스 오버 효과
+                        }
+                    }
+                },
+                point: {
+                    events: {
+                        mouseOver: function () {
+                            // 마우스 오버 시 해당 지역 이름 표시
+                            this.update({
+                                dataLabels: {
+                                    enabled: true,
+                                    format: '{point.properties.name}'
+                                }
+                            });
+                        },
+                        mouseOut: function () {
+                            // 마우스 아웃 시 이름 숨기기
+                            this.update({
+                                dataLabels: {
+                                    enabled: false
+                                }
+                            });
+                        }
+                    }
+                }
+            }]
+        });
+    })();
+</script>
+<script>
+    // 서버에서 전달받은 JSON 데이터를 JavaScript 변수로 변환
+    const ageGroupDistribution = JSON.parse('${ageGroupDistributionJson}');
+
+    // 카테고리 및 시리즈 데이터를 생성
+    const categories = ageGroupDistribution.map(data => data.age_group);
+    const maleData = ageGroupDistribution.map(data => -data.male_count); // 음수로 변환 (Population Pyramid 스타일)
+    const femaleData = ageGroupDistribution.map(data => data.female_count);
+
+    // Highcharts 차트 생성
+    Highcharts.chart('container2', {
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: 'Age Group Distribution',
+            align: 'left'
+        },
+        subtitle: {
+            text: 'Source: Senior Data',
+            align: 'left'
+        },
+        accessibility: {
+            point: {
+                valueDescriptionFormat: '{index}. Age {xDescription}, {value} people.'
+            }
+        },
+        xAxis: [{
+            categories: categories,
+            reversed: false,
+            labels: {
+                step: 1
+            },
+            accessibility: {
+                description: 'Age (male)'
+            }
+        }, { // mirror axis on right side
+            opposite: true,
+            reversed: false,
+            categories: categories,
+            linkedTo: 0,
+            labels: {
+                step: 1
+            },
+            accessibility: {
+                description: 'Age (female)'
+            }
+        }],
+        yAxis: {
+            title: {
+                text: null
+            },
+            labels: {
+                formatter: function () {
+                    return Math.abs(this.value); // 절대값 표시
+                }
+            },
+            accessibility: {
+                description: 'Number of people',
+                rangeDescription: 'Range: 0 to max population'
+            }
+        },
+
+        plotOptions: {
+            series: {
+                stacking: 'normal',
+                borderRadius: '5%'
+            }
+        },
+
+        tooltip: {
+            pointFormat: '<b>{series.name}, age {point.category}</b><br/>' +
+                'Population: {point.y:.0f} people'
+        },
+
+        series: [{
+            name: 'Male',
+            data: maleData,
+            color: '#4682B4' // 차분한 파란색
+        }, {
+            name: 'Female',
+            data: femaleData,
+            color: '#FF69B4' // 부드러운 분홍색
+        }]
+    });
+</script>
