@@ -239,31 +239,104 @@
     });
 </script>
 <style>
+    /* 버튼 스타일 */
     #btn_add {
         font-size: 1.2rem;
         border-radius: 8px;
-        padding: 10px 20px;
-        background: linear-gradient(to right, #82c419, #6ca417);
+        padding: 12px 20px;
+        background: linear-gradient(to right, #6ca417, #82c419);
         color: #fff;
+        transition: all 0.3s ease;
+        width: 100%;
     }
     #btn_add:hover {
-        background: linear-gradient(to right, #6ca417, #82c419);
+        background: linear-gradient(to right, #82c419, #6ca417);
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
     }
+
+    /* 폼 요소 스타일 */
     .form-group label {
         font-weight: bold;
         margin-bottom: 5px;
+        display: block;
     }
+
+    .form-control {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        height: 45px;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #82c419;
+        box-shadow: 0 0 5px rgba(130, 196, 25, 0.3);
+    }
+
+    /* 이미지 미리보기 */
     .profile-preview-container img {
-        transition: transform 0.3s;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border: 2px solid #ddd;
+        border-radius: 50%;
+        transition: transform 0.3s, box-shadow 0.3s;
     }
+
     .profile-preview-container img:hover {
         transform: scale(1.1);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 카드 스타일 */
+    .card {
+        border-radius: 16px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border: none;
+    }
+
+    .card-title {
+        color: #82c419;
+        font-weight: bold;
+        font-size: 1.5rem;
+    }
+
+    .signup-container {
+        padding: 1rem 2rem;
+    }
+
+    /* 주소 검색 버튼 */
+    #zipcodeBtn {
+        background-color: #82c419;
+        color: white;
+        border: none;
+        font-size: 0.9rem;
+        padding: 8px 12px;
+        border-radius: 6px;
+    }
+
+    #zipcodeBtn:hover {
+        background-color: #6ca417;
+        color: #fff;
+        transition: all 0.3s ease;
+    }
+
+    /* 회원가입 링크 */
+    .signup-container a {
+        color: #82c419;
+        text-decoration: none;
+    }
+
+    .signup-container a:hover {
+        text-decoration: underline;
     }
 </style>
+
 <div class="container signup-container" style="margin-top: 5rem">
     <div class="row justify-content-center mt-5" style="margin-bottom: 6rem">
-        <div class="col-md-6">
-            <div class="card border-0">
+        <div class="col-md-8">
+            <div class="card">
                 <div class="card-body">
                     <h3 class="card-title text-center mb-4">고객으로 회원가입</h3>
                     <form id="user_add_form">
@@ -271,7 +344,6 @@
                             <label for="profile">
                                 <div class="profile-preview-container mt-3">
                                     <img id="profilePreview" src="/images/default-profile.jpg"
-                                         style="width: 170px; height: 170px; object-fit: cover; border: 1px solid #ddd; border-radius: 50%;"
                                          alt="이미지 미리보기"/>
                                 </div>
                             </label>
@@ -282,19 +354,19 @@
                             <label for="username">아이디</label>
                             <input type="text" class="form-control" id="username" name="userUsername"
                                    placeholder="아이디를 입력하세요" required>
-                            <small id="usernameMessage" class="form-text"></small>
+                            <small id="usernameMessage" class="form-text text-muted"></small>
                         </div>
                         <div class="form-group">
                             <label for="password">비밀번호</label>
                             <input type="password" class="form-control" id="password" name="userPassword"
                                    placeholder="비밀번호를 입력하세요" required>
-                            <small id="passwordMessage" class="form-text"></small>
+                            <small id="passwordMessage" class="form-text text-muted"></small>
                         </div>
                         <div class="form-group">
                             <label for="passwordConfirm">비밀번호 재확인</label>
                             <input type="password" class="form-control" id="passwordConfirm" placeholder="비밀번호를 입력하세요"
                                    required>
-                            <small id="passwordConfirmMessage" class="form-text"></small>
+                            <small id="passwordConfirmMessage" class="form-text text-muted"></small>
                         </div>
                         <div class="form-group">
                             <label for="name">이름</label>
@@ -305,13 +377,13 @@
                             <label for="tel">전화번호</label>
                             <input type="text" class="form-control" id="tel" name="userTel" placeholder="전화번호 입력"
                                    maxlength="11" required>
-                            <small id="telMessage" class="form-text"></small>
+                            <small id="telMessage" class="form-text text-muted"></small>
                         </div>
                         <div class="form-group">
                             <label for="email">이메일</label>
                             <input type="email" class="form-control" id="email" name="userEmail"
                                    placeholder="이메일을 입력하세요" required>
-                            <small id="emailMessage" class="form-text"></small>
+                            <small id="emailMessage" class="form-text text-muted"></small>
                         </div>
                         <div class="form-group">
                             <label for="birthday">생년월일</label>
@@ -323,8 +395,7 @@
                                 <input type="text" class="form-control" id="zipcode" name="userZipcode"
                                        placeholder="우편번호를 검색하세요" readonly required>
                                 <div class="input-group-append">
-                                    <button type="button" class="btn btn-outline-secondary" id="zipcodeBtn">우편번호 검색
-                                    </button>
+                                    <button type="button" id="zipcodeBtn">우편번호 검색</button>
                                 </div>
                             </div>
                         </div>
@@ -344,8 +415,7 @@
                                    placeholder="상세주소 2를 입력하세요">
                         </div>
                     </form>
-                    <button type="submit" id="btn_add" class="btn btn-primary btn-block border-0">회원가입
-                    </button>
+                    <button type="submit" id="btn_add" class="btn btn-block">회원가입</button>
                     <div class="mt-3 text-center">
                         <p>이미 계정이 있으신가요? <a href="/login/user">로그인</a></p>
                     </div>
@@ -354,3 +424,4 @@
         </div>
     </div>
 </div>
+

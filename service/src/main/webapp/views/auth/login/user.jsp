@@ -37,32 +37,49 @@
     })
 </script>
 
-<div class="container" style="margin-top: 5rem">
-    <div class="row justify-content-center mt-5"  style="margin-bottom: 6rem">
-        <div class="col-md-6">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h3 class="card-title text-center mb-4">고객 로그인</h3>
-                    <form>
-                        <div class="form-group">
-                            <label for="username">아이디</label>
-                            <input type="text" class="form-control" id="username" name="username"
-                                   placeholder="아이디를 입력하세요" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">비밀번호</label>
-                            <input type="password" class="form-control" id="password" name="password"
-                                   placeholder="비밀번호를 입력하세요" required>
-                        </div>
-                    </form>
-                    <div class="text-center">
-                        <button type="button" id="loginbtn" class="btn btn-primary btn-block" style="background-color: #82c419; border: none">로그인</button>
-                    </div>
-                    <div class="mt-3 text-center">
-                        <p>아직 계정이 없으신가요? <a href="/signup/user">회원가입</a></p>
-                    </div>
+<div class="container" style=" max-width: 400px;">
+        <div class="card-body text-center">
+            <!-- 타이틀 -->
+            <h3 class="card-title mb-3" style="color: #249d57; font-weight: bold;">고객 로그인</h3>
+            <p class="mb-4" style="color: #666;">시니어케어에 오신 것을 환영합니다!</p>
+
+            <!-- 로그인 폼 -->
+            <form>
+                <div class="form-group mb-3">
+                    <input type="text" class="form-control" id="username" name="username"
+                           placeholder="아이디 입력" style="border-radius: 8px; height: 48px;" required>
+                </div>
+                <div class="form-group mb-3">
+                    <input type="password" class="form-control" id="password" name="password"
+                           placeholder="비밀번호 입력" style="border-radius: 8px; height: 48px;" required>
+                </div>
+                <div class="form-check d-flex align-items-center justify-content-start mb-3">
+                    <input type="checkbox" class="form-check-input" id="rememberMe" style="margin-right: 0.5rem;">
+                    <label for="rememberMe" class="form-check-label" style="color: #666;">아이디 저장</label>
+                </div>
+                <button type="button" id="loginbtn" class="btn btn-block"
+                        style="background-color: #dff2e1; border: none; height: 48px; border-radius: 8px; color: #249d57; font-size: 16px;">
+                    로그인
+                </button>
+            </form>
+
+            <!-- 비밀번호 찾기와 회원가입 -->
+            <div class="mt-3 d-flex justify-content-between">
+                <a href="/forgot-password" style="color: #666; text-decoration: none; font-size: 14px;">아이디/비밀번호 찾기</a>
+                <a href="/signup/user" style="color: #666; text-decoration: none; font-size: 14px;">회원가입</a>
+            </div>
+
+            <!-- SNS 로그인 -->
+            <div class="mt-4">
+                <p style="color: #666; font-size: 14px;">SNS 간편로그인</p>
+                <div class="d-flex justify-content-center">
+                    <button class="btn" style="background-color: transparent; border: none; border-radius: 50%; width: 48px; height: 48px; padding: 0; display: flex; align-items: center; justify-content: center;">
+                        <img src="/images/kakao.png" alt="" style="width: 40px; height: 40px;">
+                    </button>
+                    <button class="btn" style="background-color: transparent; border: none; border-radius: 50%; width: 48px; height: 48px; padding: 0; display: flex; align-items: center; justify-content: center;">
+                        <img src="/images/naver.png" alt="" style="width: 40px; height: 40px;">
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
 </div>
