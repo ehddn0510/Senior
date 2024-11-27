@@ -28,5 +28,113 @@
     <select id="findHealthInfoBySeniorId" parameterType="Integer" resultType="edu.sm.model.HealthInfo">
         SELECT * FROM healthinfo WHERE senior_id = #{seniorId};
     </select>
+
+    <select id="findRecentContractInfoBySeniorId" parameterType="Integer" resultType="map">
+        SELECT
+            cw.cw_id AS careworkerId,
+            cw.cw_name AS careworkerName,
+            u.user_id AS userId,
+            u.user_name AS userName
+        FROM
+            contract c
+                JOIN
+            senior s ON c.senior_id = s.senior_id
+                JOIN
+            careworker cw ON c.cw_id = cw.cw_id
+                JOIN
+            user u ON c.user_id = u.user_id
+        WHERE
+            s.senior_id = #{seniorId}
+        ORDER BY
+            c.contract_date DESC
+            LIMIT 1;
+    </select>
+
+    <select id="selectTotalContractAmountByseniorId" parameterType="Integer" resultType="Long">
+        SELECT COALESCE(SUM(contract_price), 0) AS total_contract_amount
+        FROM contract
+        WHERE senior_id = #{seniorId}
+    </select>
+
+    <select id="selectContractRenewalCountByseniorId" parameterType="Integer" resultType="Long">
+        SELECT COUNT(*) AS renewal_count
+        FROM contract
+        WHERE senior_id = #{seniorId}
+    </select>
+
+    <!-- 지역별 인원 수 조회 -->
+    <select id="getRegionWisePersonCount" resultType="map">
+        WITH RegionMapping AS (
+            SELECT '서울' AS region_name, '01' AS start_code, '09' AS end_code
+            UNION ALL SELECT '경기', '10', '20'
+            UNION ALL SELECT '인천', '21', '23'
+            UNION ALL SELECT '강원', '24', '26'
+            UNION ALL SELECT '충북', '27', '29'
+            UNION ALL SELECT '세종', '30', '30'
+            UNION ALL SELECT '충남', '31', '33'
+            UNION ALL SELECT '대전', '34', '35'
+            UNION ALL SELECT '경북', '36', '40'
+            UNION ALL SELECT '대구', '41', '43'
+            UNION ALL SELECT '울산', '44', '45'
+            UNION ALL SELECT '부산', '46', '49'
+            UNION ALL SELECT '경남', '50', '53'
+            UNION ALL SELECT '전북', '54', '56'
+            UNION ALL SELECT '전남', '57', '60'
+            UNION ALL SELECT '광주', '61', '62'
+            UNION ALL SELECT '제주', '63', '63'
+        )
+        SELECT
+            R.region_name,
+            COUNT(S.senior_id) AS person_count
+        FROM RegionMapping R
+                 LEFT JOIN senior S
+                           ON SUBSTRING(S.senior_zipcode, 1, 2) BETWEEN R.start_code AND R.end_code
+        GROUP BY R.region_name
+        ORDER BY person_count DESC;
+    </select>
+
+    <select id="getSeniorAgeGroupDistribution" resultType="map">
+        WITH AgeGroups AS (
+            SELECT
+                senior_gender,
+                CASE
+                    WHEN TIMESTAMPDIFF(YEAR, senior_birth, CURDATE()) BETWEEN 40 AND 44 THEN '40-44'
+                    WHEN TIMESTAMPDIFF(YEAR, senior_birth, CURDATE()) BETWEEN 45 AND 49 THEN '45-49'
+                    WHEN TIMESTAMPDIFF(YEAR, senior_birth, CURDATE()) BETWEEN 50 AND 54 THEN '50-54'
+                    WHEN TIMESTAMPDIFF(YEAR, senior_birth, CURDATE()) BETWEEN 55 AND 59 THEN '55-59'
+                    WHEN TIMESTAMPDIFF(YEAR, senior_birth, CURDATE()) BETWEEN 60 AND 64 THEN '60-64'
+                    WHEN TIMESTAMPDIFF(YEAR, senior_birth, CURDATE()) BETWEEN 65 AND 69 THEN '65-69'
+                    WHEN TIMESTAMPDIFF(YEAR, senior_birth, CURDATE()) BETWEEN 70 AND 74 THEN '70-74'
+                    WHEN TIMESTAMPDIFF(YEAR, senior_birth, CURDATE()) BETWEEN 75 AND 79 THEN '75-79'
+                    WHEN TIMESTAMPDIFF(YEAR, senior_birth, CURDATE()) BETWEEN 80 AND 84 THEN '80-84'
+                    ELSE '85+'
+                    END AS age_group
+            FROM senior
+        ),
+             AllAgeGroups AS (
+                 SELECT '40-44' AS age_group
+                 UNION ALL SELECT '45-49'
+                 UNION ALL SELECT '50-54'
+                 UNION ALL SELECT '55-59'
+                 UNION ALL SELECT '60-64'
+                 UNION ALL SELECT '65-69'
+                 UNION ALL SELECT '70-74'
+                 UNION ALL SELECT '75-79'
+                 UNION ALL SELECT '80-84'
+                 UNION ALL SELECT '85+'
+             )
+        SELECT
+            ag.age_group,
+            COALESCE(SUM(CASE WHEN g.senior_gender = 'male' THEN 1 ELSE 0 END), 0) AS male_count,
+            COALESCE(SUM(CASE WHEN g.senior_gender = 'female' THEN 1 ELSE 0 END), 0) AS female_count
+        FROM AllAgeGroups ag
+                 LEFT JOIN AgeGroups g ON ag.age_group = g.age_group
+        GROUP BY ag.age_group
+        ORDER BY FIELD(
+                         ag.age_group,
+                         '40-44', '45-49', '50-54', '55-59', '60-64', '65-69', '70-74', '75-79', '80-84', '85+'
+                 );
+    </select>
+
 </mapper>
 
