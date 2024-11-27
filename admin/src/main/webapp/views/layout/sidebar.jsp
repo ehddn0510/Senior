@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<link href="http://127.0.0.1:81/icons/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
 
 <div class="quixnav">
     <div class="quixnav-scroll">
