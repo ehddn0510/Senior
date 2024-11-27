@@ -1,6 +1,7 @@
 package edu.sm.service;
 
 import edu.sm.util.FileUploadUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import java.nio.file.Paths;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SeniorService implements SMService<Integer, Senior> {
@@ -85,6 +87,14 @@ public class SeniorService implements SMService<Integer, Senior> {
 
         senior.setSeniorStatus("inactive");
         seniorRepository.update(senior);
+    }
+
+    public List<Senior> getSeniorsByUserId(Integer userId) throws Exception {
+        List<Senior> seniors = seniorRepository.selectSeniorsByUserId(userId);
+        for (Senior senior : seniors) {
+            decryptAddress(senior);
+        }
+        return seniors;
     }
 
     private void encryptAddress(Senior senior) {
