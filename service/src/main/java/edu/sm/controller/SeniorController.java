@@ -4,6 +4,7 @@ import edu.sm.model.HealthInfo;
 import edu.sm.model.Senior;
 import edu.sm.service.HealthinfoService;
 import edu.sm.service.SeniorService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -16,39 +17,30 @@ import java.util.List;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/senior")
+@RequestMapping("/seniors")
 public class SeniorController {
     private final SeniorService seniorService;
     private final HealthinfoService healthinfoService;
 
-    @RequestMapping({"/", ""})
-    public String senior(Model model) {
-        model.addAttribute("center", "senior/list");
-        return "index";
-    }
-
-    @RequestMapping("/insert")
-    public String list(Model model) {
-        model.addAttribute("center", "senior/insert");
-        return "index";
-    }
-
     @RequestMapping("/{id}")
-    public String detail(@PathVariable Integer id, Model model) {
-        Senior senior = null;
-        List<HealthInfo> healthinfo = null;
+    public String detail(@PathVariable Integer id, HttpSession session, Model model) {
+        Integer userId = (Integer) session.getAttribute("principal");
+        if (userId == null) {
+            return "redirect:/";
+        }
         try {
-            senior = seniorService.get(id);
-            log.info("Senior: {}", senior);
-            healthinfo = healthinfoService.getHealthInfoBySeniorId(id);
-            log.info("HealthInfo: {}", healthinfo);
+            Senior senior  = seniorService.get(id);
+            if (senior == null) {
+                return "redirect:/senior";
+            }
+            List<HealthInfo> healthinfo = healthinfoService.getHealthInfoBySeniorId(id);
+
+            model.addAttribute("center", "senior/detail");
+            model.addAttribute("senior", senior);
+            model.addAttribute("healthinfo", healthinfo);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        model.addAttribute("center", "senior/detail");
-        model.addAttribute("senior", senior);
-        model.addAttribute("healthinfo", healthinfo);
         return "index";
     }
-
 }

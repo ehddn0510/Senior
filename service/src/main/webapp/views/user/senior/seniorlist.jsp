@@ -22,7 +22,7 @@
               <strong>성별:</strong> ${senior.seniorGender}<br>
               <strong>연락처:</strong> ${senior.seniorTel}<br>
             </p>
-            <a href="/senior/${senior.seniorId}" class="btn btn-primary btn-sm">자세히 보기</a>
+            <a href="/seniors/${senior.seniorId}" class="btn btn-primary btn-sm">자세히 보기</a>
           </div>
         </div>
       </div>
