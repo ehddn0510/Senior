@@ -41,7 +41,8 @@ public class CareworkerService implements SMService<Integer, Careworker> {
 
     @Override
     public Careworker get(Integer integer) throws Exception {
-        return null;
+        Careworker careworker = careworkerRepository.selectOne(integer);
+        return careworker;
     }
 
     @Override

@@ -18,6 +18,10 @@
                  );
     </insert>
 
+    <select id="selectOne" parameterType="Integer" resultType="Careworker">
+        SELECT * FROM careworker WHERE cw_id = #{cwId};
+    </select>
+
     <select id="selectByUsername" parameterType="String" resultType="Careworker">
         SELECT * FROM careworker WHERE cw_username = #{cwUsername};
     </select>

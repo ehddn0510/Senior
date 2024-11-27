@@ -44,7 +44,7 @@ let careworkerList = {
                                         <strong>거리:</strong> ${distance} 차이<br>
                                         <strong>연락처:</strong> ${tel}
                                     </p>
-                                    <a href="/careworker/${careworker.cwId}" class="btn btn-primary btn-sm">자세히 보기</a>
+                                    <a href="/user/careworkers/${careworker.cwId}" class="btn btn-primary btn-sm">자세히 보기</a>
                                 </div>
                             </div>
                         </div>
