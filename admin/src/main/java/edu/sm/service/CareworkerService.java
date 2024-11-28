@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -106,5 +107,13 @@ public class CareworkerService implements SMService<Integer, Careworker> {
     @Override
     public void modify(Careworker careworker) throws Exception {
         // 실질적인 수정 구현이 필요하다면 여기에 추가
+    }
+
+    // 보호사의 상태별 인원 수 집계
+    public List<Map<String, Object>> getCareworkerStatusCounts() {
+        return careworkerRepository.selectCareworkerStatusCounts();
+    }
+    public List<Map<String, Object>> getMonthlyAverageRatings() {
+        return careworkerRepository.findMonthlyAverageRatings();
     }
 }
