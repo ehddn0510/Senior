@@ -5,39 +5,46 @@
 <mapper namespace="edu.sm.repository.CareworkerRepository">
 
     <insert id="insert" parameterType="Careworker">
-        INSERT INTO careworker (
-            cw_username, cw_password, cw_tel, cw_email, cw_name,
-            cw_gender, cw_birthday, cw_zipcode, cw_street_addr,
-            cw_detail_addr1, cw_detail_addr2, cw_profile,
-            cw_holiday, cw_intro, cw_experience
-        ) VALUES (
-                     #{cwUsername}, #{cwPassword}, #{cwTel}, #{cwEmail}, #{cwName},
-                     #{cwGender}, #{cwBirthday}, #{cwZipcode}, #{cwStreetAddr},
-                     #{cwDetailAddr1}, #{cwDetailAddr2}, #{cwProfile},
-                     #{cwHoliday}, #{cwIntro}, #{cwExperience}
-                 );
+        INSERT INTO careworker (cw_username, cw_password, cw_tel, cw_email, cw_name,
+                                cw_gender, cw_birthday, cw_zipcode, cw_street_addr,
+                                cw_detail_addr1, cw_detail_addr2, cw_profile,
+                                cw_holiday, cw_intro, cw_experience)
+        VALUES (#{cwUsername}, #{cwPassword}, #{cwTel}, #{cwEmail}, #{cwName},
+                #{cwGender}, #{cwBirthday}, #{cwZipcode}, #{cwStreetAddr},
+                #{cwDetailAddr1}, #{cwDetailAddr2}, #{cwProfile},
+                #{cwHoliday}, #{cwIntro}, #{cwExperience});
     </insert>
 
     <select id="findAll" resultType="Careworker">
-        SELECT * FROM careworker where cw_status != 'waiting'
+        SELECT *
+        FROM careworker
+        where cw_status != 'waiting'
     </select>
 
     <select id="findWaiting" resultType="Careworker">
-        SELECT * FROM careworker where cw_status = 'waiting'
+        SELECT *
+        FROM careworker
+        where cw_status = 'waiting'
     </select>
 
     <select id="selectByUsername" parameterType="String" resultType="Careworker">
-        SELECT * FROM careworker WHERE cw_username = #{username};
+        SELECT *
+        FROM careworker
+        WHERE cw_username = #{username};
     </select>
 
     <!-- 상세 조회 쿼리 -->
     <select id="selectById" parameterType="int" resultType="Careworker">
-        SELECT * FROM careworker WHERE cw_id = #{cwId};
+        SELECT *
+        FROM careworker
+        WHERE cw_id = #{cwId};
     </select>
 
     <!-- 자격증 정보 조회 쿼리 -->
     <select id="selectLicensesByCareworkerId" parameterType="int" resultType="License">
-        SELECT * FROM license WHERE cw_id = #{cwId};
+        SELECT *
+        FROM license
+        WHERE cw_id = #{cwId};
     </select>
 
     <update id="update">
@@ -64,33 +71,28 @@
     </update>
 
     <select id="findWaitingWithLicenses" resultMap="CareworkerWithLicenseMap">
-        SELECT
-            cw.cw_id,
-            cw.cw_name,
-            cw.cw_email,
-            cw.cw_tel,
-            cw.cw_gender,
-            cw.cw_street_addr,
-            cw.cw_experience,
-            l.license_id,
-            l.license_name,
-            l.license_start_date,
-            l.license_end_date,
-            l.license_status
-        FROM
-            careworker cw
-                LEFT JOIN
-            license l
-            ON
-                cw.cw_id = l.cw_id
-        WHERE
-            cw.cw_status = 'waiting'
-        ORDER BY
-            CASE WHEN l.license_id IS NULL THEN 1 ELSE 0 END, -- null인 자격증을 뒤로 보냄
-            cw.cw_id,
-            l.license_start_date;
+        SELECT cw.cw_id,
+               cw.cw_name,
+               cw.cw_email,
+               cw.cw_tel,
+               cw.cw_gender,
+               cw.cw_street_addr,
+               cw.cw_experience,
+               l.license_id,
+               l.license_name,
+               l.license_start_date,
+               l.license_end_date,
+               l.license_status
+        FROM careworker cw
+                 LEFT JOIN
+             license l
+             ON
+                 cw.cw_id = l.cw_id
+        WHERE cw.cw_status = 'waiting'
+        ORDER BY CASE WHEN l.license_id IS NULL THEN 1 ELSE 0 END, -- null인 자격증을 뒤로 보냄
+                 cw.cw_id,
+                 l.license_start_date;
     </select>
-
 
 
     <resultMap id="CareworkerWithLicenseMap" type="Careworker">
@@ -110,5 +112,29 @@
         </collection>
     </resultMap>
 
+    <!-- 보호사의 활동 상태별 인원 수 집계 -->
+    <select id="selectCareworkerStatusCounts" resultType="map">
+        SELECT cw_status, COUNT(*) AS count
+        FROM senior.careworker
+        GROUP BY cw_status
+    </select>
 
+
+    <!-- 월별 평균 평점 조회 쿼리 -->
+    <select id="findMonthlyAverageRatings" resultType="map">
+        SELECT
+            DATE_FORMAT(a.Date, '%Y-%m') AS Month,
+            COALESCE(AVG(r.review_rating), 0) AS average_rating
+        FROM (
+            SELECT LAST_DAY(CURDATE() - INTERVAL 1 MONTH) + INTERVAL 1 DAY - INTERVAL a.i MONTH AS Date
+            FROM (
+            SELECT 0 AS i UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4
+            UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9
+            UNION ALL SELECT 10 UNION ALL SELECT 11
+            ) a
+            ) a
+            LEFT JOIN review r ON DATE_FORMAT(r.review_rdate, '%Y-%m') = DATE_FORMAT(a.Date, '%Y-%m')
+        GROUP BY Month
+        ORDER BY Month
+    </select>
 </mapper>

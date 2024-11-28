@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -45,7 +46,27 @@ public class SeniorService implements SMService<Integer, Senior> {
         return seniorRepository.findAll();
     }
 
-    // seniorId를 기준으로 기존 데이터와 새로운 데이터를 병합하여 수정하는 메서드
+    // 지역별 인원 수 조회 메서드 추가
+    public List<Map<String, Object>> getRegionWisePersonCount() {
+        List<Map<String, Object>> regionWiseCount = seniorRepository.getRegionWisePersonCount();
+        if (regionWiseCount.isEmpty()) {
+            log.warn("No data found for region-wise person count");
+        }
+        return regionWiseCount;
+    }
+
+    public List<Map<String, Object>> getAgeGroupDistribution() {
+        List<Map<String, Object>> ageGroupDistribution = seniorRepository.getSeniorAgeGroupDistribution();
+
+        if (ageGroupDistribution.isEmpty()) {
+            log.warn("No age group distribution data found in the senior table.");
+        }
+
+        return ageGroupDistribution;
+    }
+
+
+    // 기존 메서드들 유지
     public void modifyById(Integer id, Senior updatedSenior) throws Exception {
         Senior existingSenior = seniorRepository.selectOne(id);
         if (existingSenior == null) {
@@ -84,7 +105,6 @@ public class SeniorService implements SMService<Integer, Senior> {
         seniorRepository.update(existingSenior); // 병합된 데이터를 DB에 저장
     }
 
-    // seniorId를 기준으로 healthinfo 데이터를 가져오는 메서드
     public List<HealthInfo> getHealthInfoBySeniorId(Integer seniorId) throws Exception {
         if (seniorId == null || seniorId <= 0) {
             throw new IllegalArgumentException("Invalid senior ID: " + seniorId);
@@ -95,4 +115,18 @@ public class SeniorService implements SMService<Integer, Senior> {
         }
         return healthInfoList;
     }
+
+    public Map<String, Object> getRecentContractInfo(Integer seniorId) {
+        return seniorRepository.findRecentContractInfoBySeniorId(seniorId);
+    }
+
+    public Long getTotalContractAmount(Integer seniorId) {
+        return seniorRepository.selectTotalContractAmountByseniorId(seniorId);
+    }
+
+    public Long getContractRenewalCount(Integer seniorId) {
+        return seniorRepository.selectContractRenewalCountByseniorId(seniorId);
+    }
+
+
 }

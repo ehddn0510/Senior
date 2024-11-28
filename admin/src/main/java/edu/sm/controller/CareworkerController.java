@@ -1,5 +1,6 @@
 package edu.sm.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.sm.model.Careworker;
 import edu.sm.model.License;
 import edu.sm.service.CareworkerService;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
+
 
 @Controller
 @Slf4j
@@ -27,6 +30,20 @@ public class CareworkerController {
         log.info(user.toString());
         model.addAttribute("user", user);
         model.addAttribute("center", dir + "careworkerList");
+
+        // 보호사의 상태 차트 데이터
+        List<Map<String, Object>> careworkerStatusCounts = careworkerService.getCareworkerStatusCounts();
+        ObjectMapper objectMapper = new ObjectMapper();
+        String careworkerStatusCountsJson = objectMapper.writeValueAsString(careworkerStatusCounts);
+        log.info(careworkerStatusCountsJson);
+        model.addAttribute("careworkerStatusCounts", careworkerStatusCountsJson);
+
+        // 월별 평균 평점 데이터 가져오기
+        List<Map<String, Object>> monthlyAverageRatings = careworkerService.getMonthlyAverageRatings();
+        String monthlyAverageRatingsJson = objectMapper.writeValueAsString(monthlyAverageRatings);
+        log.info("Monthly Average Ratings (JSON): {}", monthlyAverageRatingsJson);
+        model.addAttribute("monthlyAverageRatings", monthlyAverageRatingsJson);
+
         return "index";
     }
 

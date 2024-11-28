@@ -6,6 +6,63 @@
 
 <div class="content-body">
     <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <div class="stat-widget-one card-body">
+                        <div class="stat-icon d-inline-block">
+                            <i class="ti-money text-success border-success"></i>
+                        </div>
+                        <div class="stat-content d-inline-block">
+                            <div class="stat-text">총 계약 금액</div>
+                            <!-- 계약 금액 총합 동적 표시 -->
+                            <div class="stat-digit">${totalContractAmount} 원</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card">
+                    <div class="stat-widget-one card-body">
+                        <div class="stat-icon d-inline-block">
+                            <i class="ti-layout-grid2 text-pink border-pink"></i>
+                        </div>
+                        <div class="stat-content d-inline-block">
+                            <div class="stat-text">계약 유지 회수</div>
+                            <!-- 계약 갱신 횟수 동적 표시 -->
+                            <div class="stat-digit">${contractRenewalCount} 회</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card" onclick="window.location.href='customer-detail?id=${recentContractInfo.userId}'" style="cursor: pointer;">
+                    <div class="stat-widget-one card-body">
+                        <div class="stat-icon d-inline-block">
+                            <i class="ti-user text-primary border-primary"></i>
+                        </div>
+                        <div class="stat-content d-inline-block">
+                            <div class="stat-text">자녀</div>
+                            <div class="stat-digit">${recentContractInfo.userName}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+                <div class="card" onclick="window.location.href='careworker-detail?id=${recentContractInfo.careworkerId}'" style="cursor: pointer;">
+                    <div class="stat-widget-one card-body">
+                        <div class="stat-icon d-inline-block">
+                            <i class="ti-link text-danger border-danger"></i>
+                        </div>
+                        <div class="stat-content d-inline-block">
+                            <div class="stat-text">연결된 보호자</div>
+                            <div class="stat-digit">${recentContractInfo.careworkerName}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- 시니어 정보 헤더 -->
         <div class="profile">
             <div class="profile-head">

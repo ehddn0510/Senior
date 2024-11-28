@@ -1,11 +1,65 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <div class="content-body">
     <div class="container-fluid">
+        <div class="row">
+            <!-- 계약 금액 -->
+            <div class="col-lg-4 col-sm-6">
+                <div class="card">
+                    <div class="stat-widget-one card-body">
+                        <div class="stat-icon d-inline-block">
+                            <i class="ti-money text-success border-success"></i>
+                        </div>
+                        <div class="stat-content d-inline-block">
+                            <div class="stat-text">계약 금액</div>
+                            <div class="stat-digit">
+                                <p>${totalContractAmount} 원</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 연결 시니어 명수 -->
+            <div class="col-lg-4 col-sm-6">
+                <div class="card">
+                    <div class="stat-widget-one card-body">
+                        <div class="stat-icon d-inline-block">
+                            <i class="ti-user text-primary border-primary"></i>
+                        </div>
+                        <div class="stat-content d-inline-block">
+                            <div class="stat-text">연결 시니어 명수</div>
+                            <div class="stat-digit">
+                                <p>${seniorCount} 명</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 계약 유지 기간 -->
+            <div class="col-lg-4 col-sm-6">
+                <div class="card">
+                    <div class="stat-widget-one card-body">
+                        <div class="stat-icon d-inline-block">
+                            <i class="ti-layout-grid2 text-pink border-pink"></i>
+                        </div>
+                        <div class="stat-content d-inline-block">
+                            <div class="stat-text">계약 유지 회수</div>
+                            <div class="stat-digit">
+                                <p>${contractRenewalCount} 회</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- 유저 프로필 헤더 -->
         <div class="profile">
             <div class="profile-head">
@@ -93,11 +147,12 @@
                             <h5 class="text-primary">${senior.seniorName}</h5>
                             <p class="mb-1">${senior.seniorGender == 'male' ? '남성' : '여성'}</p>
                             <p class="mb-1">
-                                <fmt:formatDate value="${senior.seniorBirth}" pattern="yyyy년 MM월 dd일" />
+                                <fmt:formatDate value="${senior.seniorBirth}" pattern="yyyy년 MM월 dd일"/>
                             </p>
                             <div class="mt-4 text-center">
                                 <!-- Detail 버튼으로 수정하고 링크 연결 -->
-                                <a href="<c:url value='/senior-detail?id=${senior.seniorId}' />" class="btn btn-primary btn-sm">Detail</a>
+                                <a href="<c:url value='/senior-detail?id=${senior.seniorId}' />"
+                                   class="btn btn-primary btn-sm">Detail</a>
                             </div>
                         </div>
                     </div>
@@ -109,7 +164,7 @@
 
 <script>
     // 수정 요청을 AJAX로 처리
-    document.getElementById("updateUserForm").addEventListener("submit", function(event) {
+    document.getElementById("updateUserForm").addEventListener("submit", function (event) {
         event.preventDefault(); // 폼 기본 제출 동작 방지
 
         const formData = new FormData(this);

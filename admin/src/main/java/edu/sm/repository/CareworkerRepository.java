@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Mapper
@@ -20,5 +21,7 @@ public interface CareworkerRepository extends SMRepository<Integer, Careworker> 
     List<License> selectLicensesByCareworkerId(Integer cwId);
     void updateStatusFromWaitingToActive(Integer cwId);
     List<Careworker> findWaitingWithLicenses();
+    List<Map<String, Object>> selectCareworkerStatusCounts();  // 상태별 보호사 수 집계 메서드 추가
+    List<Map<String, Object>> findMonthlyAverageRatings();
 
 }
