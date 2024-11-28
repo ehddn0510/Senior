@@ -1240,8 +1240,6 @@ body {
 /* User MY PAGE END */
 
 /* Video Page */
-
-
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -1483,3 +1481,739 @@ video {
 }
 
 /* 모달 스타일 END */
+
+/* 보호사 회원가입  start*/
+
+ body {
+     background-color: #f8f9fa;
+     color: #333;
+ }
+
+.signup-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+.signup-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.signup-title {
+    color: #249d57;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.signup-subtitle {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.form-section {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    color: #249d57;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #dff2e1;
+}
+
+.profile-preview-container {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+#profilePreview {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #dff2e1;
+    padding: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#profilePreview:hover {
+    border-color: #249d57;
+    transform: scale(1.05);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    height: 48px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #249d57;
+    box-shadow: 0 0 0 0.2rem rgba(36, 157, 87, 0.25);
+}
+
+textarea.form-control {
+    height: auto;
+    min-height: 120px;
+}
+
+.form-text {
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.text-success {
+    color: #249d57 !important;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+#zipcodeBtn {
+    height: 48px;
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+#zipcodeBtn:hover {
+    background-color: #dff2e1;
+    border-color: #249d57;
+    color: #249d57;
+}
+
+#btn_add {
+    height: 54px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: #249d57;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 2rem;
+    transition: all 0.3s ease;
+}
+
+#btn_add:hover {
+    background-color: #1b7642;
+    transform: translateY(-1px);
+}
+
+.login-link {
+    color: #249d57;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23666' viewBox='0 0 16 16'%3E%3Cpath d='M8 11.5l-5-5h10l-5 5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+/* 보호사 회원가입 end*/
+
+/* 고객 회원가입 start*/
+ body {
+     background-color: #f8f9fa;
+     color: #333;
+ }
+
+.signup-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+}
+
+.signup-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.signup-title {
+    color: #249d57;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.signup-subtitle {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.form-section {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    color: #249d57;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #dff2e1;
+}
+
+.profile-preview-container {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+#profilePreview {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #dff2e1;
+    padding: 3px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#profilePreview:hover {
+    border-color: #249d57;
+    transform: scale(1.05);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    color: #333;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    height: 48px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #249d57;
+    box-shadow: 0 0 0 0.2rem rgba(36, 157, 87, 0.25);
+}
+
+.form-text {
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+}
+
+.text-success {
+    color: #249d57 !important;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+#zipcodeBtn {
+    height: 48px;
+    background-color: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    color: #333;
+    transition: all 0.3s ease;
+    padding: 0 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+#zipcodeBtn:hover {
+    background-color: #dff2e1;
+    border-color: #249d57;
+    color: #249d57;
+}
+
+#btn_add {
+    height: 54px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    background-color: #249d57;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 2rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+#btn_add:hover {
+    background-color: #1b7642;
+    transform: translateY(-1px);
+}
+
+.login-link {
+    color: #249d57;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+.input-group {
+    display: flex;
+    gap: 0.5rem;
+}
+/* 고객 회원가입 end*/
+
+/* 고객 마이페이지 start*/
+ .mypage-container {
+     max-width: 1200px;
+     margin: 0 auto;
+     padding: 3rem 2rem;
+     background-color: #f8f9fa;
+     min-height: 100vh;
+ }
+
+.profile-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+}
+
+.profile-sidebar {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    height: fit-content;
+    width: 400px;
+}
+
+.profile-info {
+    padding: 2rem;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid #dff2e1;
+    padding: 4px;
+    margin: 0 auto 1.5rem;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.profile-image:hover {
+    transform: scale(1.05);
+    border-color: #249d57;
+}
+
+.profile-name {
+    font-size: 1.5rem;
+    color: #2c3e50;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.profile-email {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.profile-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-primary {
+    background: #249d57;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1b7642;
+    transform: translateY(-2px);
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid #249d57;
+    color: #249d57;
+}
+
+.btn-outline:hover {
+    background: #dff2e1;
+    transform: translateY(-2px);
+}
+
+.menu-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-item {
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.menu-item:hover {
+    background: #f8f9fa;
+    padding-left: 2rem;
+}
+
+.menu-item i {
+    font-size: 1.2rem;
+    width: 24px;
+    color: #249d57;
+}
+
+.menu-item p {
+    margin: 0;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.content-section {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    padding: 2rem;
+    min-height: 600px;
+}
+
+.section-title {
+    color: #249d57;
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #dff2e1;
+}
+
+.info-grid {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.info-item {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    align-items: center;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.info-item:hover {
+    transform: translateX(5px);
+    background: #f0f2f5;
+}
+
+.info-label {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.info-value {
+    color: #666;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #249d57;
+    box-shadow: 0 0 0 3px rgba(36, 157, 87, 0.1);
+    outline: none;
+}
+
+.alert-danger {
+    background: #fff5f5;
+    border: 1px solid #fee2e2;
+    padding: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.alert-heading {
+    color: #dc3545;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 992px) {
+    .profile-section {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-sidebar {
+        margin-bottom: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .info-item {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .info-label {
+        color: #249d57;
+    }
+
+    .profile-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+/* 고객 마이페이지 end*/
+
+/* 고객_보호사 찾기 start */
+ :root {
+     --primary: #40A69F;
+     --primary-dark: #368F89;
+     --background: #F9FAFB;
+     --card: #ffffff;
+     --text: #2C3E50;
+     --text-light: #64748B;
+     --border: #E5E9F0;
+     --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+ }
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.search-panel {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    flex: 1;
+    min-width: 200px;
+}
+
+.form-label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    margin: 20px;
+    margin-left: 0px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 120px;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+#careworker-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    background: var(--card);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all 0.3s;
+    height: 100%;
+    border: 1px solid var(--border);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideIn 0.5s forwards;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 250%;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text);
+}
+
+.card-text {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.card-text strong {
+    color: var(--text);
+    display: inline-block;
+    width: 70px;
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .search-panel {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-group {
+        width: 100%;
+    }
+
+    #careworker-list {
+        grid-template-columns: 1fr;
+    }
+}
+/* 고객_보호사 찾기 end */

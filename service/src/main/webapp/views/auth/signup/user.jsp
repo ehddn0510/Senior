@@ -238,190 +238,96 @@
         signup.init();
     });
 </script>
-<style>
-    /* 버튼 스타일 */
-    #btn_add {
-        font-size: 1.2rem;
-        border-radius: 8px;
-        padding: 12px 20px;
-        background: linear-gradient(to right, #6ca417, #82c419);
-        color: #fff;
-        transition: all 0.3s ease;
-        width: 100%;
-    }
-    #btn_add:hover {
-        background: linear-gradient(to right, #82c419, #6ca417);
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    }
 
-    /* 폼 요소 스타일 */
-    .form-group label {
-        font-weight: bold;
-        margin-bottom: 5px;
-        display: block;
-    }
+<div class="signup-container">
+    <div class="signup-header">
+        <h1 class="signup-title">시니어케어</h1>
+        <p class="signup-subtitle">고객 회원가입을 환영합니다</p>
+    </div>
 
-    .form-control {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        padding: 10px;
-        height: 45px;
-        transition: all 0.3s ease;
-    }
-
-    .form-control:focus {
-        border-color: #82c419;
-        box-shadow: 0 0 5px rgba(130, 196, 25, 0.3);
-    }
-
-    /* 이미지 미리보기 */
-    .profile-preview-container img {
-        width: 150px;
-        height: 150px;
-        object-fit: cover;
-        border: 2px solid #ddd;
-        border-radius: 50%;
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
-
-    .profile-preview-container img:hover {
-        transform: scale(1.1);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    /* 카드 스타일 */
-    .card {
-        border-radius: 16px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        border: none;
-    }
-
-    .card-title {
-        color: #82c419;
-        font-weight: bold;
-        font-size: 1.5rem;
-    }
-
-    .signup-container {
-        padding: 1rem 2rem;
-    }
-
-    /* 주소 검색 버튼 */
-    #zipcodeBtn {
-        background-color: #82c419;
-        color: white;
-        border: none;
-        font-size: 0.9rem;
-        padding: 8px 12px;
-        border-radius: 6px;
-    }
-
-    #zipcodeBtn:hover {
-        background-color: #6ca417;
-        color: #fff;
-        transition: all 0.3s ease;
-    }
-
-    /* 회원가입 링크 */
-    .signup-container a {
-        color: #82c419;
-        text-decoration: none;
-    }
-
-    .signup-container a:hover {
-        text-decoration: underline;
-    }
-</style>
-
-<div class="container signup-container" style="margin-top: 5rem">
-    <div class="row justify-content-center mt-5" style="margin-bottom: 6rem">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
-                    <h3 class="card-title text-center mb-4">고객으로 회원가입</h3>
-                    <form id="user_add_form">
-                        <div class="form-group text-center">
-                            <label for="profile">
-                                <div class="profile-preview-container mt-3">
-                                    <img id="profilePreview" src="/images/default-profile.jpg"
-                                         alt="이미지 미리보기"/>
-                                </div>
-                            </label>
-                            <input type="file" class="form-control" id="profile" name="userProfileFile" accept="image/*"
-                                   hidden="hidden"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="username">아이디</label>
-                            <input type="text" class="form-control" id="username" name="userUsername"
-                                   placeholder="아이디를 입력하세요" required>
-                            <small id="usernameMessage" class="form-text text-muted"></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">비밀번호</label>
-                            <input type="password" class="form-control" id="password" name="userPassword"
-                                   placeholder="비밀번호를 입력하세요" required>
-                            <small id="passwordMessage" class="form-text text-muted"></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="passwordConfirm">비밀번호 재확인</label>
-                            <input type="password" class="form-control" id="passwordConfirm" placeholder="비밀번호를 입력하세요"
-                                   required>
-                            <small id="passwordConfirmMessage" class="form-text text-muted"></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">이름</label>
-                            <input type="text" class="form-control" id="name" name="userName" placeholder="이름을 입력하세요"
-                                   required>
-                        </div>
-                        <div class="form-group">
-                            <label for="tel">전화번호</label>
-                            <input type="text" class="form-control" id="tel" name="userTel" placeholder="전화번호 입력"
-                                   maxlength="11" required>
-                            <small id="telMessage" class="form-text text-muted"></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">이메일</label>
-                            <input type="email" class="form-control" id="email" name="userEmail"
-                                   placeholder="이메일을 입력하세요" required>
-                            <small id="emailMessage" class="form-text text-muted"></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="birthday">생년월일</label>
-                            <input type="date" class="form-control" id="birthday" name="userBirthday" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="zipcode">우편번호</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="zipcode" name="userZipcode"
-                                       placeholder="우편번호를 검색하세요" readonly required>
-                                <div class="input-group-append">
-                                    <button type="button" id="zipcodeBtn">우편번호 검색</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="streetAddr">주소</label>
-                            <input type="text" class="form-control" id="streetAddr" name="userStreetAddr"
-                                   placeholder="주소를 입력하세요" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="detailAddr2">상세주소 1</label>
-                            <input type="text" class="form-control" id="detailAddr2" name="userDetailAddr2"
-                                   placeholder="상세주소 1을 입력하세요" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="detailAddr1">상세주소 2</label>
-                            <input type="text" class="form-control" id="detailAddr1" name="userDetailAddr1"
-                                   placeholder="상세주소 2를 입력하세요">
-                        </div>
-                    </form>
-                    <button type="submit" id="btn_add" class="btn btn-block">회원가입</button>
-                    <div class="mt-3 text-center">
-                        <p>이미 계정이 있으신가요? <a href="/login/user">로그인</a></p>
-                    </div>
-                </div>
+    <form id="user_add_form">
+        <!-- 프로필 섹션 -->
+        <div class="form-section">
+            <h2 class="section-title">프로필 이미지</h2>
+            <div class="profile-preview-container">
+                <label for="profile">
+                    <img id="profilePreview" src="/images/default-profile.jpg" alt="프로필 이미지 미리보기"/>
+                </label>
+                <input type="file" id="profile" name="userProfileFile" accept="image/*" hidden="hidden"/>
             </div>
         </div>
+
+        <!-- 기본 정보 섹션 -->
+        <div class="form-section">
+            <h2 class="section-title">기본 정보</h2>
+            <div class="form-group">
+                <label for="username">아이디</label>
+                <input type="text" class="form-control" id="username" name="userUsername" placeholder="아이디를 입력하세요" required>
+                <small id="usernameMessage" class="form-text"></small>
+            </div>
+            <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control" id="password" name="userPassword" placeholder="비밀번호를 입력하세요" required>
+                <small id="passwordMessage" class="form-text"></small>
+            </div>
+            <div class="form-group">
+                <label for="passwordConfirm">비밀번호 재확인</label>
+                <input type="password" class="form-control" id="passwordConfirm" placeholder="비밀번호를 다시 입력하세요" required>
+                <small id="passwordConfirmMessage" class="form-text"></small>
+            </div>
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" class="form-control" id="name" name="userName" placeholder="이름을 입력하세요" required>
+            </div>
+        </div>
+
+        <!-- 연락처 정보 섹션 -->
+        <div class="form-section">
+            <h2 class="section-title">연락처 정보</h2>
+            <div class="form-group">
+                <label for="tel">전화번호</label>
+                <input type="text" class="form-control" id="tel" name="userTel" placeholder="전화번호 입력 (-없이)" maxlength="11" required>
+                <small id="telMessage" class="form-text"></small>
+            </div>
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" class="form-control" id="email" name="userEmail" placeholder="이메일을 입력하세요" required>
+                <small id="emailMessage" class="form-text"></small>
+            </div>
+            <div class="form-group">
+                <label for="birthday">생년월일</label>
+                <input type="date" class="form-control" id="birthday" name="userBirthday" required>
+            </div>
+        </div>
+
+        <!-- 주소 정보 섹션 -->
+        <div class="form-section">
+            <h2 class="section-title">주소 정보</h2>
+            <div class="form-group">
+                <label for="zipcode">우편번호</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="zipcode" name="userZipcode" placeholder="우편번호" readonly required>
+                    <button type="button" id="zipcodeBtn">우편번호 검색</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="streetAddr">주소</label>
+                <input type="text" class="form-control" id="streetAddr" name="userStreetAddr" placeholder="주소" readonly required>
+            </div>
+            <div class="form-group">
+                <label for="detailAddr2">상세주소 1</label>
+                <input type="text" class="form-control" id="detailAddr2" name="userDetailAddr2" placeholder="상세주소 1" readonly required>
+            </div>
+            <div class="form-group">
+                <label for="detailAddr1">상세주소 2</label>
+                <input type="text" class="form-control" id="detailAddr1" name="userDetailAddr1" placeholder="상세주소 2">
+            </div>
+        </div>
+
+        <button type="button" id="btn_add">회원가입</button>
+    </form>
+
+    <div class="text-center mt-4">
+        <p>이미 계정이 있으신가요? <a href="/login/user" class="login-link">로그인하기</a></p>
     </div>
 </div>
-
