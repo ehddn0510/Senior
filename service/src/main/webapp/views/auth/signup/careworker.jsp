@@ -282,7 +282,7 @@
         register: function () {
             let form = $('#careworker_add_form')[0];
             let formData = new FormData(form);
-            console.log('formData:', formData);
+            console.log('FormData:', ...formData.entries()); // 디버깅용 로그 추가
             $.ajax({
                 type: 'POST',
                 url: '/api/careworkers/signup',
@@ -290,165 +290,148 @@
                 processData: false,
                 contentType: false,
                 dataType: 'json',
-            }).done(function (resp) {
-                if (resp.status === 200) {
-                    alert('회원가입이 완료되었습니다.');
-                    location.href = '/login/careworker';
-                } else {
-                    alert(resp.data);
-                }
-            }).fail(function (error) {
-                alert('서버와의 통신 중 오류가 발생했습니다.');
-                console.error('Error:', error);
-            });
+            })
+                .done(function (resp) {
+                    if (resp.status === 200) {
+                        alert('회원가입이 완료되었습니다.');
+                        location.href = '/login/careworker';
+                    } else {
+                        alert(resp.data);
+                    }
+                })
+                .fail(function (error) {
+                    console.error('AJAX Error:', error);
+                    alert('서버 통신 중 오류가 발생했습니다.');
+                });
         }
+
     };
 
     $(function () {
         signup.init();
     });
 </script>
-<style>
-    #btn_add {
-        font-size: 1.2rem;
-        border-radius: 8px;
-        padding: 10px 20px;
-        background: linear-gradient(to right, #82c419, #6ca417);
-        color: #fff;
-    }
-    #btn_add:hover {
-        background: linear-gradient(to right, #6ca417, #82c419);
-    }
-    .form-group label {
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-    .profile-preview-container img {
-        transition: transform 0.3s;
-    }
-    .profile-preview-container img:hover {
-        transform: scale(1.1);
-    }
-</style>
-<div class="container signup-container" style="margin-top: 5rem">
-    <div class="row justify-content-center mt-5" style="margin-bottom: 6rem">
-        <div class="col-md-6">
-            <div class="card border-0">
-                <div class="card-body">
-                    <h3 class="card-title text-center mb-4">보호사로 회원가입</h3>
-                    <form id="careworker_add_form">
-                        <div class="form-group text-center">
-                            <label for="profile">
-                                <div class="profile-preview-container mt-3">
-                                    <img id="profilePreview" src="/images/default-profile.jpg"
-                                         style="width: 170px; height: 170px; object-fit: cover; border: 1px solid #ddd; border-radius: 50%;"
-                                         alt="이미지 미리보기"/>
-                                </div>
-                            </label>
-                            <input type="file" class="form-control" id="profile" name="cwProfileFile" accept="image/*"
-                                   hidden="hidden"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="username">아이디</label>
-                            <input type="text" class="form-control" id="username" name="cwUsername"
-                                   placeholder="아이디를 입력하세요" required>
-                            <small id="usernameMessage" class="form-text"></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="password">비밀번호</label>
-                            <input type="password" class="form-control" id="password" name="cwPassword"
-                                   placeholder="비밀번호를 입력하세요" required>
-                            <small id="passwordMessage" class="form-text"></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="passwordConfirm">비밀번호 재확인</label>
-                            <input type="password" class="form-control" id="passwordConfirm" placeholder="비밀번호를 입력하세요"
-                                   required>
-                            <small id="passwordConfirmMessage" class="form-text"></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="name">이름</label>
-                            <input type="text" class="form-control" id="name" name="cwName" placeholder="이름을 입력하세요"
-                                   required>
-                        </div>
-                        <div class="form-group">
-                            <label for="gender">성별</label>
-                            <select class="form-control" id="gender" name="cwGender" required>
-                                <option value="N">선택</option>
-                                <option value="M">남성</option>
-                                <option value="F">여성</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="tel">전화번호</label>
-                            <input type="text" class="form-control" id="tel" name="cwTel" placeholder="전화번호 입력"
-                                   maxlength="11" required>
-                            <small id="telMessage" class="form-text"></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">이메일</label>
-                            <input type="email" class="form-control" id="email" name="cwEmail"
-                                   placeholder="이메일을 입력하세요" required>
-                            <small id="emailMessage" class="form-text"></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="birthday">생년월일</label>
-                            <input type="date" class="form-control" id="birthday" name="cwBirthday" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="holiday">휴무일</label>
-                            <select class="form-control" id="holiday" name="cwHoliday" required>
-                                <c:forEach var="day" items="${['선택', 'SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY']}">
-                                    <option value="${day}">${day}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="experience">경력 (년)</label>
-                            <input type="number" class="form-control" id="experience" name="cwExperience" min="0"
-                                   placeholder="보호사 경력 (년)" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="intro">소개</label>
-                            <textarea class="form-control" id="intro" name="cwIntro" rows="3"
-                                      placeholder="자신을 소개해주세요." required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="zipcode">우편번호</label>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="zipcode" name="cwZipcode"
-                                       placeholder="우편번호를 검색하세요" readonly required>
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-outline-secondary" id="zipcodeBtn">우편번호 검색
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="streetAddr">주소</label>
-                            <input type="text" class="form-control" id="streetAddr" name="cwStreetAddr"
-                                   placeholder="주소를 입력하세요" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="detailAddr2">상세주소 1</label>
-                            <input type="text" class="form-control" id="detailAddr2" name="cwDetailAddr2"
-                                   placeholder="상세주소 1을 입력하세요" readonly required>
-                        </div>
-                        <div class="form-group">
-                            <label for="detailAddr1">상세주소 2</label>
-                            <input type="text" class="form-control" id="detailAddr1" name="cwDetailAddr1"
-                                   placeholder="상세주소 2를 입력하세요">
-                        </div>
-                        <input type="hidden" id="latitude" name="cwLatitude">
-                        <input type="hidden" id="longitude" name="cwLongitude">
-                    </form>
-                    <button type="submit" id="btn_add" class="btn btn-primary btn-block border-0">회원가입
-                    </button>
-                    <div class="mt-3 text-center">
-                        <p>이미 계정이 있으신가요? <a href="/login/careworker">로그인</a></p>
-                    </div>
-                </div>
+
+<div class="signup-container">
+    <div class="signup-header">
+        <h1 class="signup-title">시니어케어</h1>
+        <p class="signup-subtitle">보호사 회원가입을 환영합니다</p>
+    </div>
+
+    <form id="careworker_add_form">
+        <!-- 프로필 섹션 -->
+        <div class="form-section">
+            <h2 class="section-title">프로필 이미지</h2>
+            <div class="profile-preview-container">
+                <label for="profile">
+                    <img id="profilePreview" src="/images/default-profile.jpg" alt="프로필 이미지 미리보기"/>
+                </label>
+                <input type="file" id="profile" name="cwProfileFile" accept="image/*" hidden="hidden"/>
             </div>
         </div>
+
+        <!-- 기본 정보 섹션 -->
+        <div class="form-section">
+            <h2 class="section-title">기본 정보</h2>
+            <div class="form-group">
+                <label for="username">아이디</label>
+                <input type="text" class="form-control" id="username" name="cwUsername" placeholder="아이디를 입력하세요" required>
+                <small id="usernameMessage" class="form-text"></small>
+            </div>
+            <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control" id="password" name="cwPassword" placeholder="비밀번호를 입력하세요" required>
+                <small id="passwordMessage" class="form-text"></small>
+            </div>
+            <div class="form-group">
+                <label for="passwordConfirm">비밀번호 재확인</label>
+                <input type="password" class="form-control" id="passwordConfirm" placeholder="비밀번호를 다시 입력하세요" required>
+                <small id="passwordConfirmMessage" class="form-text"></small>
+            </div>
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" class="form-control" id="name" name="cwName" placeholder="이름을 입력하세요" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">성별</label>
+                <select class="form-control" id="gender" name="cwGender" required>
+                    <option value="N">선택</option>
+                    <option value="M">남성</option>
+                    <option value="F">여성</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 연락처 정보 섹션 -->
+        <div class="form-section">
+            <h2 class="section-title">연락처 정보</h2>
+            <div class="form-group">
+                <label for="tel">전화번호</label>
+                <input type="text" class="form-control" id="tel" name="cwTel" placeholder="전화번호 입력 (-없이)" maxlength="11" required>
+                <small id="telMessage" class="form-text"></small>
+            </div>
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" class="form-control" id="email" name="cwEmail" placeholder="이메일을 입력하세요" required>
+                <small id="emailMessage" class="form-text"></small>
+            </div>
+        </div>
+
+        <!-- 추가 정보 섹션 -->
+        <div class="form-section">
+            <h2 class="section-title">추가 정보</h2>
+            <div class="form-group">
+                <label for="birthday">생년월일</label>
+                <input type="date" class="form-control" id="birthday" name="cwBirthday" required>
+            </div>
+            <div class="form-group">
+                <label for="holiday">휴무일</label>
+                <select class="form-control" id="holiday" name="cwHoliday" required>
+                    <c:forEach var="day" items="${['선택', 'SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY']}">
+                        <option value="${day}">${day}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="experience">경력 (년)</label>
+                <input type="number" class="form-control" id="experience" name="cwExperience" min="0" placeholder="보호사 경력 (년)" required>
+            </div>
+            <div class="form-group">
+                <label for="intro">소개</label>
+                <textarea class="form-control" id="intro" name="cwIntro" rows="3" placeholder="자신을 소개해주세요." required></textarea>
+            </div>
+        </div>
+
+        <!-- 주소 정보 섹션 -->
+        <div class="form-section">
+            <h2 class="section-title">주소 정보</h2>
+            <div class="form-group">
+                <label for="zipcode">우편번호</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="zipcode" name="cwZipcode" placeholder="우편번호" readonly required>
+                    <button type="button" id="zipcodeBtn">우편번호 검색</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="streetAddr">주소</label>
+                <input type="text" class="form-control" id="streetAddr" name="cwStreetAddr" placeholder="주소" readonly required>
+            </div>
+            <div class="form-group">
+                <label for="detailAddr2">상세주소 1</label>
+                <input type="text" class="form-control" id="detailAddr2" name="cwDetailAddr2" placeholder="상세주소 1" readonly required>
+            </div>
+            <div class="form-group">
+                <label for="detailAddr1">상세주소 2</label>
+                <input type="text" class="form-control" id="detailAddr1" name="cwDetailAddr1" placeholder="상세주소 2">
+            </div>
+            <input type="hidden" id="latitude" name="cwLatitude">
+            <input type="hidden" id="longitude" name="cwLongitude">
+        </div>
+
+        <button type="button" id="btn_add">회원가입</button>
+    </form>
+
+    <div class="text-center mt-4">
+        <p>이미 계정이 있으신가요? <a href="/login/careworker" class="login-link">로그인하기</a></p>
     </div>
 </div>
