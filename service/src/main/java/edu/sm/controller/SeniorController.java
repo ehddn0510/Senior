@@ -43,4 +43,19 @@ public class SeniorController {
         }
         return "index";
     }
+
+    @RequestMapping("/map/{id}")
+    public String list(@PathVariable Integer id, Model model) {
+        Senior senior = null;
+        try {
+            senior = seniorService.get(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        model.addAttribute("senior", senior);
+        model.addAttribute("center", "senior/map");
+        return "index";
+    }
+
+
 }
