@@ -42,6 +42,7 @@ public class CareworkerService implements SMService<Integer, Careworker> {
     @Override
     public Careworker get(Integer integer) throws Exception {
         Careworker careworker = careworkerRepository.selectOne(integer);
+        decryptAddressFields(careworker); // 주소 필드 복호화
         return careworker;
     }
 

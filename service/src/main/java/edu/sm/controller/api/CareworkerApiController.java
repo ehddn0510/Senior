@@ -19,6 +19,18 @@ public class CareworkerApiController {
 
     private final CareworkerService careworkerService;
 
+    // 사용자 정보 조회 API 엔드포인트
+    @GetMapping("/{cwId}")
+    public ResponseDto<Careworker> getUser(@PathVariable int cwId) {
+        try {
+            Careworker careworker = careworkerService.get(cwId);
+            return new ResponseDto<>(HttpStatus.OK.value(), careworker);
+        } catch (Exception e) {
+            log.error("사용자 조회 중 오류 발생", e);
+            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), null);
+        }
+    }
+
     @PostMapping("/signup")
     public ResponseDto<String> save(@ModelAttribute Careworker careworker) {
         try {
@@ -37,15 +49,18 @@ public class CareworkerApiController {
     public ResponseDto<String> login(@RequestBody Careworker careworker, HttpSession session) {
         try {
             Careworker principal = careworkerService.login(careworker);
-            session.setAttribute("principal", principal.getCwId());
-            session.setAttribute("role", "CAREWORKER");
+            session.setAttribute("principal", principal.getCwId()); // 세션에 Careworker ID 저장
+            session.setAttribute("role", "CAREWORKER"); // 역할 정보 저장
             return new ResponseDto<>(HttpStatus.OK.value(), "1");
         } catch (IllegalArgumentException e) {
             return new ResponseDto<>(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
         } catch (Exception e) {
+            log.error("로그인 중 예기치 않은 오류 발생", e);
             return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "예기치 않은 오류 발생");
         }
     }
+
+
 
     @GetMapping("/nearby")
     public List<Careworker> findNearbyCareworkers(
@@ -64,4 +79,5 @@ public class CareworkerApiController {
         log.info(careworkers.toString());
         return careworkers;
     }
+
 }
