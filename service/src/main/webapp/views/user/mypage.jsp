@@ -6,7 +6,7 @@
     <!-- 왼쪽 사이드바 -->
     <div class="profile-sidebar">
       <div class="profile-info">
-        <img src="imgs/user" alt="프로필 이미지" class="profile-image">
+        <img alt="프로필 이미지" class="profile-image" id="profileImage">
         <h3 class="profile-name" id="profileName"></h3>
         <p class="profile-email" id="profileEmail"></p>
         <div class="profile-actions">
@@ -185,8 +185,10 @@
     },
 
     updateProfileDisplay: function(user) {
+      document.getElementById("profileImage").src = user.userProfile ? `/imgs/user/`+user.userProfile : "../images/default-profile.jpg";
       document.getElementById("profileName").textContent = user.userName || "이름 없음";
       document.getElementById("profileEmail").textContent = user.userEmail || "이메일 없음";
+
     },
 
     populateUpdateForm: function(user) {
