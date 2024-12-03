@@ -9,4 +9,34 @@
         VALUES (#{contractStatus}, #{cwId}, #{userId}, #{seniorId});
     </insert>
 
+    <!-- 보호사의 전체 계약 조회 -->
+    <select id="findAllByCareworkerId" resultType="Contract">
+        SELECT *
+        FROM contract
+        WHERE cw_id = #{cwId}
+    </select>
+
+    <!-- 상태별 보호사 계약 조회 -->
+    <select id="findByCareworkerIdAndStatus" resultType="Contract">
+        SELECT *
+        FROM contract
+        WHERE cw_id = #{cwId}
+          AND contract_status = #{status}
+    </select>
+
+    <select id="selectOne" resultType="Contract">
+        SELECT *
+        FROM contract
+        WHERE contract_id = #{contractId}
+    </select>
+
+    <update id="update" parameterType="Contract">
+        UPDATE contract
+        SET
+            contract_start_date = #{contractStartDate},
+            contract_end_date = #{contractEndDate},
+            contract_price = #{contractPrice},
+            contract_status = #{contractStatus}
+        WHERE contract_id = #{contractId}
+    </update>
 </mapper>
