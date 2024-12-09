@@ -15,4 +15,10 @@ public interface CalendarRepository {
 
     // cwId로 스케줄 조회
     List<Schedule> selectSchedulesByCwId(@Param("cwId") int cwId);
+
+    // 계약과 관련 없는 일정 추가
+    void insertNonContractSchedule(Schedule schedule);
+
+    // 계약과 관련된 일정 추가
+    void insertContractSchedule(Schedule schedule);
 }

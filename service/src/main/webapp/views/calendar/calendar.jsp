@@ -3,46 +3,66 @@
 
 <div class="content-body">
     <div class="container-fluid">
-        <!-- Flexbox를 이용한 레이아웃 -->
         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-top: 20px;">
-            <!-- FullCalendar가 렌더링될 영역 -->
             <div id="calendar" style="flex: 0 0 70%; border: 1px solid #ddd; padding: 10px;"></div>
-
-            <!-- 옆에 추가된 박스 -->
-            <div style="flex: 0 0 28%; border: 1px solid #ddd; margin-left: 10px; padding: 10px; background-color: #f9f9f9;">
-                <h2>추가 정보 박스</h2>
-                <p>여기에 추가할 내용을 작성하세요.</p>
-                <ul>
-                    <li>예: 캘린더 관련 정보</li>
-                    <li>예: 버튼 또는 기타 UI 요소</li>
-                </ul>
-            </div>
         </div>
-    </div>
-
-    <!-- 테스트용 버튼 -->
-    <div style="margin-top: 20px;">
-        <button onclick="location.reload()">페이지 새로고침</button>
     </div>
 </div>
 
-<!-- FullCalendar 스크립트 및 스타일 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar/main.min.css" />
-<script src='/js/index.global.js'></script>
+<div class="modal fade" id="scheduleAddModal" tabindex="-1" aria-labelledby="scheduleAddModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="scheduleAddModalLabel">일정 추가</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="modalAddScheduleForm">
+                    <div style="margin-bottom: 10px;">
+                        <label for="addScheduleTitle">제목</label>
+                        <input type="text" id="addScheduleTitle" name="scheduleTitle" class="form-control" required>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <label for="modalAddStartDate">시작 날짜</label>
+                        <input type="date" id="modalAddStartDate" name="scheduleStartDate" class="form-control" readonly>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <label for="modalAddStartTime">시작 시간</label>
+                        <input type="time" id="modalAddStartTime" name="scheduleStartTime" class="form-control" required>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <label for="modalAddEndDate">종료 날짜</label>
+                        <input type="date" id="modalAddEndDate" name="scheduleEndDate" class="form-control" readonly>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <label for="modalAddEndTime">종료 시간</label>
+                        <input type="time" id="modalAddEndTime" name="scheduleEndTime" class="form-control" required>
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <label for="modalAddDescription">설명</label>
+                        <textarea id="modalAddDescription" name="scheduleDescription" class="form-control" rows="4"></textarea>
+                    </div>
+                    <button type="button" id="saveScheduleBtn" class="btn btn-primary" style="width: 100%;">일정 추가</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar/main.min.css"/>
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/google-calendar@6.1.15/index.global.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/rrule@6.1.15/index.global.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/rrule@6.1.15/index.global.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/rrule@2.6.4/dist/es5/rrule.min.js"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
+    function formatDateTime(date, time) {
+        return date + "T" + time + ":00";
+    }
 
-        // JavaScript로 전달된 JSON 데이터를 파싱
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
         const eventsData = JSON.parse('${schedulesJson}');
 
-        // FullCalendar 초기화
         var calendar = new FullCalendar.Calendar(calendarEl, {
             headerToolbar: {
                 left: 'prev,next today',
@@ -50,38 +70,70 @@
                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
             initialDate: '2024-12-01',
-            navLinks: true, // can click day/week names to navigate views
+            navLinks: true,
             selectable: true,
             selectMirror: true,
-            select: function(arg) {
-                var title = prompt('Event Title:');
-                if (title) {
-                    calendar.addEvent({
-                        title: title,
-                        start: arg.start,
-                        end: arg.end,
-                        allDay: arg.allDay
-                    })
-                }
-                calendar.unselect()
-            },
-            eventClick: function(arg) {
-                if (confirm('Are you sure you want to delete this event?')) {
-                    arg.event.remove()
-                }
-            },
-            editable: true,
-            dayMaxEvents: true, // allow "more" link when too many events
             events: eventsData.map(event => ({
                 title: event.scheduleTitle,
                 start: event.scheduleStartDatetime,
                 end: event.scheduleEndDatetime,
-                description: event.scheduleDescription, // FullCalendar에서 description은 커스텀
-                allDay: false // 필요 시 event에서 allDay 값을 계산해 넣을 수 있음
-            }))
+                description: event.scheduleDescription,
+                allDay: false
+            })),
+            select: function(arg) {
+                document.getElementById('modalAddStartDate').value = arg.startStr;
+                document.getElementById('modalAddEndDate').value = arg.endStr;
+                $('#scheduleAddModal').modal('show');
+            },
+            editable: true,
+            dayMaxEvents: true
         });
 
         calendar.render();
+
+        document.getElementById('saveScheduleBtn').addEventListener('click', function () {
+            var title = document.getElementById('addScheduleTitle').value.trim();
+            var startDate = document.getElementById('modalAddStartDate').value;
+            var startTime = document.getElementById('modalAddStartTime').value;
+            var endDate = document.getElementById('modalAddEndDate').value;
+            var endTime = document.getElementById('modalAddEndTime').value;
+            var description = document.getElementById('modalAddDescription').value.trim();
+
+            if (!title || !startDate || !startTime || !endDate || !endTime || !description) {
+                alert("모든 필드를 채워주세요.");
+                return;
+            }
+
+            const startDateTime = formatDateTime(startDate, startTime);
+            const endDateTime = formatDateTime(endDate, endTime);
+
+            const scheduleData = {
+                scheduleTitle: title,
+                scheduleStartDatetime: startDateTime,
+                scheduleEndDatetime: endDateTime,
+                scheduleDescription: description
+            };
+
+            $.ajax({
+                url: '/api/calendar/saveUserSchedule',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(scheduleData),
+                success: function(response) {
+                    alert("일정이 성공적으로 추가되었습니다.");
+                    calendar.addEvent({
+                        title: title,
+                        start: startDateTime,
+                        end: endDateTime,
+                        description: description
+                    });
+                    $('#scheduleAddModal').modal('hide');
+                },
+                error: function(error) {
+                    console.error("AJAX Error:", error);
+                    alert("일정 추가 중 오류가 발생했습니다.");
+                }
+            });
+        });
     });
 </script>
-

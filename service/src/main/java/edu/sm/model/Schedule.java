@@ -17,8 +17,9 @@ public class Schedule {
     private String scheduleDescription;   // 스케줄 설명
     private LocalDateTime scheduleStartDatetime; // 스케줄 시작 시간
     private LocalDateTime scheduleEndDatetime;   // 스케줄 종료 시간
-    private String scheduleStatus;        // 스케줄 상태 (ACTIVE, CANCELLED)
-    private int scheduleGroupId;          // 그룹 ID
-    private int userId;                   // 사용자 ID
-    private int cwId;                     // 돌봄 제공자 ID
+    private String scheduleStatus;        // 스케줄 상태 (ACTIVE, CANCELLED,WAITING)
+    private Integer userId;               // 사용자 ID
+    private Integer cwId;                 // 돌봄 제공자 ID
+    private Integer contractId;           // 계약 ID (NULL 가능)
+
 }
