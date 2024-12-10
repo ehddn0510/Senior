@@ -9,4 +9,11 @@
         VALUES (#{workLogContent}, #{visitStartTime}, #{visitEndTime}, #{cwId}, #{seniorId});
     </insert>
 
+    <select id="selectBySeniorId" parameterType="Integer">
+        SELECT * FROM worklog WHERE senior_id = #{seniorId}
+    </select>
+
+    <select id="selectOne" parameterType="Integer">
+        SELECT * FROM worklog WHERE worklog_id = #{workLogId}
+    </select>
 </mapper>

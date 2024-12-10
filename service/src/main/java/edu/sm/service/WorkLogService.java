@@ -6,6 +6,7 @@ import edu.sm.repository.WorkLogRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,12 +32,19 @@ public class WorkLogService implements SMService<Integer, WorkLog> {
     }
 
     @Override
-    public WorkLog get(Integer integer) throws Exception {
-        return null;
+    public WorkLog get(Integer workLogId) throws Exception {
+        WorkLog workLog = workLogRepository.selectOne(workLogId);
+        return workLog;
     }
 
     @Override
     public List<WorkLog> get() throws Exception {
         return List.of();
+    }
+
+    @Transactional
+    public List<WorkLog> getBySeniorId(Integer seniorId) throws Exception {
+        List<WorkLog> workLogs = workLogRepository.selectBySeniorId(seniorId);
+        return workLogs;
     }
 }

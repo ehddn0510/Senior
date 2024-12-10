@@ -1,13 +1,7 @@
 package edu.sm.controller;
 
-import edu.sm.model.Careworker;
-import edu.sm.model.HealthInfo;
-import edu.sm.model.Senior;
-import edu.sm.model.User;
-import edu.sm.service.CareworkerService;
-import edu.sm.service.HealthinfoService;
-import edu.sm.service.SeniorService;
-import edu.sm.service.UserService;
+import edu.sm.model.*;
+import edu.sm.service.*;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +23,7 @@ public class UserController {
     private final SeniorService seniorService;
     private final HealthinfoService healthinfoService;
     private final CareworkerService careworkerService;
+    private final WorkLogService workLogService;
 
     @GetMapping("/senior")
     public String seniors(HttpSession session, Model model) {
@@ -39,8 +34,10 @@ public class UserController {
 
         try {
             Senior senior = seniorService.getSeniorsByUserId(userId);
+            List<WorkLog> workLogs = workLogService.getBySeniorId(senior.getSeniorId());
 
             model.addAttribute("senior", senior);
+            model.addAttribute("workLogs", workLogs);
             model.addAttribute("center", "senior/detail");
         } catch (Exception e) {
             return "redirect:/user/senior/insert";
@@ -136,5 +133,28 @@ public class UserController {
         } catch (Exception e) {
             return "redirect:/user/senior/insert";
         }
+    }
+
+    @GetMapping("/worklog")
+    public String worklog(@RequestParam Integer workLogId, HttpSession session, Model model) {
+        Integer userId = (Integer) session.getAttribute("principal");
+        if (userId == null) {
+            return "redirect:/login/user"; // 로그인 페이지로 리다이렉트
+        }
+
+        try {
+            Senior senior = seniorService.getSeniorsByUserId(userId);
+            WorkLog workLog = workLogService.get(workLogId);
+            Careworker careworker = careworkerService.get(workLog.getCwId());
+
+            model.addAttribute("senior", senior);
+            model.addAttribute("workLog", workLog);
+            model.addAttribute("careworker", careworker);
+            model.addAttribute("center", "user/senior/worklog");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return "index";
     }
 }
