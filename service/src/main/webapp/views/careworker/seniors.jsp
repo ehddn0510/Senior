@@ -200,7 +200,7 @@
             <div class="senior-grid">
                 <c:forEach var="details" items="${contractsWithDetails}">
                     <div class="senior-card">
-                        <img src="/imgs/careworker/${details.senior.seniorProfile}" class="senior-image"
+                        <img src="/imgs/senior/${details.senior.seniorProfile}" class="senior-image"
                              alt="${details.senior.seniorName}" onerror="this.src='/imgs/default-profile.jpg'">
                         <div class="senior-details">
                             <h3 class="senior-name">${details.senior.seniorName}</h3>
