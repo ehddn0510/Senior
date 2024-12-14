@@ -2,6 +2,7 @@ package edu.sm.controller.api;
 
 import edu.sm.dto.ResponseDto;
 import edu.sm.model.Careworker;
+import edu.sm.model.License;
 import edu.sm.model.User;
 import edu.sm.service.CareworkerService;
 import jakarta.servlet.http.HttpSession;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -119,4 +121,42 @@ public class CareworkerApiController {
         }
     }
 
+    // 특정 Careworker의 자격증 목록 조회
+    @GetMapping("/{cwId}/licenses")
+    public ResponseDto<List<License>> getLicensesByCareworkerId(@PathVariable int cwId) {
+        try {
+            log.info("Careworker ID로 자격증 조회 요청: {}", cwId);
+
+            List<License> licenses = careworkerService.getLicensesByCareworkerId(cwId);
+
+            if (licenses == null || licenses.isEmpty()) {
+                log.info("Careworker ID {}에 대한 자격증이 없습니다.", cwId);
+                return new ResponseDto<>(HttpStatus.OK.value(), new ArrayList<>()); // 빈 리스트 반환
+            }
+
+            log.info("조회된 자격증 목록: {}", licenses);
+            return new ResponseDto<>(HttpStatus.OK.value(), licenses);
+
+        } catch (Exception e) {
+            log.error("자격증 조회 중 오류 발생", e);
+            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), null);
+        }
+    }
+
+    // Careworker에 자격증 추가
+    @PostMapping("/{cwId}/licenses")
+    public ResponseDto<String> addLicense(@PathVariable int cwId, @RequestBody License license) {
+        try {
+            license.setCwId(cwId); // Careworker ID 설정
+            careworkerService.addLicense(license); // 서비스에서 자격증 추가
+            log.info("자격증 추가 완료: {}", license);
+            return new ResponseDto<>(HttpStatus.OK.value(), "자격증이 성공적으로 추가되었습니다.");
+        } catch (IllegalArgumentException e) {
+            log.error("자격증 추가 중 잘못된 요청: {}", e.getMessage());
+            return new ResponseDto<>(HttpStatus.BAD_REQUEST.value(), e.getMessage());
+        } catch (Exception e) {
+            log.error("자격증 추가 중 오류 발생", e);
+            return new ResponseDto<>(HttpStatus.INTERNAL_SERVER_ERROR.value(), "자격증 추가 중 오류가 발생했습니다.");
+        }
+    }
 }

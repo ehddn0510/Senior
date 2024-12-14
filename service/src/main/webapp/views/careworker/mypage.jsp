@@ -6,7 +6,7 @@
         <!-- 왼쪽 사이드바 -->
         <div class="profile-sidebar">
             <div class="profile-info">
-                <img alt="프로필 이미지" class="profile-image" id="profileImage"  >
+                <img alt="프로필 이미지" class="profile-image" id="profileImage">
                 <h3 class="profile-name" id="profileName"></h3>
                 <p class="profile-email" id="profileEmail"></p>
                 <div class="profile-actions">
@@ -20,6 +20,10 @@
                     <i class="fas fa-user"></i>
                     <p>내 정보</p>
                 </li>
+                <li class="menu-item" onclick="mypage.showSection('licenseSection')">
+                    <i class="fas fa-file-alt"></i>
+                    <p>자격증 관리</p>
+                </li>
                 <li class="menu-item" onclick="mypage.showSection('updateSection')">
                     <i class="fas fa-cog"></i>
                     <p>회원정보 수정</p>
@@ -32,6 +36,7 @@
                     <i class="fas fa-user-times"></i>
                     <p>회원 탈퇴</p>
                 </li>
+
             </ul>
         </div>
 
@@ -75,6 +80,7 @@
                 </div>
             </div>
 
+
             <!-- 회원정보 수정 섹션 -->
             <div id="updateSection" style="display: none;">
                 <h2 class="section-title">회원정보 수정</h2>
@@ -117,6 +123,73 @@
                 </form>
             </div>
 
+            <div id="licenseSection" style="display: none;">
+                <h2 class="section-title">자격증 관리</h2>
+
+                <!-- 현재 자격증 목록 -->
+                <div id="currentLicenses" style="
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <h3 style="margin-bottom: 15px;">현재 자격증</h3>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>자격증 이름</th>
+                            <th>시작 날짜</th>
+                            <th>종료 날짜</th>
+                            <th>상태</th>
+                        </tr>
+                        </thead>
+                        <tbody id="licenseTableBody">
+                        <!-- 자격증 목록이 동적으로 추가됩니다 -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 구분선 -->
+                <hr style="border: 0; border-top: 2px solid #eee; margin: 20px 0;">
+
+                <!-- 자격증 추가 폼 -->
+                <div id="addLicenseForm" style="
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <h3 style="margin-bottom: 15px;">자격증 추가</h3>
+                    <form id="licenseForm" class="license-form">
+                        <div class="form-group">
+                            <label for="licenseName">자격증 이름</label>
+                            <input type="text" class="form-control" id="licenseName" name="licenseName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="licenseStartDate">시작 날짜</label>
+                            <input type="date" class="form-control" id="licenseStartDate" name="licenseStartDate"
+                                   required>
+                        </div>
+                        <div class="form-group">
+                            <label for="licenseEndDate">종료 날짜</label>
+                            <input type="date" class="form-control" id="licenseEndDate" name="licenseEndDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="licenseStatus">상태</label>
+                            <select class="form-control" id="licenseStatus" name="licenseStatus">
+                                <option value="1">활성</option>
+                                <option value="0">비활성</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="mypage.addLicense()">
+                            <i class="fas fa-plus"></i> 추가하기
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+
             <!-- 비밀번호 변경 섹션 -->
             <div id="passwordSection" style="display: none;">
                 <h2 class="section-title">비밀번호 변경</h2>
@@ -158,6 +231,7 @@
     const mypage = {
         init: function () {
             this.loadCwInfo();
+            this.loadLicenses();
             this.showSection('infoSection');
         },
 
@@ -194,7 +268,7 @@
         },
 
         updateProfileDisplay: function (cw) {
-            document.getElementById("profileImage").src = cw.cwProfile ? `/imgs/careworker/`+cw.cwProfile : "../images/default-profile.jpg";
+            document.getElementById("profileImage").src = cw.cwProfile ? `/imgs/careworker/` + cw.cwProfile : "../images/default-profile.jpg";
             document.getElementById("profileName").textContent = cw.cwName || "이름 없음";
             document.getElementById("profileEmail").textContent = cw.cwEmail || "이메일 없음";
         },
@@ -287,6 +361,39 @@
             }
         },
 
+        addLicense: function () {
+            const licenseForm = document.getElementById("licenseForm");
+            const formData = new FormData(licenseForm);
+            const licenseData = Object.fromEntries(formData.entries());
+
+            // 시작 날짜와 종료 날짜에 시간 추가
+            licenseData.licenseStartDate += "T00:00:00";
+            licenseData.licenseEndDate += "T00:00:00";
+
+            // 서버로 데이터 전송
+            fetch(`/api/careworkers/${cwId}/licenses`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(licenseData)
+            })
+                .then(response => {
+                    if (!response.ok) throw new Error("자격증 추가 실패");
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status === 200) {
+                        alert("자격증이 성공적으로 추가되었습니다.");
+                        this.loadLicenses(); // 자격증 목록 갱신
+                    } else {
+                        alert(`자격증 추가 실패: ${data.data || "알 수 없는 오류"}`);
+                    }
+                })
+                .catch(error => {
+                    console.error("자격증 추가 오류:", error);
+                    alert("자격증 추가 중 오류가 발생했습니다.");
+                });
+        },
+
         logout: function () {
             fetch('/logout', {method: 'POST'})
                 .then(() => {
@@ -295,8 +402,78 @@
                 .catch(error => console.error("로그아웃 오류:", error));
         },
 
+        loadLicenses: function () {
+            fetch(`/api/careworkers/${cwId}/licenses`)
+                .then(response => {
+                    if (!response.ok) throw new Error("자격증 정보를 불러오는데 실패했습니다.");
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("API 응답:", data);
+
+                    const licenses = data.data || [];
+                    console.log("파싱된 자격증 목록:", licenses);
+
+                    const tbody = document.getElementById("licenseTableBody");
+                    if (!tbody) {
+                        console.error("licenseTableBody 요소를 찾을 수 없습니다.");
+                        return;
+                    }
+
+                    tbody.innerHTML = ""; // 기존 내용을 초기화합니다.
+
+                    if (licenses.length === 0) {
+                        console.log("자격증 데이터가 비어 있습니다.");
+                        tbody.innerHTML = `<tr><td colspan="4">등록된 자격증이 없습니다.</td></tr>`;
+                        return;
+                    }
+
+                    licenses.forEach(license => {
+                        const row = document.createElement("tr");
+
+                        // 자격증 이름
+                        const nameCell = document.createElement("td");
+                        nameCell.textContent = license.licenseName || "없음";
+                        row.appendChild(nameCell);
+
+                        // 시작 날짜
+                        const startDateCell = document.createElement("td");
+                        startDateCell.textContent = license.licenseStartDate
+                            ? formatDate(license.licenseStartDate)
+                            : "없음";
+                        row.appendChild(startDateCell);
+
+                        // 종료 날짜
+                        const endDateCell = document.createElement("td");
+                        endDateCell.textContent = license.licenseEndDate
+                            ? formatDate(license.licenseEndDate)
+                            : "없음";
+                        row.appendChild(endDateCell);
+
+                        // 상태
+                        const statusCell = document.createElement("td");
+                        statusCell.textContent = license.licenseStatus === "1" ? "유효" : "유효 X";
+                        row.appendChild(statusCell);
+
+                        tbody.appendChild(row); // 테이블에 추가
+                    });
+
+                    function formatDate(dateString) {
+                        const date = new Date(dateString);
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, "0");
+                        const day = String(date.getDate()).padStart(2, "0");
+                        return year + "년 " + month + "월 " + day + "일";
+                    }
+
+                    console.log("테이블 렌더링 완료.");
+                })
+                .catch(error => {
+                    console.error("자격증 정보 로드 오류:", error);
+                });
+        },
         showSection: function (sectionId) {
-            const sections = ['infoSection', 'updateSection', 'passwordSection', 'deleteSection'];
+            const sections = ['infoSection', 'updateSection', 'passwordSection', 'deleteSection', 'licenseSection'];
             sections.forEach(section => {
                 document.getElementById(section).style.display = section === sectionId ? 'block' : 'none';
             });

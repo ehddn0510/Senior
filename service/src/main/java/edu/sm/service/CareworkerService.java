@@ -2,6 +2,7 @@ package edu.sm.service;
 
 import edu.sm.frame.SMService;
 import edu.sm.model.Careworker;
+import edu.sm.model.License;
 import edu.sm.model.User;
 import edu.sm.model.enums.CwStatus;
 import edu.sm.repository.CareworkerRepository;
@@ -174,5 +175,23 @@ public class CareworkerService implements SMService<Integer, Careworker> {
             if (careworker.getCwDetailAddr2() != null)
                 careworker.setCwDetailAddr2(textEncoder.decrypt(careworker.getCwDetailAddr2()));
         }
+    }
+
+    // 특정 Careworker의 자격증 목록 가져오기
+    public List<License> getLicensesByCareworkerId(int cwId) throws Exception {
+        List<License> licenses = careworkerRepository.selectLicensesByCareworkerId(cwId);
+        if (licenses == null || licenses.isEmpty()) {
+            throw new IllegalArgumentException("해당 Careworker의 자격증 정보를 찾을 수 없습니다: " + cwId);
+        }
+        return licenses;
+    }
+
+    // 자격증 추가
+    @Transactional
+    public void addLicense(License license) throws Exception {
+        if (license == null || license.getCwId() == 0) {
+            throw new IllegalArgumentException("자격증 정보가 올바르지 않습니다.");
+        }
+        careworkerRepository.insertLicense(license);
     }
 }

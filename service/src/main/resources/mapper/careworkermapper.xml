@@ -47,6 +47,7 @@
         )
         ) AS distance
         FROM careworker
+        WHERE cw_status = 'ACTIVE'
         HAVING <![CDATA[distance <= #{radius}]]>
         ORDER BY distance;
     </select>
@@ -80,6 +81,23 @@
         WHERE cw_id = #{cwId};
     </update>
 
+    <!-- 특정 careworker의 자격증 목록 가져오기 -->
+    <select id="selectLicensesByCareworkerId" parameterType="int" resultType="License">
+        SELECT license_id AS licenseId,
+               license_name AS licenseName,
+               license_start_date AS licenseStartDate,
+               license_end_date AS licenseEndDate,
+               license_status AS licenseStatus,
+               cw_id AS cwId
+        FROM license
+        WHERE cw_id = #{cwId};
+    </select>
+
+    <!-- 자격증 추가 -->
+    <insert id="insertLicense" parameterType="License">
+        INSERT INTO license (license_name, license_start_date, license_end_date, license_status, cw_id)
+        VALUES (#{licenseName}, #{licenseStartDate}, #{licenseEndDate}, #{licenseStatus}, #{cwId});
+    </insert>
 
 
 </mapper>

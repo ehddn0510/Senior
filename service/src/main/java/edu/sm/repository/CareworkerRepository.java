@@ -2,6 +2,7 @@ package edu.sm.repository;
 
 import edu.sm.frame.SMRepository;
 import edu.sm.model.Careworker;
+import edu.sm.model.License;
 import edu.sm.model.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -19,4 +20,11 @@ public interface CareworkerRepository extends SMRepository<Integer, Careworker> 
     void updatePassword(Careworker careworker);
     // 사용자 상태를 inactive로 변경 (소프트 삭제)
     void deactivateCareworker(int CwId);
+
+
+    // 특정 Careworker의 자격증 목록 가져오기
+    List<License> selectLicensesByCareworkerId(int cwId) throws Exception;
+
+    // 새로운 자격증 추가
+    void insertLicense(License license) throws Exception;
 }
